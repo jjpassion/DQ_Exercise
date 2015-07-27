@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>不定高度动态元素height CSS3 transition过渡动画实例</title>
+</head>
+<style>
+/*
+ transition 过渡
+ 
+ transition-duration 运行时间
+ transition-property 要运动的样式 （all || [attr] || none）
+ transition-delay 延迟时间
+ transition-timing-function 运动形式
+ 	- ease: 逐渐变慢 默认值;
+ 	- linear: 匀速;
+ 	- ease-in: 加速; 
+ 	- ease-out 减速
+ 	- ease-in-out: 先加速后减速;  【常用】
+ 	- cubic-bezier: 贝塞尔曲线（x1,y1,x2,y2）;
+ */
+
+.box{width: 400px; padding: 20px; border: 40px solid #becceb; background:  #eee; overflow: hidden;}
+
+.in { width: 100px; margin: 0 auto;  border: 50px solid #beceeb; background-color: #f0f3f9; }
+
+.loading{ width: 20px;height: 20px;display: block;background: url(./images/loading_sprite.png);background-size: auto 20px;/*-webkit-transition-duration:0ms;
+				-webkit-animation-name:rotate;
+				-webkit-animation-duration:2s;
+				-webkit-animation-iteration-count:infinite;
+				-webkit-animation-timing-function:linear;*/ 
+		-webkit-animation: rotate 2s steps(12) infinite; 
+		 visibility: hidden;
+	}
+
+@-webkit-keyframes rotate{
+	from { -webkit-transform: rotate(0deg) translateZ(0);}
+	to { -webkit-transform: rotate(360deg) translateZ(0);}
+}
+</style>
+<script>
+
+window.onload = function(){
+	var box = document.getElementById('box')
+		,btn = document.getElementById('button')
+		,loading = document.querySelector('.loading')
+
+	btn.onclick = function(){
+		// 载入菊花，模拟loading效果
+		loading.style.visibility = 'visible'
+		setTimeout(function(){
+			box.innerHTML = '<div class="in" style="height:' +  Math.random() * 400+ 'px; " ></div>'
+			funTransitionHeight(box,250)
+			loading.style.visibility = 'hidden'
+		},1000)
+
+		
+		// alert(1)
+	}
+
+
+	// 高度无缝动画方法
+	var funTransitionHeight = function(element, time) { // time, 数值，可缺省
+	    if (typeof window.getComputedStyle == "undefined") return;
+	    var height = window.getComputedStyle(element).height;
+	    element.style.height = "auto";
+	    var targetHeight = window.getComputedStyle(element).height;
+	    console.log(height,targetHeight)
+	    
+	    element.style.height = height;
+	    setTimeout(function() {
+	        if (time) element.style.transition = "height "+ time +"ms";
+	        element.style.height = targetHeight;
+	    }, 15);
+	};
+
+
+
+}
+
+</script>
+<body>
+<div id="box" class="box">
+	1111
+	
+</div>
+
+<span class="loading"></span>
+
+<p>
+<input type="button" id="button" value="点击我">
+</p>
+	
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>窗口的拖拽</title>
+</head>
+<style>
+	*{margin: 0;padding: 0;}
+	#div1{position: absolute; width: 200px; height: 200px; background-image: url(./img/football.png); background-repeat: no-repeat;background-size: 80%; background-position: center;}
+</style>
+
+<script>
+/**
+ * 拖拽的三大事件 onmousedown onmousemove onmouseup
+ * 1、解决拖拽图片的bug,则要阻止默认事件 return false;
+ * 2、IE8之前 选中就会有BUG
+ * 		setCapture() : 全局捕获（生成了一个透明层）
+ * 		releaseCapture() : 释放全局捕获（删除了一个层）
+ * 
+ */
+
+window.onload = function() {
+	//或者直接用document.getElementById('#div1')
+	var div1 = document.querySelector('#div1')
+
+	/* 鼠标按下 */
+	div1.onmousedown = function(ev){
+		var ev = ev || window.event
+		var disX = ev.clientX - div1.offsetLeft
+			,disY = ev.clientY - div1.offsetTop
+
+		if(div1.setCapture){
+			div1.setCapture();
+		}
+
+		document.onmousemove = function(ev){
+			var ev = ev || window.event
+			div1.style.left = ev.clientX - disX + 'px'
+			div1.style.top = ev.clientY - disY + 'px'
+		}
+
+		document.onmouseup = function(){
+			document.onmousemove = null
+			document.onmouseup = null
+			/* 释放 全局捕获 */
+			if(div1.releaseCapture){
+				div1.releaseCapture()
+			}
+		}
+
+		return false;
+
+	}
+	// console.log(div1)
+}
+
+</script>
+<body>
+
+	<div id="div1"></div>
+	
+</body>
+</html>

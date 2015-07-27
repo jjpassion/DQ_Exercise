@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+ </head>
+<style>
+	table{width: 50%; border-collapse: collapse;  }
+	td{border: 1px solid #ccc; height: 30px; }
+
+/* content(attr=**) 示例 */
+span{position: relative; display: inline-block;}
+span:hover{cursor: pointer;}
+
+span:hover:before{ content: attr(data-tooltip); background-color: #d9444a; color: #fff; padding: .8em 1em; position: absolute; left: 100%; top: -70%; margin-left:  14px; white-space: pre; }
+
+span:hover:after{ content: ""; position: absolute; left: 108%; width: 0; height: 0; border-right: 8px solid #d9444a; border-top:8px solid transparent; border-bottom: 8px solid transparent; }
+
+.wrap{width: 100%; position: relative; height: 300px; background: #ccc;}
+.d1,.d2{width: 100px; height: 100px; /*position: absolute;*/  background: red; }
+.d1,.d2{width: 100px; height: 100px; position: absolute; background: red; }
+.d1{ margin-right: 10px; background: blue;}
+.d2{ margin-left: 10px;}
+
+.div1,.div2{margin-top: 10px; background: pink; width: 100px; height: 100px; }
+.div1{margin-bottom: 10px;}
+
+
+.mother{width: 200px; height: 100px; background: #ccc; margin-top: 10px; /*border: 1px solid;*/}
+.child{width: 50px; height: 50px; background: pink; margin-top: 10px; display: inline-block;}
+</style>
+
+ <BODY>
+
+ <a href="mailto:lanmeng@yeah.net?cc=admin@188.com&subject=建议&body=body.....">联系我们(抄送)</a>
+ <p>1 </p>
+
+上标：DIVCSS5<sup>www.DIVCSS5.com</sup><br /> 
+下标：DIVCSS5<sub>www.DIVCSS5.com</sub> 
+
+<div class="wrap">
+	<span class="d1">111</span>
+	<span class="d1">111222</span>
+	<span class="d2">222</span>
+</div>
+
+<div class="div1">div1</div>
+<div class="div2">div2</div>
+
+<div onclick="window.print();">
+	<span data-tooltip="hello world">Hover Me!!!</span>
+</div>
+
+
+<div class="mother">
+	<div class="child">child</div>
+</div>
+
+
+<ul id="test"> 
+	<li>1</li>
+	<li>2</li>
+	<li>3</li> 
+</ul>
+
+<table id="tableTest">
+	<tr>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>2</td>
+	</tr>
+	<tr>
+		<td>3</td>
+	</tr>
+	<tr>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>5</td>
+	</tr>
+	<tr>
+		<td>6</td>
+	</tr>
+	<tr>
+		<td>7</td>
+	</tr>
+	<tr>
+		<td>8</td>
+	</tr>
+	<tr>
+		<td>9</td>
+	</tr>
+	<tr>
+		<td>10</td>
+	</tr>
+	<tr>
+		<td>11</td>
+	</tr>
+	<tr>
+		<td>12</td>
+	</tr>
+	<tr>
+		<td>13</td>
+	</tr>
+	<tr>
+		<td>14</td>
+	</tr>
+	<tr>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>16</td>
+	</tr>
+	<tr>
+		<td>17</td>
+	</tr>
+	<tr>
+		<td>18</td>
+	</tr>
+	<tr>
+		<td>19</td>
+	</tr>
+	<tr>
+		<td>20</td>
+	</tr><tr>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>16</td>
+	</tr>
+	<tr>
+		<td>17</td>
+	</tr>
+	<tr>
+		<td>18</td>
+	</tr>
+	<tr>
+		<td>19</td>
+	</tr>
+	<tr>
+		<td>20</td>
+	</tr><tr>
+		<td>15</td>
+	</tr>
+	<tr>
+		<td>16</td>
+	</tr>
+	<tr>
+		<td>17</td>
+	</tr>
+	<tr>
+		<td>18</td>
+	</tr>
+	<tr>
+		<td>19</td>
+	</tr>
+	<tr>
+		<td>20</td>
+	</tr>
+</table>
+
+
+
+<script>
+
+//请实现JS中，indexOf的功能，判断一个字符串a中是否包含另一个字符串b，如果包含，返回字符串b的位置，如果不包含返回-1
+function funIndexOf(a,b){
+	var al = a.length, bl = b.length
+	var len = al - bl
+	if(len < 0){
+		return -1
+	}
+	var i = 0
+	for (; i <= len; i++) {
+		/* 或者用substr */
+		// var nowStr = a.slice(i,i+bl)
+		var nowStr = a.substr(i,bl)
+		// console.log(nowStr)
+		if(nowStr == b) return i
+		else if(i==len) return -1
+	};
+}
+
+var str = funIndexOf('hello','lo')
+// alert(str)
+
+// 编写一个differ函数，用来比较2个字符串的差异，如果字符在第一个字符串中存在，在第二个字符串中不存在则输出减号和相应的字符，如果字符在第二个字符串中存在而在第一个中不存在，则输出加号与相应的字符，如果存在相同的字符串则字符串中的内容不需要输出，字符串的比较结果用逗号分开，每个差异的字符都要找出来。
+function funDiff(strA,strB){
+	var i = 0
+		,res = []
+		,key = {}
+
+	for (; i < strA.length; i++) {
+		/* A,B中都有 */
+		var nowStr = strA[i]
+		if(strB.indexOf(nowStr) != -1){
+			var reg = new RegExp(nowStr,'g')
+			strB = strB.replace(reg,'')
+			strA = strA.replace(reg,'')
+			i-- //减去后指针往前一位
+		}else{
+			res.push('-'+nowStr)
+		}
+	};
+
+	var lenB = strB.length
+	if(lenB){
+		for (i = 0; i < lenB; i++) {
+			if(!key[ strB[i] ]){
+				key[ strB[i] ] = 1
+				res.push('+'+strB[i])
+			}
+		};
+	}
+	return res==false ? '都存在相同的字符' : res.join()
+}
+console.log(funDiff('abce000','a0001bdfdfcddd00'))
+
+
+
+window.onload = function(){
+	clickLi()
+
+	trBgc()
+
+}
+
+/*
+如何让ID为”tableTest”的table每3行换一次颜色，即1，2，3用红色，4，5，6用绿色，7，8，9用黄色，10，11，12用红色
+ */
+
+function trBgc(){
+	var oTable = document.getElementById('tableTest')
+	var oTd = oTable.getElementsByTagName('td')
+	var aColor = ['red','green','yellow']
+	var mark = 0
+	for (var i = 0; i < oTd.length; i++) {
+		if(i && i%3 == 0){
+			mark = (++mark) >= 3 ? mark%3 : mark
+		}
+		oTd[i].style.backgroundColor = aColor[mark]
+	};
+}
+
+function clickLi(){
+	var ul = document.getElementById('test')
+	var oLi = ul.getElementsByTagName('li')
+
+	for (var i = 0; i < oLi.length; i++) {
+		oLi[i].onclick = (function(idx){
+			return function(){
+				alert(idx)
+			}
+		})(i)
+	};
+}
+
+
+</script>
+ </BODY>
+</HTML>

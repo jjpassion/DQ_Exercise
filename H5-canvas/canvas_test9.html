@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例9-图片反色</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+ul{float: left; margin-right: 20px; font-size: 30px;}
+ul > li {line-height:  40px; cursor: pointer;}
+</style>
+ <script>
+ window.onload = function(){
+ 	var oC = document.getElementById('c1')
+ 		,oGC = oC.getContext('2d')
+ 	
+ 	var nImg = new Image()
+
+ 	nImg.onload = function(){
+ 		draw(this)
+ 	}
+ 	nImg.src = './3.jpg'
+
+
+ 	function draw(obj){
+ 		var i = 0
+ 			,j = 0
+ 			,w = obj.width
+ 			,h = obj.height
+
+ 		oC.width = w
+ 		oGC.drawImage(obj,0,0,w,h)
+ 		var oImg = oGC.getImageData(0,0,w,h)
+ 		
+ 		var newImg = oGC.createImageData(w,h)
+
+ 		/* 
+ 			w- X坐标变化
+			h- Y坐标变化
+ 		*/
+ 		for (; i < h; i++) { 
+ 			for (j = 0 ; j < w; j++) {
+ 				var res = []
+ 				// console.log(oImg)
+ 				var d = getXY(oImg,j,i)
+
+ 				res[0] = 255 - d[0]
+ 				res[1] = 255 - d[1]
+ 				res[2] = 255 - d[2]
+ 				res[3] = 255 /* 表示不透明 */
+
+ 				// setXY(oImg,j,i,res)
+
+ 				/*图片倒角*/
+ 				setXY(newImg,j,h-i,res)
+ 			};
+ 		};
+
+ 		// oGC.putImageData(oImg,0,h)
+ 		oGC.putImageData(newImg,0,h)
+ 	}
+
+
+ 	function setXY(obj,x,y,color){
+ 		var w = obj.width
+ 			,h = obj.height
+ 			,data = obj.data
+
+ 		data[ 4*(y*w+x) ] = color[0]
+ 		data[ 4*(y*w+x)+1 ] = color[1]
+ 		data[ 4*(y*w+x)+2 ] = color[2]
+ 		data[ 4*(y*w+x)+3 ] = color[3]
+ 		// return color
+ 	}
+
+ 	function getXY(obj,x,y){
+ 		var w = obj.width
+ 			,h = obj.height
+ 			,data = obj.data
+
+ 		var color = [];
+
+ 		// console.log(data)
+ 		color[0] = data[ 4*(y*w+x) ]
+ 		color[1] = data[ 4*(y*w+x)+1 ]
+ 		color[2] = data[ 4*(y*w+x)+2 ]
+ 		color[3] = data[ 4*(y*w+x)+3 ]
+
+ 		return color
+ 	} 
+ }
+
+ </script>
+<body>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简易版-妈祖游戏</title>
+</head>
+<style>
+body{background: #ccc;}
+#c1{background: #fff;}
+</style>
+
+<script>
+window.onload = function(){
+	var oC = document.getElementById('c1')
+	var oGC = oC.getContext('2d')
+
+	var ocW = oC.width
+		,ocH = oC.height
+		,ocL = oC.offsetLeft
+		,ocT = oC.offsetTop
+
+	var ball = [] /* 球 */
+		,bullet = [] /* 子弹 */
+
+	var iRotate = 0;  //青蛙旋转的角度
+	var yImg = new Image()
+	yImg.src = 'zuma.png'
+
+	yImg.onload = function(){
+
+		setInterval(addBall,400)  //球的出现
+		setInterval(draw,1000/60) //重绘
+		setInterval(move,30) //移动
+
+	}
+
+
+
+	/* 鼠标移动 小青蛙移动 按角度计算 */
+	oC.onmousemove = function(ev){
+		var ev = ev || window.event
+
+		var x = ev.clientX - ocL
+			,y = ev.clientY - ocT
+
+		var a = x - 300
+			,b = y - 200
+
+		var c = Math.sqrt(a*a + b*b)
+
+		if(a > 0 && b > 0 ){
+			/* 右下角 */
+			iRotate = -Math.asin(a/c)
+		}else if(a > 0){
+			/* 右上角 */
+			iRotate = Math.asin(b/c) - 90*Math.PI/180
+		}
+
+		if(a < 0 && b < 0 ){
+			/* 左上角 */
+			iRotate = -Math.asin(b/c) + 90*Math.PI/180
+		}else if(a < 0){
+			/* 左下角 */
+			iRotate = -Math.asin(a/c)
+		}
+
+	}
+
+	/* 鼠标抬起事件 发射子弹 */
+	oC.onmousedown = function(){
+		var ev = ev || window.event
+
+		var x = ev.clientX - ocL
+			,y = ev.clientY - ocT
+
+		var a = x - 300
+			,b = y - 200
+
+		var c = Math.sqrt(a*a + b*b)
+
+		var speed = 5
+			,speedX = speed * a/c //X轴方向的速度
+			,speedY = speed * b/c //Y轴方向的速度
+
+		bullet.push({
+			x : 300
+			,y : 200
+			,sX : speedX
+			,sY : speedY
+		})
+	}
+
+	/* 增加小球 */
+	function addBall(){
+		ball.push({
+			x : 300,
+			y : 0,
+			r : 200,
+			startX : 300,
+			startY : 0,
+			num : 0
+		});
+
+	}
+
+	/* 小球移动 */
+	function move(){
+		for (var i = 0; i < ball.length; i++) {
+			ball[i].num += 1
+			if(ball[i].num == 270){
+				ball[i].r = 150
+				ball[i].startX = 250
+				ball[i].startY = 50
+			}
+
+			if(ball[i].num == 270 + 180){
+				alert('游戏结束')
+				window.location.reload();
+			}
+			
+			var r = ball[i].r
+			ball[i].x = Math.sin(ball[i].num * Math.PI/180) * r + ball[i].startX
+			ball[i].y = r - Math.cos(ball[i].num * Math.PI/180) * r + ball[i].startY
+		};
+
+		/* 吐出来的小球 */
+		for (var i = 0; i < bullet.length; i++) {
+			bullet[i].x = bullet[i].x + bullet[i].sX
+			bullet[i].y = bullet[i].y + bullet[i].sY
+		};
+
+		/* 碰撞检测 */
+		for (var i = 0; i < bullet.length; i++) {
+			for (var j = 0; j < ball.length; j++) {
+				if( pz( bullet[i].x, bullet[i].y, ball[j].x,ball[j].y ) ){
+					bullet.splice(i,1)
+					ball.splice(j,1)
+					break
+				}
+			};
+		};
+
+	}
+
+	/* 重绘 */
+	function draw(){
+		oGC.clearRect(0,0,ocW,ocH)
+
+		/* 线路绘制 */
+		oGC.strokeStyle = '#f69'
+		oGC.fillStyle = '#f69'
+		oGC.beginPath()
+		oGC.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false)
+		oGC.stroke()
+
+		oGC.beginPath()
+		oGC.arc(250,200,150,180*Math.PI/180,360*Math.PI/180,false)
+		oGC.stroke()
+
+		oGC.beginPath()
+		oGC.arc(400,200,20,0,360*Math.PI/180,false)
+		oGC.stroke()
+
+		/* 小球绘制 */
+		for (var i = 0; i < ball.length; i++) {
+			var x = ball[i].x,
+				y = ball[i].y
+			oGC.beginPath()
+			oGC.moveTo(x,y)
+			oGC.arc(x,y,20,0,360*Math.PI/180,false)
+			oGC.fill()
+		};
+
+		/* 青蛙绘制 */
+		oGC.save()
+		oGC.translate(300,200)
+		oGC.rotate( iRotate )
+		oGC.translate(-40,-40)
+		oGC.drawImage(yImg,0,0)
+		oGC.restore()
+
+		/* 子弹绘制 */
+		for (var i = 0; i < bullet.length; i++) {
+			var x = bullet[i].x,
+				y = bullet[i].y
+			oGC.save();
+			oGC.beginPath();
+			oGC.moveTo(x,y);
+			oGC.arc(x,y,20,0,360*Math.PI/180,false);
+			oGC.fillStyle = "#a2bf4b";
+			oGC.fill();
+			oGC.restore();
+		};
+
+		drawText()
+	}
+
+	function drawText(){
+		/* 文字显示 */
+		oGC.save()
+		oGC.font = '60px impact'
+		oGC.textBaseline = 'top'
+		oGC.fillStyle = '#f69'
+		oGC.shadowOffsetX = 10
+		oGC.shadowOffsetY = 5
+		oGC.shadowColor = '#a2bf4b'
+		oGC.shadowBlur = 5
+		var w = oGC.measureText('简易祖玛').width
+		var h = 60
+		oGC.fillText('简易祖玛',(oC.width-w)/2,450 )
+		oGC.restore()
+	}
+
+	function pz(x1,y1,x2,y2){
+		var a = x1 - x2
+			,b = y1 - y2
+		var c = Math.sqrt( a*a + b*b )
+
+		if(c < 40){
+			return true
+		}else{
+			return false
+		}
+	}
+
+}
+</script>
+
+<body>
+<canvas id="c1" width="600" height="600"></canvas>
+</body>
+</html>

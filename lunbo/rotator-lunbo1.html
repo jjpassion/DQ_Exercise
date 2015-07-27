@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>无缝滚动轮播图</title>
+	<style>
+	body,ul,ol{margin: 0;padding: 0;}
+	li{list-style: none;}
+	img{border: none; vertical-align: top;}
+
+	#box{width: 470px;height: 150px;position: relative;margin: 30px auto;overflow: hidden;}
+	ul{position: absolute; width: 470px; left: 0; top: 0; z-index: 1;}
+
+	ol{position: absolute; right: 10px; bottom: 4px; z-index: 2;}
+	ol > li{float: left; padding:0 4px; margin: 4px; background: #fff; color: #f60; text-align: center; vertical-align: middle; line-height: 20px;}
+	ol > li.active{background: #f60; color: #fff;}
+	</style>
+	<script type="text/javascript" src="../js/move.js"></script>
+	<script>
+		var DOC = document
+
+		window.onload = function(){
+
+			var oUl = DOC.querySelector('ul')
+				,li_Ul = oUl.querySelectorAll('li')
+				,oOl = DOC.querySelector('ol')
+				,li_Ol = oOl.querySelectorAll('li')
+				,oBox = DOC.querySelector('#box')
+			/**
+			 * 在IE6，IE7，IE8， IE9以及最新的的FF, 
+			 * Chrome中，对于一般元素
+			 * 都是offsetHeight = padding + height + border = clientHeight + 滚动条 + 边框。
+			 */
+			var oneHeight = li_Ul[0].offsetHeight
+				,len = len = li_Ol.length
+				,iNow = 0
+				,iNow2 = 0
+				,timer = null
+			
+
+			for (var i = 0; i < len; i++) {
+				li_Ol[i].index = i;
+				li_Ol[i].onmouseover = function(){
+					for (var i = 0; i < len; i++) {
+						li_Ol[i].className = ''
+					};
+					this.className = 'active'
+					iNow = this.index
+					iNow2 = this.index
+
+					startMove(oUl,{'top' : - iNow * oneHeight})
+				}
+
+			};
+
+			timer = setInterval(toRun,2000)
+
+			oBox.onmouseover = function(){
+				clearInterval(timer)
+			}
+			oBox.onmouseout = function(){
+				timer = setInterval(toRun,2000)
+			}
+			
+
+			function toRun(){
+				
+				/**
+				 * 无缝滚动思路：
+				 * 当滚动到最后一个元素，将第一个元素relative定位
+				 * 到最后一个元素的后面
+				 * 当到第一个元素的时候，将定位还原，top=0
+				 */
+				
+				if(iNow == 0){
+					li_Ul[0].style.cssText = "position:static;";
+					oUl.style.top = 0;
+					iNow2 = 0;	
+				}
+				
+				//滚到最后一张图
+				if(iNow == len - 1){
+					iNow = 0
+					li_Ul[0].style.cssText = "position:relative; top:" + len * oneHeight + "px;"
+				}else{
+					iNow++
+				}
+
+				iNow2++;
+
+
+				for (var i = 0; i < len; i++) {
+					li_Ol[i].className = ''
+				};
+				li_Ol[iNow].className = 'active'
+
+				startMove(oUl,{'top' : - iNow2 * oneHeight})
+
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul>
+			<li><img src="../images/1.jpg" alt=""></li>
+			<li><img src="../images/2.jpg" alt=""></li>
+			<li><img src="../images/3.jpg" alt=""></li>
+			<li><img src="../images/4.jpg" alt=""></li>
+			<li><img src="../images/5.jpg" alt=""></li>
+		</ul>
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+	</div>
+</body>
+</html>

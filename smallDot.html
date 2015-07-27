@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>运动的小箭头</title>
+</head>
+
+<style>
+.arrow {
+	position: absolute;
+	left: 50%;
+	top: 95%;
+	z-index: 1;
+	width: 10px;
+	height: 16px;
+	margin-left: -5px;
+	*background: url(http://c1.mifile.cn/f/i/2014/cn/yicamera/icon-scroll-static-arrow.png) no-repeat 50% 50%
+}
+.arrow:after {
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	content: '';
+	width: 10px;
+	height: 6px;
+	margin-left: -5px;
+	background: url(http://c1.mifile.cn/f/i/2014/cn/yicamera/icon-scroll-arrow.png) no-repeat 50% 100%;
+	-webkit-animation: arrow 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+	animation: arrow 1.5s cubic-bezier(0, .5, 0, 1) infinite
+}
+.arrow .dot {
+	display: block;
+	width: 2px;
+	height: 2px;
+	margin: 0 auto;
+	background: #959595;
+	-webkit-animation: dot1 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+	animation: dot1 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+}
+
+.arrow .dot:before {
+top: 4px;
+-webkit-animation: dot2 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+animation: dot2 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+}
+
+.arrow .dot:before, .arrow .dot:after {
+position: absolute;
+left: 50%;
+width: 2px;
+height: 2px;
+margin-left: -1px;
+content: '';
+background: #959595;
+}
+
+.arrow:after {
+position: absolute;
+left: 50%;
+bottom: 0;
+content: '';
+width: 10px;
+height: 6px;
+margin-left: -5px;
+background: url(http://c1.mifile.cn/f/i/2014/cn/yicamera/icon-scroll-arrow.png) no-repeat 50% 100%;
+-webkit-animation: arrow 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+animation: arrow 1.5s cubic-bezier(0, .5, 0, 1) infinite;
+}
+
+@-webkit-keyframes dot1 {
+	0%,14.99% {
+		opacity: 0
+	}
+
+	15% {
+		opacity: 1
+	}
+}
+
+@keyframes dot1 {
+	0%,14.99% {
+		opacity: 0
+	}
+
+	15% {
+		opacity: 1
+	}
+}
+
+@-webkit-keyframes dot2 {
+	0%,29.99% {
+		opacity: 0
+	}
+
+	30% {
+		opacity: 1
+	}
+}
+
+@keyframes dot2 {
+	0%,29.99% {
+		opacity: 0
+	}
+
+	30% {
+		opacity: 1
+	}
+}
+
+@-webkit-keyframes dot3 {
+	0%,44.99% {
+		opacity: 0
+	}
+
+	45% {
+		opacity: 1
+	}
+}
+
+@keyframes dot3 {
+	0%,44.99% {
+		opacity: 0
+	}
+
+	45% {
+		opacity: 1
+	}
+}
+
+@-webkit-keyframes arrow {
+	0%,59.99% {
+		opacity: 0
+	}
+
+	60% {
+		opacity: 1
+	}
+}
+
+@keyframes arrow {
+	0%,59.99% {
+		opacity: 0
+	}
+
+	60% {
+		opacity: 1
+	}
+}
+</style>
+
+<body>
+
+	<a class="arrow ir J_arrowDown" href="javascript: void(0);" data-stat-id="6667b54c7e48f33e" onclick="_msq.push(['trackEvent', '72ba5d77927a1f59-6667b54c7e48f33e', 'javascript:void(0);', 'pcpid']);">
+		<span class="dot"></span>
+	</a>
+	
+</body>
+</html>

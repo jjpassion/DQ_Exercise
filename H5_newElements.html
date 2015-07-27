@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5 新标签示例及进度条</title>
+</head>
+<style>
+	*{margin:0;padding:0;}
+	h2{margin: 10px;}
+	pre{color: red;}
+	fieldset{padding: 10px;}
+	.box1{
+		width:150px;
+		height:191px;
+		background:url(http://www.caihong.cc/wp-content/uploads/2012/10/nut.jpg);
+		border-radius:10px;
+		-webkit-animation:loopVMove 1.5s ease infinite;
+	  }
+	.box1:hover{-webkit-animation:loopVMove2 1.5s ease infinite;}
+
+	@-webkit-keyframes loopVMove{
+	0%{-webkit-transform:translate3d(0,0,0)}
+	50%{-webkit-transform:translate3d(100px,0,0)}
+	100%{-webkit-transform:translate3d(0,0,0)}
+	}
+
+	@-webkit-keyframes loopVMove2{
+	0%{-webkit-transform:translate3d(0,0,0)}
+	100%{-webkit-transform:translate3d(0,0,0)}
+	}
+
+
+
+
+	@-webkit-keyframes loop-VMove{
+			0%{-webkit-transform:translate3d(0,0,0)}
+			50%{-webkit-transform:translate3d(0,86px,0)}
+			100%{-webkit-transform:translate3d(0,0,0)}
+		}
+	
+
+
+	#test-css3{background-color: red; width: 100px; height: 100px;}
+	#test-css3:hover{
+		animation:loop-VMove 1.5s ease infinite; 
+		-webkit-animation:loop-VMove 1.5s ease infinite; 
+		background-color: gray;}
+</style>
+
+<body>
+	<h2>1、H5新增表现元素</h2>
+	<pre>  
+	H5新增表现元素：
+	1. progress 
+		<progress max="100"  value="60" id="pro"></progress>
+	2. mark
+		<mark>搜索结果</mark>
+	3. address
+		<address>中国，北京</address>
+	4. colgroup col 进行列管理
+	5. keygen 生成public key,生成秘钥
+	6. fieldset legend
+	7. ol li
+		reversed(序列倒序).start(序列从几开始).type（值，A,a,I,1）进行排序
+	8. q的引用
+	9. contenteditable
+	10. input
+		color
+		email
+		url
+		number
+		range
+		search
+
+		属性：
+		pattern
+		required
+		placeholder
+		aoutofocus
+	11. form 属性
+		novalidate
+		oninput
+	</pre>
+
+	<h2>2、H5新增语义元素</h2>
+	<pre>
+		1.header footer
+		2.detail summary
+		3.nav
+		4.section
+		5.article time
+
+	</pre>
+
+	<h2>3、Hitory API</h2>
+	<pre>
+		1.window.history.length
+			历史记录长度
+		2.window.history.go([delta])
+			向前或向后跳多少步到某个历史记录
+			go(-1),go(1),go(0)
+		3.window.history.back()
+		   	go(-1)
+		4.window.history.forward()
+		   	go(1)
+
+		===============较少用的=============
+		5.window.history.pushState(data,title,[,url])
+			向当前history添加一些自定义的数据
+
+		6.window.history.replaceState(data,title,[,url])
+			替换当前history的data数据
+
+		7.window.history.state
+			获取当前history的data数据
+
+		8.window.onpopstate = function(event){
+			//event state
+		}
+			通过history回退、前进后触发onpopstate
+		
+		案例：ajax请求数据，也能实现前进后退
+	</pre>
+
+
+	<h2>4、Location api</h2>
+	<pre>
+		1.location.href = value
+			获取设置 当前页面地址 
+		2.location.assign(url)
+			跳转到某个地址
+		3.location.replace(url)
+			替换当前页面 
+			（改变地址，与location.href的区别是，location.href每改变一次就会向history添加一条记录）
+		4.location.reload()
+			重新加载页面
+		5.
+
+	</pre>
+	
+
+
+	<div id="test-css3">
+		test-css3
+	</div>
+
+	<div class="box1"></div>
+
+	进度 <span id="res"></span>
+	<button onclick="down()">开始下载</button>
+	
+	js实现
+
+
+	控件样式<br>
+	<progress max="100"  value="0" id="pro"></progress>
+	
+	<script>
+		function down(){
+			var res = document.querySelector('#res')
+			var pro = document.querySelector('#pro')
+
+			var xh = new XMLHttpRequest()
+			xh.open('GET','',true)
+
+			xh.onprogress = function(evt){
+				console.log('evt.lengthComputable: ',evt.lengthComputable)
+				if(evt.lengthComputable){
+					// console.log('evt.loaded:');
+					var percent = parseInt(evt.loaded / evt.total * 100)
+					// res.innerHTML = percent
+					pro.value =  percent            
+				}
+			}
+
+			xh.onreadystatechange = function(){
+				if(xh.readyState == 4){
+					// res.innerHTML = '下载完成了'
+					pro.value = 100
+				}
+			}
+
+			xh.send();
+		}
+	</script>
+	
+	
+
+
+	<br>
+	4、cologroup col  列管理，示例
+	<table style="width:100px;">
+		<colgroup>
+			<col style="background:gray"/>
+			<col style="background:yellow"/>
+		</colgroup>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td>2</td>
+		</tr>
+	</table>
+
+
+	fieldset示例1 disabled不能输入：
+	<br>
+	<br>
+	<fieldset disabled>
+		<legend>框框标题legend</legend> 
+		name:<input type="text"><br>
+		email: <input type="text">
+	</fieldset>
+
+	<br>
+	<br>
+	<p></p>
+
+	<fieldset>
+		name:<input type="text"><br>
+		email: <input type="text">
+	</fieldset>
+
+	<br>
+	<br>
+	<p></p>
+
+	8. 中国 <q>广东</q> 广东加了q标签引用
+	<br>
+	<br>
+	9.contenteditable
+
+	<br>
+	<br>
+	11. form 属性
+	<pre>
+		
+	11. form 属性
+	novalidate
+	oninput
+
+	output 示例
+	</pre>
+
+	<div>
+		<form action="" oninput="x.value = (parseInt(a.value) + parseInt(b.value));">
+			a: <input type="number" name="a" max="100" min="10" value="15">
+			b: <input type="range" name="b" max="100" min="10" value="20">
+			= <output name="x">35</output>
+		</form>
+
+	</div>
+	
+
+
+	<footer style="height:100px;"></footer>
+</body>
+</html>

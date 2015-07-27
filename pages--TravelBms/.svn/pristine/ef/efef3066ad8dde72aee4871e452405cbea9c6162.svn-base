@@ -1,0 +1,52 @@
+*{font-size:12px;font-family:ËÎÌå;color:#333333;}
+body{margin:0;background-color:#fffdee;}
+img{
+	display: block;
+	font-size: 24px;
+}
+h1{margin:0;font-weight:normal;font-size:20px;color:white;}
+a{margin:0;text-decoration:none;color:black;display:block;}
+p{margin:0;}
+dl,dd{margin:0;}
+h2,h3{margin:0;font-weight:normal;color:white;line-height:18px;}
+
+/*Ò³Ã¼*/
+.header{width:1380px;margin:0 auto;height:50px;background-color:#40abef;overflow:hidden;}
+.logo{overflow:hidden;float:left;}
+.logo img,h1{float:left;}
+.logo_img{margin:16px 20px;}
+.logo_line{margin:10px 20px 10px 0;}
+.header h1{line-height:50px;}
+.botton{overflow:hidden;float:right;margin-right:20px;}
+.botton img,.botton a,.botton p{float:left;}
+.line{margin:10px 19px;}
+.icon{margin:16px 0;}
+.img_id{margin-top:9px;}
+.botton p{margin-left:18px;color:white;margin-top:19px;}
+
+/*ºáÏòµ¼º½*/
+.botton_index{width:200px;height:39px;background-image:url(images/index_bg.png);overflow:hidden;}
+.botton_index img,.botton_index p{float:left;}
+.botton_index img{margin:12px 12px 12px 12px;}
+.botton_index p{line-height:40px;color:white;font-size:14px;font-family:Î¢ÈíÑÅºÚ;}
+.weizhi{background-image:url(images/nav_top.png);width:1180px;height:39px;overflow:hidden;}
+.weizhi img,.weizhi a{float:left;}
+.weizhi a{margin:14px 0;}
+.icon_gray{margin:11px 10px;}
+.jiantou_right{margin:15px 10px;}
+/*×ÝÏòµ¼º½*/
+.content{width:1380px;margin:0 auto;overflow:hidden;}
+.nav_left,.content_box{float:left;}
+.nav_left{width:200px;height:760px;background-color:#f2f2f2;border-right:solid 1px #cccccc;}
+.nav_left dd{background-color:#f8f8f8;border-bottom:solid 1px #e1e1e1;overflow:hidden;height:40px;}
+.nav_left dd p{float:left;line-height:40px;margin-left:46px;}
+.nav_left dd img{float:right;margin:17px 15px 0 0;}
+	.xiala_menu{display:none;}
+	.xiala_menu a{background-image:url(images/xiala_menu.png);width:200px;height:37px;line-height:37px;text-align:center;}
+.content_bigbox{overflow:hidden;}
+
+
+/*Ò³½Å*/
+.footer{width:1380px;height:40px;margin:0 auto;background-color:#40abef;}
+h2{margin-left:668px;}
+h3{margin-left:696px;}

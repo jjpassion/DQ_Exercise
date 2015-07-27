@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>视频和canvas的结合</title>
+</head>
+<style>
+	video{width: 400px; height: auto;}
+	canvas{background: #ccc;}
+</style>
+<body>
+<video id="v" controls src="./shipin.mp4"></video>	
+<canvas id="c"></canvas>
+<script>
+window.onload = function(){
+	var oV = document.getElementById('v')
+	var oC = document.getElementById('c')
+	var oGC = oC.getContext('2d')
+
+	oC.width = oV.videoWidth;
+	oC.height = oV.videoHeight;
+
+	setInterval(function(){
+		oGC.drawImage(oV,0,0)
+	},30)
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+<script>
+	$ = {
+		getJSON : function(url,data,callback){
+			/* 获取callback的函数名 window[call] = callback */
+			var call = this.urlquerystring(url)['callback'];
+
+			/* 0、拼接url data转换 */
+			for (var key in data) {
+				url += '&' + key + '=' + data[key];
+			};
+
+			/* 1、判断回调 */
+			window[call] = function(data){
+				window[call] = undefined;
+				try{
+					delete window[call];
+				}catch(e){}
+				callback(data);
+			}
+			/* 2、创建script标签*/ 
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = url;
+
+			/* 3、append到head标签中 */
+			document.head.appendChild(script);
+			script.onload = function(){ document.head.removeChild(this); }  //加载后，删除
+		},
+		urlquerystring:function(url){ 
+			var url = url.split("?")[1]; 
+			var result = {}
+				,reg = /([^&=]+)=([^&]*)/g
+				,m; 
+			// m1 = reg.exec(url)
+			// m2 = reg.exec(url)
+			// console.log(m1);
+			// console.log(m2);
+			while(m = reg.exec(url)){ 
+				result[m[1]] = m[2]; 
+			} 
+			return result;//object {callback11: "callajax11", callback: "callajax"} }
+		}
+	}
+
+	var data = {
+		'type': '6',
+         'code' : '201409111544197720f39692'
+     };
+	// console.log($.abc);
+	$.getJSON('http://m-qiang.meilishuo.com/aj/sq/sq_coupon_all?callback=jsonp1&callback1=test',data,function(res){
+		console.log(res);
+	});
+
+</script>
+</head>
+<body>
+	
+</body>
+</html>

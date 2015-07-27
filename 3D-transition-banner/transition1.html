@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+/*
+ transition 过渡
+ 
+ transition-duration 运行时间
+ transition-property 要运动的样式 （all || [attr] || none）
+ transition-delay 延迟时间
+ transition-timing-function 运动形式
+ 	- ease: 逐渐变慢 默认值;
+ 	- linear: 匀速;
+ 	- ease-in: 加速;
+ 	- ease-in-out: 先加速后减速;
+ 	- cubic-bezier: 贝塞尔曲线（x1,y1,x2,y2）;
+ */
+div{width: 100px;height: 100px; background: red; transition:1s width, 3s 2s height;} /* height属性的：3s是运行时间，2s是延迟时间 */
+div:hover{width: 300px;height: 300px; background: orange;}
+
+</style>
+<body>
+	<div></div>
+	
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>banner 3D轮播旋转</title>
+</head>
+<style id="sCss">
+.wrap{width: 800px; margin: 50px auto; }
+
+#picList{ width:100%; height: 360px; position: relative; background: rgba(200,200,200,.4); list-style: none; margin: 0; padding: 0; -webkit-perspective:800px; }
+
+#picList li{position: relative; width: 25px; height: 360px; float: left; -webkit-transform:translateZ(-180px); /*-webkit-transition: 3s all;*/ -webkit-transform-style:preserve-3d;}
+#picList a{position: absolute; width: 100%; height: 100%;}
+#picList a:nth-of-type(1){/* 正面 */
+	background: url(./images/1.jpg) no-repeat; -webkit-transform: translateZ(180px); 
+}
+#picList a:nth-of-type(2){/* 顶部 */
+	background: url(./images/2.jpg) no-repeat;-webkit-transform:translateZ(-180px) rotateX(90deg); -webkit-transform-origin: top;
+}
+#picList a:nth-of-type(3){ /* 后面 */
+	background: url(./images/3.jpg) no-repeat; -webkit-transform:translateZ(-180px) rotateX(180deg);
+}
+#picList a:nth-of-type(4){/* 底部 */
+	background: url(./images/4.jpg) no-repeat; -webkit-transform: translateZ(-180px) rotateX(-90deg);-webkit-transform-origin:bottom;
+}
+
+
+/* 两个黑面的处理 */
+#picList span{
+	display:inline-block; width: 360px; height: 360px; background: #333; position: absolute; top: 0;
+}
+#picList span:nth-of-type(1){
+	-webkit-transform: translateZ(180px) rotateY(90deg); -webkit-transform-origin:left; left: 0; 
+}
+#picList span:nth-of-type(2){
+	-webkit-transform: translateZ(180px) rotateY(-90deg); -webkit-transform-origin:right; right: 0;
+}
+
+.picNum li{ float: left; background: #333; color: #fff; margin:0 10px; list-style: none; border-radius: 50%; height: 30px; width: 30px; line-height: 30px; text-align: center; cursor: pointer;}
+.picNum .active{ background: #f69;}
+</style>
+
+
+<script>
+	window.onload = function(){	
+		// alert(picList.offsetWidth)
+		// alert(picList.clientWidth)
+		
+		var inner = ''
+			,sStyle = ''
+			,liW = 25
+			,zIndex = 0
+
+		var picList = document.getElementById('picList')
+			,sCss = document.getElementById('sCss')
+		var picW = picList.clientWidth;
+		var len = parseInt(picW/liW);
+
+		// alert(len)
+		for (var i = 0; i < len ; i++) {
+
+			inner += '<li><a href="#"></a><a href="#"></a><a href="#"></a><a href="#"></a><span></span><span></span></li>';
+
+			i < len/2 ? zIndex++ : zIndex--
+			sStyle += '#picList li:nth-of-type(' + (i+1) + '){ z-index:' + zIndex + ';} ' ; 
+
+			sStyle += '#picList li:nth-of-type(' + (i+1) + ') a{ background-position:-' + i*liW + 'px 0;} ' ; 
+
+		};
+
+		picList.innerHTML = inner;
+		sCss.innerHTML += sStyle;
+ 
+		var btnLi = document.querySelector('.picNum').getElementsByTagName('li')
+			,picLi = picList.getElementsByTagName('li')
+			,iNow = 0
+
+		var btnLen = btnLi.length
+		// console.log(btnLi[0])
+		for (i = 0; i < btnLen; i++) {
+			btnLi[i].index = i
+			// btnLi[i].onclick = (function(a){
+			// 	function doChange(){
+					
+			// 		btnLi[iNow].className = ''
+			// 		btnLi[a].className = 'active'
+			// 		iNow = a
+
+			// 		/* 滚动图片 */
+			// 		for (var i = 0; i < len; i++) {
+			// 			// Things[i]
+			// 			// 
+			// 			console.log(i)
+			// 			with(picLi[i].style){
+			// 				WebkitTransform = 'translateZ(-180px) rotateX(-' + a*90 + 'deg)';
+			// 			}
+			// 		};
+
+			// 	}
+			// 	return doChange
+			// })(i)
+	
+			btnLi[i].onclick = function(){
+				btnLi[iNow].className = ''
+				this.className = 'active'
+				var iIndex = this.index
+
+				/* 滚动图片 */
+				for (var i = 0; i < len; i++) {
+					with(picLi[i].style){
+						WebkitTransition = 0.5*Math.abs(iNow-iIndex) + 's ' + i*50 + 'ms all ease-in-out';
+						WebkitTransform = 'translateZ(-180px) rotateX(-' + iIndex*90 + 'deg)';
+					}
+				};
+
+				iNow = iIndex	
+			}
+		};
+	}
+</script>
+
+
+<body>
+
+<div class="wrap">
+	<ul id="picList">
+		<!-- <li>
+			<a href="#"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+			<a href="#"></a>
+			<span></span><span></span>
+		</li> -->
+	</ul>
+	<ol class="picNum">
+		<li class="active">1</li>
+		<li>2</li>
+		<li>3</li>
+		<li>4</li>
+	</ol>
+</div>
+	
+</body>
+</html>

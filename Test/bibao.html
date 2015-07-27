@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>闭包</title>
+</head>
+<script>
+	/* test */
+	var name = 'test'; debugger;
+	function myFunc(){
+		console.log(name) /* 访问1 undefined */
+		/**
+		 * 假设没有这个局部变量的赋值，上一句代码 name:test
+		 * 有了这个局部变量，虽然与全局变量同名，
+		 * 但是，在myFunc() 函数体内要访问name变量，局部变量的优先级高于全部变量
+		 * 所以，首先找到 局部变量name. 但是 name的赋值是在 下一句
+		 * 此时记住：“变量标示符可在赋初值之前访问” ， 则 访问1的结果是 undefined
+		 */
+		var name = 100 
+		console.log(name) /* 访问2 100 */
+	}
+
+	myFunc()
+
+
+	/*var name = "the window"
+	var obj = {
+		name : "my object"
+		,getNameFunc : function(){
+			return function(){
+				return this.name;
+			}
+		}
+		,getThis : this.name
+	}
+
+	var tt = function(){
+		console.log(this)
+	}
+
+	console.log(obj.name)
+
+	
+		obj.getNameFunc()
+		等于（该匿名函数）
+		function(){
+				return this.name;
+			}
+
+	 
+	console.log(obj.getNameFunc()())
+
+	console.log(obj.getThis,tt())*/
+
+
+</script>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>transform变换 - Y轴的3D旋转</title>
+</head>
+<style>
+/*
+ transition 过渡
+ 
+ transition-duration 运行时间
+ transition-property 要运动的样式 （all || [attr] || none）
+ transition-delay 延迟时间
+ transition-timing-function 运动形式
+ 	- ease: 逐渐变慢 默认值;
+ 	- linear: 匀速;
+ 	- ease-in: 加速; 
+ 	- ease-out 减速
+ 	- ease-in-out: 先加速后减速;  【常用】
+ 	- cubic-bezier: 贝塞尔曲线（x1,y1,x2,y2）;
+ */
+
+/**
+ * transform 变换
+ * 		rotateX() X轴旋转
+ * 		rotateY() Y轴旋转
+ * 		translateZ() Z轴位移
+ * transform-style(preserve-3d) 建立3D场景
+ * perspective 景深
+ * perspective-origin 景深基点
+ * transform-origin 变换基点
+ * 
+ */
+.box{height: 100px; width: 100px; border: 1px solid gray; padding: 150px; -webkit-transform-style:preserve-3d; -webkit-perspective: 100px; }
+.box > div{height: 100px; width: 100px; background: red;-webkit-transition:1s all; }
+
+.box:hover > div{
+	-webkit-transform: rotateY(180deg); /* Y轴旋转 */
+}
+
+</style>
+<body>
+	<div class="box">
+		<div></div>
+	</div>
+	
+</body>
+</html>

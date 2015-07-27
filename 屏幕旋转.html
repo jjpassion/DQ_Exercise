@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>手机屏幕旋转事件</title>
+</head>
+<body>
+	事件监听
+	<script>
+	 	//该事件兼容 ios 安卓4.0以上
+		window.addEventListener('deviceorientation',function(event){
+			switch(window.orientation){
+				case 90:case -90:
+					orientation = '横屏'
+					break;
+				default:
+					orientation = '竖屏'
+			}
+			//process event.alpha,event.beta and event gamma
+		},true);
+
+	//横竖屏切换的事件。。。
+	window.addEventListener('orientationchange',function(e){
+		alert(111)
+	})
+	</script>
+</body>
+</html>

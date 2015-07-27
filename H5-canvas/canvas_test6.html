@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例6-文字选择</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+ul{float: left; margin-right: 20px; font-size: 30px;}
+ul > li {line-height:  40px; cursor: pointer;}
+</style>
+ <script>
+ window.onload = function(){
+ 	var oC = document.getElementById('c1')
+ 		,oGC = oC.getContext('2d')
+ 	
+ 	var iH = oC.height
+ 		,iW = oC.width
+
+
+ 	var oLis = document.querySelectorAll('li')
+ 		,i = 0
+ 		,len = oLis.length
+ 	for ( ; i < len; i++) {
+ 		oLis[i].onclick = function(){
+ 			writeFont(this.innerHTML,oGC)
+ 		}
+ 	};
+
+	
+	function writeFont(str,oGC){
+		oGC.clearRect(0,0,iW,iH)
+		var h = 160
+		oGC.fillStyle = '#f69'
+	 	oGC.font =  h + "px impact"
+	 	oGC.textBaseline = 'top'
+	 	var w = oGC.measureText(str).width
+	 	oGC.fillText(str,(iW - w)/2, (iH - h - 80)/2 )
+	}	
+	 
+ }
+
+ </script>
+<body>
+<ul>
+	<li>美</li>
+	<li>丽</li>
+	<li>说</li>
+</ul>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+</html>

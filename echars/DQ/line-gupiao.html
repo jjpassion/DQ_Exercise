@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<style>
+.main{width: 33%; height: 300px; background: rgba(0,0,0,.2); float: left;}
+/*.show{width: 100%; height: 50px; background: rgba(0,0,0,.2);}*/
+.item-board{
+  zoom: 1;
+  color: #a7a7a7;
+  font-size: 14px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  /*background: rgba(0,0,0,.2);*/
+}
+.item-board .board-item{
+      margin-left: 80px;
+}
+.now-figure,.old-figure{ color: #e60012;}
+.back-down .now-figure,.back-down .old-figure{color: #a6e19c;}
+.hd{visibility: hidden;}
+
+</style>
+
+<body>
+    <div id="index-item-board" class="item-board hd">
+        <span class="board-item time-item" name="timestamp"></span>
+        <span class="board-item price-item">当前价位：<span class="now-figure">21865.96</span></span>
+        <span class="board-item price-item">原始价位：<span class="old-figure">21865.96</span></span>
+        <!-- <span class="board-item">涨幅：<span class="figure">+0.84%</span></span> -->
+    </div>
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div class="main" id="main" ></div>
+    <div class="main" id="main2"></div>
+    <div class="main" id="main3"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="./build/dist/echarts.js"></script>
+    <script type="text/javascript">
+
+        /* 获取当前日期 */
+        var d = new Date()
+        var strDate = d.getFullYear() + '-' + (d.getMonth() + 1 ) + '-' + d.getDate() + ' ';
+
+        // var boardItem = document.getElementById('index-item-board')
+        var $boardItem = $('#index-item-board') 
+        var $itemDate =  $boardItem.children('.time-item')
+        var $nowPrice = $boardItem.find('.now-figure')
+        var $oldPrice = $boardItem.find('.old-figure')
+
+        /* X轴坐标数据 */
+        var xData =  (function () {
+                var arr = []
+                    ,i = 9
+                    ,j = 0
+
+                for (; i < 15; i++) {
+                    for (j = 0; j < 60; j++) {
+                        if(j < 10){
+                            j = '0' + j
+                        }
+                        arr.push( i + ':' + j )
+                    };
+                };
+                arr.push('15:00')
+                return arr.slice(30);
+            })();
+
+        var lineData1 = [2450, 2087, 2067, 2608, 2569, 2241, 2469, 2109, 2212, 2823, 2918, 2535, 2897, 2817, 2812, 2796, 2875, 2469, 2305, 2051, 2547, 2603, 2834, 2755, 2548, 2827, 2567, 2192, 2368, 2653, 2444, 2111, 2696, 2196, 2711, 2611, 2690, 2742, 2005, 2394, 2273, 2959, 2991, 2849, 2105, 2459, 2273, 2601, 2923, 2262, 2650, 2842, 2331, 2676, 2156, 2801, 2911, 2394, 2802, 2129, 2156, 2572, 2843, 2795, 2101, 2316, 2483, 2935, 2043, 2735, 2998, 2267, 2729, 2621, 2922, 2660, 2674, 2185, 2569, 2754, 2990, 2635, 2053, 2906, 2226, 2743, 2834, 2069, 2007, 2048, 2320, 2824, 2752, 2893,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800,3800, 2198, 2107, 2045, 2377, 2281, 2115,2450, 2087, 2067, 1908, 1869, 1841, 1869, 1509, 1612, 1523, 1918, 1535, 1597, 2817, 2812, 2796, 2875, 2469, 2305, 2051, 2547, 2603, 2834, 2755, 2548, 2827, 2567, 2192, 2368, 2653, 2444, 2111, 2696, 2196, 2711, 2611, 2690, 2742, 2005, 2394, 2273, 2959, 2991, 2849, 2105, 2459, 2273, 2601, 2923, 2262, 2650, 2842, 2331, 2676, 2156, 2801, 2911, 2394, 2802, 2129, 2156, 2572, 2843, 2795, 2101, 2316, 2483, 2935, 2043, 2735, 2998, 2267, 2729, 2621, 2922, 2660, 2674, 2185, 2569, 2754, 2990, 2635, 2053, 2906, 2226, 2743, 2834, 2069, 2007, 2048, 2320, 2824, 2752, 2893, 2198, 2107, 2045, 2377, 2281, 2115]
+        var lineData2 = [1000, 1030, 1100, 1040, 1500,1200,1089, 1100, 1000, 1030, 1400, 1340, 1000, 1200, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1028,990,876,1020,1000,1098, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1300,1000, 1030, 1100, 1040, 1500,1200,1089, 1100, 1000, 1030, 1400, 1340, 1000, 1200, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1028,990,876,1020,1000,1098, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1300,1000, 1030, 1100, 1040, 1500,1200,1089, 1100, 1000, 1030, 1400, 1340, 1000, 1200, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1028,990,876,1020,1000,1098, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1300,1000, 1030, 1100, 1040, 1500,1200,1089, 1100, 1000, 1030, 1400, 1340, 1000, 1200, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1028,990,876,1020,1000,1098, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1000, 1030, 1100, 1040, 1000, 1300,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1100,1000,1000,1000,1000,1000,1000,1000,1000,1300,900,800,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,1000];
+
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: './build/dist'
+            }
+        });
+        
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                // var myChart = ec.init(document.getElementById('main'),'dark'); 
+                
+                //{dom} dom, {string | Object =} theme 第二个参数为主题对象
+                var myChart = ec.init(document.getElementById('main'))
+
+                // 过渡---------------------
+                myChart.showLoading({
+                    text: '正在努力的读取数据中...',    //loading话术
+                });
+                
+                option = {
+                    title : {
+                        text: '(3999001)'
+                        , subtext: '代码'
+                        , x: 'center'
+                    },
+                    legend: {
+                        data:['当前点数','原始点数'],
+                        x: 'center'
+                        ,y: 'bottom'
+                        ,borderWidth : 1
+                        ,textStyle : {
+                            color : 'auto'
+                        }
+                    },
+                    /* 提示框，鼠标悬浮交互时的信息提示，每个图表最多仅有一个提示框 */
+                    tooltip : {
+                        trigger: 'axis'
+                        ,transitionDuration:0.2 //动画变换时长，单位s
+                        ,showDelay: 15 //显示延迟，添加显示延迟可以避免频繁切换,单位ms
+                        ,showContent : true //是否需要显示主体内容
+                        ,axisPointer:{
+                            type: 'line', //默认type为line,可选为：'line' | 'cross' | 'shadow' | 'none'(无)
+                            lineStyle: {
+                                color: '#ccc',
+                                width: 1,
+                                // type: 'solid'
+                                type : 'dashed'
+                            }
+                        }
+                        ,formatter: function (params,ticket,callback) {
+                            var res = strDate + params[0].name;
+                            for (var i = 0, l = params.length; i < l; i++) {
+                                res += '<br/>' + params[i].seriesName + ' : ' + params[i].value;
+                            }
+
+                            /* 顶部显示 */
+                            $boardItem.removeClass('hd')
+                            $itemDate.html( strDate + params[0].name) 
+                            $nowPrice.html( params[0].value )
+                            $oldPrice.html( params[1].value )
+                            $boardItem.removeClass('back-down')
+                            if( params[0].value < 2000 ){
+                               $boardItem.addClass('back-down')
+                            }
+
+                            /* 跟随鼠标窗口显示 */
+                            setTimeout(function (){
+                                // 仅为了模拟异步回调
+                                callback(ticket, res);
+                            }, 5)
+                            return 'loading...'
+                        }
+
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,  //类目起始和结束两端空白策略，默认为true留空，false则顶头
+                            axisLine: {
+                                onZero: true, /* onZero:是否 定位到垂直方向的0值坐标上  */
+                                lineStyle: {
+                                    color: 'blue',
+                                    width: 2,
+                                    type: 'solid'
+                                }
+                            },
+                            data : xData
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            'type':'value',
+                            'name':'GDP（亿元）',
+                            'max':3000
+                        },
+                        {
+                            'type':'value',
+                            'name':'其他（亿元）',
+                            'max' : 4000
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'当前点数',
+                            type:'line',
+                            symbol: 'none',
+                            yAxisIndex:1,  //Y坐标用哪个，0表示左边，1表示右边
+                            data: lineData1
+                            ,itemStyle: {
+                                normal: {
+                                    color: '#87cefa',
+                                    lineStyle: {        // 系列级个性化折线样式
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+                                }
+                            }
+                            /* 平均值 线 */
+                            ,markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        },
+                        {
+                            name:'原始点数',
+                            type:'line',
+                            symbol: 'none',
+                            yAxisIndex:1,
+                            data: lineData2
+                            ,itemStyle: {
+                                normal: {
+                                    color: '#f69',
+                                    lineStyle: {        // 系列级个性化折线样式
+                                        width: 1,
+                                        type: 'solid'
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                };  
+
+                myChart.hideLoading();
+
+                /* 提示隐藏 */
+                // setTimeout(function(){
+                //       myChart.hideLoading();
+                // },1000 )
+            
+                // 为echarts对象加载数据 
+                myChart.setOption(option);
+
+
+                var myChart2 = ec.init(document.getElementById('main2'));
+                myChart2.setOption(option);
+
+                var myChart3 = ec.init(document.getElementById('main3'));
+                myChart3.setOption(option);
+
+            }
+        );
+
+
+        // 非入口或再次使用，图表已被加载注册
+        // require('echarts').init(dom).setOption({...});
+
+        // 如果需要再次使用ECharts的图表实例，建议你还是保存init返回的图表实例吧
+        // var myChart = require('echarts').init(dom);
+        // myChart.setOption({...}); 
+        // 
+        
+        $('.main').on('mouseleave',function(){
+            $boardItem.addClass('hd')
+        });
+        
+    </script>
+</body>

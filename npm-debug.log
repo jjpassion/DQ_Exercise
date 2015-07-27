@@ -1,0 +1,152 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'puer', '-g' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.29
+4 verbose cache add [ 'puer', null ]
+5 verbose cache add name=undefined spec="puer" args=["puer",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'puer',
+6 verbose parsed url   path: 'puer',
+6 verbose parsed url   href: 'puer' }
+7 silly lockFile 88c3493a-puer puer
+8 verbose lock puer /Users/a2014103/.npm/88c3493a-puer.lock
+9 silly lockFile 88c3493a-puer puer
+10 silly lockFile 88c3493a-puer puer
+11 verbose addNamed [ 'puer', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile 199b1c93-puer puer@
+14 verbose lock puer@ /Users/a2014103/.npm/199b1c93-puer.lock
+15 silly addNameRange { name: 'puer', range: '*', hasData: false }
+16 verbose url raw puer
+17 verbose url resolving [ 'https://registry.npmjs.org/', './puer' ]
+18 verbose url resolved https://registry.npmjs.org/puer
+19 info trying registry request attempt 1 at 12:44:33
+20 verbose etag "5CP2PYE3ML2E6Z4Q07Q2TNQFM"
+21 http GET https://registry.npmjs.org/puer
+22 http 304 https://registry.npmjs.org/puer
+23 silly registry.get cb [ 304,
+23 silly registry.get   { date: 'Mon, 01 Jun 2015 04:44:34 GMT',
+23 silly registry.get     via: '1.1 varnish',
+23 silly registry.get     'cache-control': 'max-age=60',
+23 silly registry.get     etag: '"5CP2PYE3ML2E6Z4Q07Q2TNQFM"',
+23 silly registry.get     age: '0',
+23 silly registry.get     connection: 'keep-alive',
+23 silly registry.get     'x-served-by': 'cache-fra1246-FRA',
+23 silly registry.get     'x-cache': 'MISS',
+23 silly registry.get     'x-cache-hits': '0',
+23 silly registry.get     'x-timer': 'S1433133874.723454,VS0,VE913',
+23 silly registry.get     vary: 'Accept' } ]
+24 verbose etag puer from cache
+25 silly addNameRange number 2 { name: 'puer', range: '*', hasData: true }
+26 silly addNameRange versions [ 'puer',
+26 silly addNameRange   [ '0.0.2',
+26 silly addNameRange     '0.0.3',
+26 silly addNameRange     '0.0.4',
+26 silly addNameRange     '0.0.5',
+26 silly addNameRange     '0.0.6',
+26 silly addNameRange     '0.0.7',
+26 silly addNameRange     '0.1.0',
+26 silly addNameRange     '0.1.1',
+26 silly addNameRange     '0.1.2',
+26 silly addNameRange     '1.0.0',
+26 silly addNameRange     '1.0.1',
+26 silly addNameRange     '1.0.2',
+26 silly addNameRange     '1.0.3',
+26 silly addNameRange     '1.0.4',
+26 silly addNameRange     '1.0.5',
+26 silly addNameRange     '1.0.6',
+26 silly addNameRange     '1.0.7',
+26 silly addNameRange     '1.0.8',
+26 silly addNameRange     '1.0.9',
+26 silly addNameRange     '1.1.0' ] ]
+27 verbose addNamed [ 'puer', '1.1.0' ]
+28 verbose addNamed [ '1.1.0', '1.1.0' ]
+29 silly lockFile 6c3516c9-puer-1-1-0 puer@1.1.0
+30 verbose lock puer@1.1.0 /Users/a2014103/.npm/6c3516c9-puer-1-1-0.lock
+31 silly lockFile 6c3516c9-puer-1-1-0 puer@1.1.0
+32 silly lockFile 6c3516c9-puer-1-1-0 puer@1.1.0
+33 silly lockFile 199b1c93-puer puer@
+34 silly lockFile 199b1c93-puer puer@
+35 silly resolved [ { name: 'puer',
+35 silly resolved     description: 'more than a live-reload server , built for efficient frontend development',
+35 silly resolved     author: { name: 'leeluolee' },
+35 silly resolved     version: '1.1.0',
+35 silly resolved     repository: { type: 'git', url: 'https://github.com/leeluolee/puer' },
+35 silly resolved     keywords: [ 'live-reload', 'server', 'proxy', 'frontend', 'tool' ],
+35 silly resolved     main: './lib/index.js',
+35 silly resolved     bin: { puer: './bin/puer' },
+35 silly resolved     dependencies:
+35 silly resolved      { 'coffee-script': '1.4.x',
+35 silly resolved        express: '3.0.x',
+35 silly resolved        chokidar: '0.8.1',
+35 silly resolved        'socket.io': '0.9.16',
+35 silly resolved        weinre: '*',
+35 silly resolved        'qrcode-npm': '0.0.3',
+35 silly resolved        'http-proxy': '~1.10.0' },
+35 silly resolved     devDependencies: { nodeunit: '>=0.5.0' },
+35 silly resolved     engines: { node: '>0.8' },
+35 silly resolved     scripts:
+35 silly resolved      { prepublish: 'coffee -o lib/ src/',
+35 silly resolved        test: 'node setup.js test' },
+35 silly resolved     gitHead: '65510d35208604e903cc754f92a63c7d77ef47a8',
+35 silly resolved     bugs: { url: 'https://github.com/leeluolee/puer/issues' },
+35 silly resolved     homepage: 'https://github.com/leeluolee/puer',
+35 silly resolved     _id: 'puer@1.1.0',
+35 silly resolved     _shasum: '8a4bd6530956fc7efb464fbe74e502fa5da708af',
+35 silly resolved     _from: 'puer@',
+35 silly resolved     _npmVersion: '2.3.0',
+35 silly resolved     _nodeVersion: '0.10.36',
+35 silly resolved     _npmUser: { name: 'leeluolee', email: '87399126@163.com' },
+35 silly resolved     maintainers: [ [Object] ],
+35 silly resolved     dist:
+35 silly resolved      { shasum: '8a4bd6530956fc7efb464fbe74e502fa5da708af',
+35 silly resolved        tarball: 'http://registry.npmjs.org/puer/-/puer-1.1.0.tgz' },
+35 silly resolved     directories: {},
+35 silly resolved     _resolved: 'https://registry.npmjs.org/puer/-/puer-1.1.0.tgz',
+35 silly resolved     readme: 'ERROR: No README data found!' } ]
+36 info install puer@1.1.0 into /usr/local/lib
+37 info installOne puer@1.1.0
+38 info /usr/local/lib/node_modules/puer unbuild
+39 verbose tar unpack /Users/a2014103/.npm/puer/1.1.0/package.tgz
+40 silly lockFile 5a4d9e47--usr-local-lib-node-modules-puer tar:///usr/local/lib/node_modules/puer
+41 verbose lock tar:///usr/local/lib/node_modules/puer /Users/a2014103/.npm/5a4d9e47--usr-local-lib-node-modules-puer.lock
+42 silly lockFile 2d8b1382-14103-npm-puer-1-1-0-package-tgz tar:///Users/a2014103/.npm/puer/1.1.0/package.tgz
+43 verbose lock tar:///Users/a2014103/.npm/puer/1.1.0/package.tgz /Users/a2014103/.npm/2d8b1382-14103-npm-puer-1-1-0-package-tgz.lock
+44 silly gunzTarPerm modes [ '755', '644' ]
+45 error Error: EACCES, mkdir '/usr/local/lib/node_modules/puer'
+45 error  { [Error: EACCES, mkdir '/usr/local/lib/node_modules/puer']
+45 error   errno: 3,
+45 error   code: 'EACCES',
+45 error   path: '/usr/local/lib/node_modules/puer',
+45 error   fstream_type: 'Directory',
+45 error   fstream_path: '/usr/local/lib/node_modules/puer',
+45 error   fstream_class: 'DirWriter',
+45 error   fstream_stack:
+45 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23',
+45 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53',
+45 error      'Object.oncomplete (fs.js:107:15)' ] }
+46 error Please try running this command again as root/Administrator.
+47 error System Darwin 13.1.0
+48 error command "node" "/usr/local/bin/npm" "install" "puer" "-g"
+49 error cwd /Users/a2014103/Desktop/DQ_Exercise
+50 error node -v v0.10.29
+51 error npm -v 1.4.14
+52 error path /usr/local/lib/node_modules/puer
+53 error fstream_path /usr/local/lib/node_modules/puer
+54 error fstream_type Directory
+55 error fstream_class DirWriter
+56 error code EACCES
+57 error errno 3
+58 error stack Error: EACCES, mkdir '/usr/local/lib/node_modules/puer'
+59 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:36:23
+59 error fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:37:53
+59 error fstream_stack Object.oncomplete (fs.js:107:15)
+60 verbose exit [ 3, true ]

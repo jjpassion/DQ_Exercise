@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>平均分配手风琴轮播图</title>
+	<style>
+	body,ul,ol{margin: 0;padding: 0;}
+	li{list-style: none;}
+	img{border: none; vertical-align: top;}
+
+	#box{width: 470px;height: 150px;position: relative;margin: 30px auto;  overflow: hidden;  }
+	ul{position: absolute; width: 470px; left: 0; top: 0; z-index: 1;}
+	ul > li{ position: absolute; width: 470px; top: 0;}
+
+	ol{position: absolute; right: 10px; bottom: 4px; z-index: 2;}
+	ol > li{float: left; padding:0 4px; margin: 4px; background: #fff; color: #f60; text-align: center; vertical-align: middle; line-height: 20px;}
+	ol > li.active{background: #f60; color: #fff;}
+	</style>
+	<script type="text/javascript" src="../js/move.js"></script>
+	<script>
+		var DOC = document
+
+		window.onload = function(){
+
+			var oUl = DOC.querySelector('ul')
+				,li_Ul = oUl.querySelectorAll('li')
+				,oBox = DOC.querySelector('#box')
+
+			var len = li_Ul.length
+				,oneWidth = li_Ul[0].offsetWidth
+
+			//总宽度/图片的张数 = 每张图占据的宽度
+			var	one_img_w = Math.ceil(oneWidth / len)
+			/**
+			 * 每个小间隔 预计30px, 4张图 = 120px
+			 *  470px 总宽度（oneWidth）
+			 */
+			for (var i = 0; i < len; i++) {
+				//初始定位
+				li_Ul[i].style.left = one_img_w * i + 'px'
+				
+
+				//绑定 mouseover 
+				li_Ul[i].index = i;
+				li_Ul[i].onmouseover = function(){
+					var idx = this.index
+					for (var i = 0; i < len; i++) {
+						if( i <= idx){
+							startMove(li_Ul[i],{ 'left' : i * 30})
+						}else{
+							startMove(li_Ul[i],{ 'left' : (oneWidth - 120) + (i-1) * 30})
+						}
+					}
+				}
+				li_Ul[i].onmouseout = function(){
+					for (var i = 0; i < len; i++) {
+						startMove(li_Ul[i],{ 'left' : i * one_img_w})					}
+				}
+			};
+		}
+
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul>
+			<li><img src="../images/1.jpg" alt=""></li>
+			<li><img src="../images/2.jpg" alt=""></li>
+			<li><img src="../images/3.jpg" alt=""></li>
+			<li><img src="../images/4.jpg" alt=""></li>
+			<li><img src="../images/5.jpg" alt=""></li>
+		</ul>
+	</div>
+</body>
+</html>

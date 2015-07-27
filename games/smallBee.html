@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>小蜜蜂游戏</title>
+</head>
+<!-- 
+	思路解析：
+	元素的生产（ createElement ）
+	敌人的移动（ setInterval ）
+	碰撞检测 （ 方法 ）
+	敌人跟随（ 运动算法 ）
+	关卡（ 实现多关 ）
+	其他的功能（ 积分，血量 ）
+ -->
+<style>
+*{ margin: 0; padding: 0;}
+li{ list-style:  none;}
+#div1{width: 800px; height: 600px; overflow: hidden; background:  black; margin: 20px auto; position:  relative;}
+
+#gameBtn{ color: white; font-size: 20px; cursor:  pointer; border: 1px solid #fff; width: 100px; height: 30px; line-height: 30px; text-align:  center; position: absolute;top: 285px; left:  350px;}
+
+#score{ color: #fff; font-size: 20px;}
+#bee{position: relative;}
+#bee > li{float: left; margin: 3px; }
+
+/* 三个敌人的样式 */
+.e1{background-color: green;width: 31px;height: 20px}
+.e2{background-color: #FFE898;width: 31px;height: 20px}
+.e3{background-color: red;width: 31px;height: 20px}
+/* 飞机 */
+.air1{width: 16px; height: 20px; background-color: gray; position: absolute;}
+/* 子弹 */
+.bullet{width: 1px; overflow: hidden; height: 10px;background-color: white; position: absolute;}
+</style>
+
+
+<script>
+window.onload = function(){
+	// alert(111)
+	var oBtn = document.querySelector('#gameBtn')
+	// console.log(oBtn)
+	//
+
+	oBtn.onclick = function(){
+		this.style.display = 'none'
+
+		Game.init('div1') //游戏开始 传入父级元素
+	}
+};
+
+/**
+ * 所有跟游戏相关的都放在 Game 大对象中
+ */
+var Game = {
+
+	/* 敌人的数据 */
+	oEnemy : {
+		e1 : { style : 'e1', blood : 1, speed : 2, score : 1},
+		e2 : { style : 'e2', blood : 2, speed : 5, score : 2},
+		e3 : { style : 'e3', blood : 3, speed : 10, score : 3}
+	}
+
+	/**
+	 * 关卡 数据
+	 * 敌人的地图 10lie 6hang
+	 */
+	,gk : [
+		{	
+			/* 第一关 数据 */
+			eMap : [
+				'e2','e2','e2','e2','e2','e2','e2','e2','e2','e2',
+				'e2','e2','e2','e2','e2','e2','e2','e2','e2','e2',
+				'e2','e2','e2','e2','e2','e2','e2','e2','e2','e2',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+			]
+
+			,colNum : 10 //表示一行10个
+			,iSpeedX : 10
+			,iSpeedY : 10
+			,times : 2000 //时间
+		},
+		{	/* 第二关 数据 */
+			eMap : [
+				'e3','e3','e3','e3','e3','e3','e3','e3','e3','e3',
+				'e3','e3','e3','e3','e3','e3','e3','e3','e3','e3',
+				'e3','e3','e3','e3','e3','e3','e3','e3','e3','e3',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+				'e1','e1','e1','e1','e1','e1','e1','e1','e1','e1',
+			]
+
+			,colNum : 10 //表示一行10个
+			,iSpeedX : 10
+			,iSpeedY : 10
+			,times : 2000 //时间
+		}
+	]
+
+	/* 飞机的数据 */
+	,air : {
+		style : 'air1'
+		,bulletStyle : 'bullet'
+	}
+
+	/* 初始化 */
+	,init : function(id){
+		this.oParent = document.getElementById(id)
+
+		this.createScore() //积分简历
+
+		this.createEnemy(0) //0 表示第一关
+
+		this.createAir() //创建飞机
+
+	}
+	/* 积分的创建 */
+	,createScore : function(){
+		var oS = document.createElement('div')
+		oS.id = 'score'
+		oS.innerHTML = '积分<span>0</span>';
+
+		this.oParent.appendChild(oS)
+
+		// this.oSNum = oS.getElementsByTagName('span')[0]
+		this.oSNum = oS.querySelector('span') //选择第一个span标签，选取多个用 querySelectorAll()
+	}
+
+	/* 敌人的创建 小蜜蜂 */
+	,createEnemy : function(iNow){
+
+		if(this.oUl){
+			clearInterval(this.oUl.timer)
+			this.oParent.removeChild(this.oUl)
+		}
+		/* 提示第几关 */
+		document.title = '第' + (iNow + 1) + '关'
+
+		var gk = this.gk[iNow]
+
+		var oUl = document.createElement('ul')
+		oUl.id = 'bee'
+		var arr = [] //用户存储 每个小蜜蜂的offsetTop和offseLeft值 用于定位
+		oUl.style.width = gk.colNum * 40 + 'px'
+		this.oParent.appendChild(oUl)
+
+		
+		// console.log(this.oEnemy['e2'])
+
+		/* oUl-蜜蜂层 居中：（父级的宽度 - 小蜜蜂UL的宽度）/ 2 */  
+		oUl.style.left = (this.oParent.offsetWidth - oUl.offsetWidth)/2 + 'px'
+		
+		this.oUl = oUl
+
+		var eMapLen = gk.eMap.length;
+		for (var i = 0; i < eMapLen; i++) {
+			// Things[i]
+			var oLi = document.createElement('li')
+
+			var oEnemyInfo = this.oEnemy[ gk.eMap[i] ]
+
+			oLi.className = oEnemyInfo['style']
+			oLi.blood = oEnemyInfo['blood']
+			oLi.speed = oEnemyInfo['speed']
+			oLi.score = oEnemyInfo['score']
+
+			oUl.appendChild(oLi)
+		};
+
+		//相当于找到所有的蜜蜂
+		this.aLi = oUl.getElementsByTagName('li') 
+		
+		var aLen = this.aLi.length
+		for (var i = 0; i < aLen; i++) {
+			arr.push( [this.aLi[i].offsetLeft,this.aLi[i].offsetTop] )
+		};
+
+		for (var i = 0; i < aLen; i++) {
+			this.aLi[i].style.position = 'absolute'
+			this.aLi[i].style.left = arr[i][0] + 'px'
+			this.aLi[i].style.top = arr[i][1] + 'px'
+		};
+
+		this.runEnemy(gk)
+	}
+
+	,runEnemy : function(gk){
+		var that = this
+			,oUl_width = that.oUl.offsetWidth
+
+		var	L = 0 
+			,R = this.oParent.offsetWidth - oUl_width
+
+		that.oUl.timer = setInterval(function(){
+			var oUl_left = that.oUl.offsetLeft
+			/* 移动到最左边 */
+			if (oUl_left <= L || oUl_left > R ) {
+				 gk.iSpeedX *= -1
+				 that.oUl.style.top = that.oUl.offsetTop + gk.iSpeedY + 'px'
+
+			}
+
+			that.oUl.style.left = oUl_left + gk.iSpeedX + 'px'
+
+		},200)
+
+		/* 根据关卡里面的时间设定，表示多长时间 自动飞出一只蜜蜂 */
+		setInterval(function(){
+			that.oneMove()
+		},gk.times)
+	}
+
+	/* 单兵作战 */
+	,oneMove : function(){
+		var This = this 
+		/* 随机蜜蜂飞下来 */
+		var nowLi = This.aLi[ Math.floor( Math.random() * This.aLi.length) ]
+
+		/* 蜜蜂飞下来 */
+		nowLi.timer = setInterval(function(){
+			/* 分别求出 每条边的速度，a，b及c斜边 求斜边长度用勾股定理*/
+			var a = (This.oA.offsetLeft + This.oA.offsetWidth / 2) - (nowLi.offsetLeft + nowLi.parentNode.offsetLeft + nowLi.offsetWidth / 2)
+			var b = (This.oA.offsetTop + This.oA.offsetHeight / 2) - (nowLi.offsetTop + nowLi.parentNode.offsetTop + nowLi.offsetHeight / 2)
+
+			var c = Math.sqrt(a*a + b*b)
+			/*求速度*/
+			var speedX = nowLi.speed * a / c
+				,speedY = nowLi.speed * b / c
+
+			nowLi.style.left = nowLi.offsetLeft + speedX + 'px'
+			nowLi.style.top = nowLi.offsetTop + speedY + 'px'
+
+			if(This.pz(This.oA,nowLi)){
+				alert('游戏结束')
+				window.location.reload();
+			}
+
+		},30)
+	}
+	/* 飞机的创建 */
+	,createAir : function(){
+		var oA = document.createElement('div')
+		oA.className = this.air.style
+		this.oParent.appendChild(oA)
+
+		this.oA = oA  // 变成全局属性 游戏的飞机
+
+		oA.style.left = (this.oParent.offsetWidth - oA.offsetWidth)/2 + 'px'
+		oA.style.top = this.oParent.offsetHeight -oA.offsetHeight + 'px'
+ 		
+ 		this.bindAir()
+	}
+	/* 操作飞机 */
+	,bindAir : function(){
+		var timer = null
+			,iNum = 0
+			,This = this
+			,moveLen = 8
+
+		document.onkeydown = function(ev){
+			var ev = ev || window.event
+			if(!timer){
+				timer = setInterval(show,30)
+			}
+
+			if (ev.keyCode == 37) {
+				iNum = 1
+
+			}else if(ev.keyCode == 39){
+				iNum = 2
+			}
+		}
+
+		document.onkeyup = function(ev){
+			var ev = ev || window.event 
+
+			clearInterval(timer)
+			timer = null
+			iNum = 0
+
+			if(ev.keyCode == 32){
+				This.createBullet()
+			}
+		}
+
+		function show(){
+			var oaLeft = This.oA.offsetLeft
+			
+			/* 左右临界点的判断 */
+			if (iNum == 1 && oaLeft - moveLen > 0) {
+				This.oA.style.left = oaLeft - moveLen + 'px'
+			}else if(iNum == 2 && (oaLeft + moveLen + This.oA.offsetWidth) <=  This.oParent.offsetWidth){
+				This.oA.style.left = oaLeft + moveLen + 'px'
+			}
+		}
+	}
+	/**
+	 * 子弹的创建
+	 * 
+	 */
+	,createBullet : function(){ 
+		var oB = document.createElement('div')
+		oB.className = this.air.bulletStyle
+		this.oParent.appendChild(oB)
+		//left 值，飞机的left + 飞机宽度的一半
+		oB.style.left = this.oA.offsetLeft + this.oA.offsetWidth/2 + 'px'
+		oB.style.top = this.oA.offsetTop - 10 + 'px'
+		this.runBullet(oB);
+	}
+	/**
+	 * 子弹运动
+	 * @return {[type]} [description]
+	 */
+	,runBullet : function(oB){
+		var This = this
+		oB.timer = setInterval(function(){
+			var obTop = oB.offsetTop
+			if(obTop < -10){
+				clearInterval(oB.timer)
+				This.oParent.removeChild(oB)
+			}else{
+				oB.style.top = obTop - 10 + 'px'
+			}
+
+			for (var i = 0; i < This.aLi.length; i++) {
+				var ali = This.aLi[i];
+				if(This.pz(oB,ali)){
+					if (This.aLi[i].blood == 1) {
+						clearInterval(ali.timer)
+						This.oSNum.innerHTML = (This.oSNum.innerHTML|0) + This.aLi[i].score
+						This.oUl.removeChild(ali)
+					}else{
+						This.aLi[i].blood -= 1
+					}
+					clearInterval(oB.timer)
+					This.oParent.removeChild(oB)
+				}
+				// else if(ali.offsetTop >= This.oUl.offsetTop + This.oUl.offsetHeight){
+				// 	clearInterval(ali.timer)
+				// 	This.oUl.removeChild(ali)
+				// }
+			};
+
+			if(This.aLi.length == 0){
+				// alert('进入下一关')
+				This.createElement(1) //1 表示第二关
+			}
+		},30)
+	}
+	/**
+	 * 碰撞检测
+	 * @return {[type]} [description]
+	 */
+	,pz : function(obj1,obj2){
+		var L1 = obj1.offsetLeft
+			,R1 = obj1.offsetLeft + obj1.offsetWidth
+			,T1 = obj1.offsetTop
+			,B1 = obj1.offsetTop + obj1.offsetHeight
+
+		var L2 = obj2.offsetLeft + obj2.parentNode.offsetLeft
+			,R2 = obj2.offsetLeft + obj2.offsetWidth + obj2.parentNode.offsetLeft
+			,T2 = obj2.offsetTop + obj2.parentNode.offsetTop
+			,B2 = obj2.offsetTop + obj2.offsetHeight + obj2.parentNode.offsetTop
+		
+		// console.log(L1,R1,T1,B1)
+		// console.log(L2,R2,T2,B2)
+		// console.log(obj2.offsetLeft,obj2.offsetTop,obj2.offsetWidth)
+		//四个方向检测
+		if(L2 > R1 || L1 > R2 || T2 > B1 || T1 > B2){
+			return false
+		}else{
+			return true
+		}
+	}
+}
+
+</script>
+<body>
+<div id="div1">
+	<div id="gameBtn">开始游戏</div>
+</div>
+</body>
+</html>

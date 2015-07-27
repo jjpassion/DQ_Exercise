@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js原生实现delegate</title>
+</head>
+<body>
+	<div id="container">
+		<input type="button" value="testBtn" class="btn_class" id="btn">
+	</div>
+</body>
+
+<script>
+
+window.onload = function(){
+
+	function delegate(parent,selector,eventType,fn){
+		if (typeof parent === 'string') {
+			var par = document.getElementById(parent);
+			if(!par){
+				alert('parent父元素不存在');return;
+			}
+		};
+		if (typeof selector !== 'string') {
+			alert('selector is not string');return;
+		};
+		if (typeof fn !== 'function') {
+			alert('fn is not a function');return;
+		};
+
+		function handle(e){
+			/**
+			获取event对象，
+			标准的DOM方法处理函数第一个参数是event对象
+			IE可以用全局变量window.event
+			**/
+			var evt = window.event ? window.event : e;
+
+			/**
+			获取触发事件的原始事件源
+			标准的DOM方法是用target
+			IE用event.srcElement
+			**/
+			var target = evt.target || evt.srcElement; 
+
+			// console.log(target);
+
+			/**
+			获取当前正在处理的事件源
+			标准：currentTarget
+			IE中的this指向当前处理的事件源
+			**/
+			var currentTarget = e ? e.currentTarget : this;
+
+			//在IE9下  window.event 与 e 不同 evt没有currentTarget属性,e才有currentTarg 
+	        // alert("src id===" + target.id+"\n\ncurent target id==" + currentTarget.id);
+
+	        if(target.id === selector || target.className.indexOf(selector) != -1){
+	        	fn.call(target);
+	        }
+		}
+		par[eventType] = handle;
+	}
+
+	// console.log(document.getElementById('container'));return;
+	delegate('container','btn_class', 'onclick', function(event) {
+		console.log("===");
+		console.log(this)
+	});
+
+
+	/* 新增一个测试元素 */
+	var input = document.createElement('input')
+	input.className = 'btn_class'
+	input.value = '测试按钮2'
+	input.type = 'button' 
+	// btn.setAttribute("value","测试按钮");
+
+	document.getElementById('container').appendChild(input);
+};
+
+
+
+	
+</script>
+</html>

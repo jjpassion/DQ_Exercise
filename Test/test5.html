@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<script>
+var a = 0
+function fn(b){
+	return function fb(c){
+		console.log(a++,b++,c++)
+	}
+}
+
+var f1 = fn(0)
+var f2 = fn(0)
+f1()
+f2()
+
+var f1 = f2 = fn(fn(0))
+f1()
+f2()
+
+</script>
+<style>
+.radius{
+	/*  border-radius: 20% 80% 30% 70% / 80% 70% 30% 20%;*/
+	width: 200px; height: 200px;background: rgb(32,143,222);
+	box-shadow: 0 0 0 8px #709b1e,inset 0 0 20px #000,300px 0 0 2px #709b1e;
+}
+
+/*-webkit-linear-gradient*/
+.stop{ margin-top: 20px; width: 100px;height: 100px; border-radius: 50%; border: 10px solid #d9331a;
+	background: linear-gradient(
+			to right bottom,
+			transparent 46%,
+			#d9331a 46%,
+			#d9331a 54%,
+			transparent 54%
+		);
+
+}
+.box{-webkit-transform-style:preserve-3d; position: relative;width: 100px; height: 100px;}
+.box > div{ width: 100px; height: 100px; border:  1px solid;  position: absolute;}
+.box .top{ top: -100px;left: 0; -webkit-transform: rotateX(90deg) translateZ(150px);}
+.box .bottom{ bottom: -100px;left: 0;  -webkit-transform: rotateX(-90deg) translateZ(150px);}
+.box .left{top: 0;left: -100px;  -webkit-transform: rotateY(-90deg) translateZ(150px);}
+.box .right{top: 0;left: 100px;   -webkit-transform: rotateY(90deg) translateZ(150px);}
+.box .back{ top: 0;left: 0px;  -webkit-transform: rotateY(180deg) translateZ(150px);}
+.box .front{ top: 0;left: 0px;  -webkit-transform: translateZ(150px);}
+</style>
+<body>
+
+<header></header>
+<div>
+	<section></section>
+	<aside></aside>
+</div>
+<footer></footer>
+<ruby>有<rp>(</rp> <rt>you</rt> <rp>)</rp></ruby>
+
+<!-- 画椭圆 -->
+<div class="radius"></div>
+
+<div class="stop"></div>
+
+<div class="box">
+	<div class="top">top</div>
+	<div class="bottom">bottom</div>
+	<div class="left">left</div>
+	<div class="right">right</div>
+	<div class="back">back</div>
+</div>
+</body>
+</html>

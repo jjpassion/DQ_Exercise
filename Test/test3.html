@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	body{background: #f69;}
+	div{width: 100%; height: 200px; background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.4) 0%, rgba(0, 0, 0, 0.2) 40%, rgba(0, 0, 0, 0.4) 80%,  rgba(0, 0, 0, 0.5) 100%); }
+</style>
+<script>
+/* 
+对于这个问题，我的理解是，将url的参数解析为一个对象，对象的key值是key0,key1,key2……,分别对应url中的第一个参数、第二个参数、第三个参数……
+alert(obj.key0) // 输出0 
+*/
+var url = 'http://www.mekkey.com?a=麦粒儿前端开发&b=javascript&c=html&d=css';
+
+var obj = parseQueryString(url);
+console.log(obj)
+
+function parseQueryString(url){
+	var o = url.split(/[\?&]/) 
+	/*
+	0: "http://www.mekkey.com"
+	1: "a=麦粒儿前端开发"
+	2: "b=javascript"
+	3: "c=html"
+	4: "d=css"
+	 */
+	var res = {}
+	var i = 1
+		,len = o.length
+	for (; i < len; i++) {
+		var iSp = o[i].split('=')
+		res[ 'key' + (i-1) ] = iSp[1]
+	};
+
+	return res
+}
+</script>
+<body>
+	<div>dddd</div>
+</body>
+</html>

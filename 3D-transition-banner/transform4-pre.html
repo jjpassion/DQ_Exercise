@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3D筛子旋转-六面平铺</title>
+</head>
+<style>
+/*
+ transition 过渡
+ 
+ transition-duration 运行时间
+ transition-property 要运动的样式 （all || [attr] || none）
+ transition-delay 延迟时间
+ transition-timing-function 运动形式
+ 	- ease: 逐渐变慢 默认值;
+ 	- linear: 匀速;
+ 	- ease-in: 加速; 
+ 	- ease-out 减速
+ 	- ease-in-out: 先加速后减速;  【常用】
+ 	- cubic-bezier: 贝塞尔曲线（x1,y1,x2,y2）;
+ */
+
+/**
+ * transform 变换
+ * 		rotateX() X轴旋转
+ * 		rotateY() Y轴旋转
+ * 		translateZ() Z轴位移
+ * transform-style(preserve-3d) 建立3D场景
+ * perspective 景深
+ * perspective-origin 景深基点
+ * transform-origin 变换基点
+ * 
+ */
+.wrap{width: 200px; height: 200px; padding: 200px; border: 1px solid #000; /*-webkit-perspective:600px; */ }
+
+.box{ width: 200px; height: 200px; position: relative; /* -webkit-transition:3s all;  -webkit-transform-style:preserve-3d;*/}
+.box > .flat{width: 200px;height: 200px; text-align: center; font-size: 100px; font-weight: bold; color: #fff; position: absolute; line-height: 200px;}
+.box > .flat:nth-of-type(1){  background: orange;  left: 0; top: -200px; }
+.box > .flat:nth-of-type(2){  background: green;  left: -200px; top: 0; }
+.box > .flat:nth-of-type(3){  background: blue;  left: 0; top: 0;}
+.box > .flat:nth-of-type(4){  background: #ccc;  left: 200px; top: 0;}
+.box > .flat:nth-of-type(5){  background: #AFAF4E;  left: 0; top: 200px; }
+.box > .flat:nth-of-type(6){  background: #f69;  left: 0; top: 0;}
+
+/*.wrap:hover > .box{ -webkit-transform:rotateX(-180deg); }*/
+
+</style>
+<body>
+
+<div class="wrap">
+	<div class="box">
+		<div class="flat">1</div>
+		<div class="flat">2</div>
+		<div class="flat">3</div>
+		<div class="flat">4</div>
+		<div class="flat">5</div>
+		<div class="flat">6</div>
+	</div>
+</div>
+	
+</body>
+</html>

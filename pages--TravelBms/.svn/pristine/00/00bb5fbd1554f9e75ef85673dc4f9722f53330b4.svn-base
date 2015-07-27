@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="style.css"/>
+<title>北斗旅游管理系统</title>
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="Validform_v5.3.2_min.js"></script>
+<style>
+*{font-size:12px;font-family:宋体;color:#333333;}
+body{margin:0;background-color:#fffdee;}
+img{display:block;}
+a{ text-decoration:none;}
+h1{margin:0;font-weight:normal;}
+
+.iogin_bg{background-image:url(images/bg.png);background-repeat:no-repeat;width:1380px;margin:0 auto;}
+h1{line-height:50px;font-size:20px; font-family:微软雅黑;color:#fffdee;}
+h1,.input{float:left;}
+
+.iogin_btn{background-image:url(images/login_btn.png);background-repeat:no-repeat;width:348px;height:59px;margin-left:484px;margin-top:60px;text-align:center;}
+.iogin_btn a{line-height:50px;font-size:20px; font-family:微软雅黑;color:#fffdee;padding:0 130px;}
+.iogin_logo{margin-left:480px;padding-top:200px;}
+.footer{width:1380px;margin:0 auto;margin-top:110px;}
+</style>
+</head>
+<body>
+<div class="iogin_bg">
+<div class="iogin_content">
+	<img class="iogin_logo" src="images/login_logo.png">
+
+    <style>
+	.iogin_xiangmu{line-height:50px;font-size:20px; font-family:微软雅黑;color:#fffdee;}
+    .iogin_shuru{outline:none;background-color:transparent;border:none;background-image:url(images/kuang1.png);width:340px;height:50px;background-repeat:no-repeat;}
+	.iogin_shuru02{outline:none;background-color:transparent;border:none;background-image:url(images/yanzhengma.png);width:200px;height:50px;background-repeat:no-repeat;}
+	td div{line-height:50px;font-size:14px; font-family:微软雅黑;color:#4d0606;}
+	tr{margin-top:40px;}
+	form{margin-left:400px;margin-top:100px;}
+	.iogin_float{overflow:hidden;}
+	.iogin_shuru02,.iogin_yanzhengma{float:left;}
+    </style><form class="registerform" action="demo/ajax_post.php">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="iogin_xiangmu">用户名：</td>
+                    <td><input class="iogin_shuru"type="text" value="" name="name" class="inputxt Validform_error" datatype="s6-18" ajaxurl="demo/valid.php" errormsg="用户名至少6个字符,最多18个字符！" nullmsg="请填写信息！"></td>
+                    <td><div class="Validform_checktip Validform_wrong">请填写信息！</div></td>
+                </tr>
+                <tr>
+                    <td  class="iogin_xiangmu">密　码：</td>
+                    <td><input  class="iogin_shuru"type="password" value="" name="userpassword" class="inputxt" datatype="*6-16" nullmsg="请输入密码！" errormsg="密码范围在6~16位之间！"></td>
+                    <td><div class="Validform_checktip">密码范围在6~16位之间！</div></td>
+                </tr>
+                <tr >
+                    <td  class="iogin_xiangmu">验证码：</td>
+                    <td class="iogin_float"><input  class="iogin_shuru02"type="password" value="" name="userpassword2" class="inputxt" datatype="*" recheck="userpassword" nullmsg="请输入验证码！" errormsg="验证码错误！"><a class="iogin_yanzhengma" href="#"><img class="iogin_yz" src="images/yz_img.png"></a></td>
+                    <td><div class="Validform_checktip">请输入验证码！</div></td>
+                </tr>
+
+            </tbody></table>
+        </form>
+        <script type="text/javascript">
+			$(function(){
+				$(".registerform").Validform({
+					tiptype:2
+				});
+			})
+		</script>
+        <div class="iogin_btn"><a href="index.html">登　陆</a></div>	
+</div>
+<div class="footer"><img src="images/login_footer.png"></div>
+</div>
+</body>
+</html>

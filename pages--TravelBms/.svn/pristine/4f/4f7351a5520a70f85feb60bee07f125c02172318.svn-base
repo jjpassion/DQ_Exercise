@@ -1,0 +1,212 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="all_style.css"/>
+<link type="text/css" rel="stylesheet" href="sbgl_csxx_02.css"/>
+<title>北斗旅游管理系统</title>
+<script src="jquery-1.11.3.min.js"></script>
+<script src="WdatePicker.js"></script>
+<script src="calendar.js"></script>
+<style>
+.logo h1{font-family:微软雅黑;}
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="logo">
+    	<a href="#"><img  class="logo_img" src="images/logo.png"/>
+        <img  class="logo_line" src="images/logo_line.png"/>
+        <h1>北斗旅游管理系统</h1></a>
+    </div>
+    <div class="botton">
+    	<img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/message.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/setting.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/out.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="img_id"><img src="images/img_ID.png"/></a>
+        <a href="#"><p>某某某，您好！</p></a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="nav_left">
+            <dl>
+            	<a href="index.html">
+                    <div class="botton_index">
+                        <img src="images/index_icon.png"/>
+                        <p>首页</p>
+                    </div>
+        		</a>
+                
+                <a href="#" class="menu_botton"><dd>
+                	<p>系统管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                                    <div class="xiala_menu">
+                                        <a href="users.html">系统用户信息</a>
+                                        <a href="jsgl.html">角色管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>设备管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="sbgl_jbxx.html">基本信息</a>
+                                        <a href="sbgl_csxx_02.html">参数信息</a>
+                                        <a href="#">设备录入</a>
+                                        <a href="#">使用管理</a>
+                                    </div>
+                <a href="lytgl.html" class="menu_botton"><dd>
+                	<p>旅行团管理</p>
+                </dd></a>
+                <a href="#" class="menu_botton"><dd>
+                	<p>人员管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="dygl.html">导游管理</a>
+                                        <a href="ykgl.html">游客管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>组织机构管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="lxsgl.html">旅行社管理</a>
+                                    </div>
+            </dl>
+            <script>
+					$(".menu_botton").click(function(){
+						var flag=$(this).next("div").is(":hidden");
+						if(flag){
+							$(this).next("div").show();
+						}else{
+							$(this).next("div").hide();
+						}
+					});
+            </script>
+	</div>
+    <div class="content_bigbox">
+    	 <div class="weizhi">
+        	<img class="icon_gray" src="images/index_icon_gray.png"/>
+            <a href="index.html">首页</a>
+            <img class="jiantou_right" src="images/jiantou_right.png"/>
+            <a href="#">设备管理</a>
+            <img class="jiantou_right" src="images/jiantou_right.png"/>
+            <a href="sbgl_csxx_02.html">参数信息</a>
+        </div>    
+      <div class="biaodan">
+            <div class="taitou"><img src="images/csxx_top_bg.png"></div>
+            <div class="shezhixiang">
+            	<div class="left">
+                    <div><span>开机铃声</span></div>
+                    <div><span>关机铃声</span></div>
+                    <div><span>GPS上传间隔</span></div>
+                    <div><span>LBS上传间隔</span></div>
+                    <div><span>GPS定时定位参数</span></div>
+                    <div><span>进出GPS盲区提醒</span></div>
+                    <div><span>进入盲区后提醒间隔</span></div>
+                    <div><span>出盲区后提醒间隔</span></div>
+                    <div><span>状态信息包间隔</span></div>
+                    <div><span>在线状态</span></div>
+                </div>
+                <div class="left_02">
+                	<input><br><input><br><input><br><input><br><input><br><input><br><input><br><input><br><input><br><input><br>                  
+                </div>
+                <div class="middle">
+                    <div><span>限制是否可以关机</span>　</div>
+                    <div><span>SIM卡换卡报警开关</span>　</div>
+                    <div><span>低电量报警开关</span></div>
+                    <div><span>关机提醒</span></div>
+                    <div><span>SOS报警开关</span></div>
+                </div>
+                <div class="middle_02">
+                <form><input type="radio" name="sex" checked="check"/>是<input type="radio" name="sex"/>否</form>
+                <form><input type="radio" name="sex" checked="check"/>开<input type="radio" name="sex"/>关</form>
+                <form><input type="radio" name="sex" checked="check"/>开<input type="radio" name="sex"/>关</form>
+                <form><input type="radio" name="sex" checked="check"/>开<input type="radio" name="sex"/>关</form>
+                <form><input type="radio" name="sex" checked="check"/>开<input type="radio" name="sex"/>关</form>
+                
+                </div>
+                <div class="right">
+                    <div><span>来电提醒模式</span>　
+                                                                   							
+                    </div>                
+                    <div><span>SIM卡换卡报警方式</span>
+                         
+                    </div>     
+                    <div><span>低电量报警方式</span>　
+                    	</div>
+                    
+                    <div><span>关机提醒方式</span>　
+                   </div>
+                    
+                    <div><span>进出盲区报警方式</span>　
+                    </div>
+                    
+                    <div><span>SOS报警方式</span>　
+                    </div> 
+                </div>
+                <div class="right_02">
+                		 <select class="search_zt" size="1" >
+                         <option selected="select">模式1</option>
+                         <option>模式2</option>
+                         <option>模式3</option>
+                         </select><br>
+            
+                		 <select class="search_zt" size="1" >
+                         <option selected="select">方式1</option>
+                         <option>方式2</option>
+                         <option>方式3</option>
+                         </select><br>
+
+                         <select class="search_zt" size="1" >
+                         <option selected="select">方式1</option>
+                         <option>方式2</option>
+                         <option>方式3</option>
+                         </select><br>
+
+                         <select class="search_zt" size="1" >
+                         <option selected="select">方式1</option>
+                         <option>方式2</option>
+                         <option>方式3</option>
+                         </select><br>
+
+                         <select class="search_zt" size="1" >
+                         <option selected="select">方式1</option>
+                         <option>方式2</option>
+                         <option>方式3</option>
+                         </select><br>
+
+                         <select class="search_zt" size="1" >
+                         <option selected="select">方式1</option>
+                         <option>方式2</option>
+                         <option>方式3</option>
+                         </select><br>
+                </div>
+                <div class="bottom">
+                	<div><span>亲情号码列表</span>　　<input>、<input>、<input></div>
+                    <div><span>SOS号码列表</span>　　 <input>、<input>、<input></div>
+                	<div><span>隐身时段(周日)</span> <input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><span>(周六)</span><input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><span>(工作日)</span><input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></div>
+                    <div><span>GPS时段(周日)</span>　<input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><span>(周六)</span><input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/><span>(工作日)</span><input type="text" class="Wdate" id="d531" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/></div>
+                    
+                </div>
+                  
+                <div class="btn">
+              	<a class="tijiao" href="#"><div>提交</div></a>
+                <a class="chongzhi" href="#"><div>重置</div></a>
+        </div>
+            </div>
+            <div class="jieshu"><img src="images/csxx_bottom.png"></div>
+		</div>                  
+    </div>
+</div>
+<div class="footer">
+	<h2>Copyright &copy; 2015 by SCBDLBS.</h2>
+	<h3>All Rights Reserved</h3>
+</div>
+</body>
+</html>

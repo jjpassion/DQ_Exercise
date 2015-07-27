@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>多张图分片-3D翻转（切割70份）</title>
+</head>
+<style>
+	body,ul,li{ padding: 0; margin: 0; list-style: none;}
+	.list{ width: 570px; height: 400px;  -webkit-transform-style:preserve-3d; -webkit-perspective:600px; perspective:600px; position: absolute; left: 0; top: 0;}
+	.list li{width: 55px; height: 55px; float: left; border: 1px solid rgba(0,0,0,0); background: #f69; background: url(./images/1.png) no-repeat; background-origin: border-box;/* -webkit-transition: background .3s, border .2s, -webkit-transform 2s .2s,opacity 2s .3s;*/ }
+	
+	/*.btn{margin: 0 auto; width: 200px;}*/
+	/*input{margin-top: 50px; position: relative; z-index: 2;}*/
+	#wrap{ width: 570px; height: 400px; position: relative; margin: 50px auto; }
+	#wrap input{ background: #ccc; width: 100px; height: 100px; border-radius: 50%; z-index: 10; cursor: pointer; top: 160px; border: none;}
+	#wrap input:nth-of-type(1){ position: absolute; left: -120px;}
+	#wrap input:nth-of-type(2){ position: absolute; right: -120px;}
+
+
+	/*.list:nth-of-type(1){ background-image: url(./images/1.png);}*/
+	.list:nth-of-type(2) li{ background-image: url(./images/2.png);}
+	.list:nth-of-type(3) li{ background-image: url(./images/3.png);}
+	.list:nth-of-type(4) li{ background-image: url(./images/4.png);}
+
+
+</style>
+
+<script>
+	
+window.onload = function(){
+	var oList = document.querySelector('.list')
+		,oUls = document.getElementsByTagName('ul')
+		,oInput = document.getElementsByTagName('input')
+
+	var oLis = oUls[0].getElementsByTagName('li')
+		,liLen = oLis.length
+		,oneLiW = oLis[0].offsetWidth
+		,oneLiH = oLis[0].offsetHeight
+		,iRows = parseInt(oList.offsetHeight / oneLiW)
+		,iCeils = parseInt(liLen / iRows) /* 长度/行数 = 每行的单元格个数 = 列数 */
+
+	var objs = []
+		,iNow = 0
+		,oulLen = oUls.length
+	// console.log(oUls.length)
+	for (var i = 0; i < oulLen; i++) {
+		oUls[i].index = i
+		oUls[i].style.zIndex = oulLen - i
+		var thisOLis = oUls[i].getElementsByTagName('li')
+		objs[i] = setPos(thisOLis,iRows,iCeils)
+
+		oUls[i].onclick = function(){
+			alert(this.index)
+		}
+	};
+
+
+	/* 上一张 展开 */
+	oInput[0].onclick = function(){
+		// console.log(iNow)
+		if(iNow <= 0){
+			return;
+		}
+
+		iNow--
+
+		oUls[iNow].children[0].removeEventListener('webkitTransitionEnd',end,false);
+		// oUls[iNow].style.display = 'block'
+		oUls[iNow].style.visibility = 'visible'
+		clickObj(objs[iNow],0,0,function(){
+			with(this.style){
+				WebkitTransition = 'background .3s, border 1s, -webkit-transform ease-in 1s,opacity 1s'
+				border = '1px solid rgba(0,0,0,0)'
+				boxShadow =  '0 0 0 blue'
+				WebkitTransform = 'translate(0,0) rotateY(0deg) rotateX(0)'
+				opacity = 1
+			}
+		},1,1)
+	}
+
+	/* 下一张 重置*/
+	oInput[1].onclick = function(){
+		// console.log(iNow,oulLen)
+		if(iNow >= oulLen-1){
+			return;
+		}
+		clickObj(objs[iNow],iCeils-1,iRows-1,function(){
+			with(this.style){
+				WebkitTransition = 'background .3s, border 2s, -webkit-transform 2s .2s,opacity 2s .3s'
+				border = '1px solid rgba(0,0,0,.2)'
+				boxShadow =  '0 0 20px #fde8e7'
+				WebkitTransform = 'translate(-50px,-100px) rotateY(-720deg) rotateX(-540deg)'
+				opacity = 0
+			}
+
+			if(this.xIndex == 0 && this.yIndex == 0){
+				this.addEventListener('webkitTransitionEnd',end,false);
+			}
+
+		},-1,-1)
+
+		iNow++
+	}
+
+	/* Transition End 事件 this.addEventListener('webkitTransitionEnd',end,false); */
+	function end(e){
+		// console.log(e.type,e.propertyName)
+		if(e.propertyName == 'opacity'){
+			this.parentNode.style.visibility = 'hidden'
+		}
+	}
+
+	function clickObj(arr,x,y,fn,speedX,speedY,delayTime){
+
+		delayTime || (delayTime = 50)
+
+		if(!arr[y] || !arr[y][x]) return;
+		if(fn){
+			clearTimeout(arr[y][x].timer)
+			arr[y][x].timer = setTimeout(function(){
+				fn.call(arr[y][x])
+				clickObj(arr,x+speedX,y,fn,speedX,speedY)
+				clickObj(arr,x,y+speedY,fn,speedX,speedY)
+			},delayTime)
+			
+		}
+	}
+
+	function setPos(objs,iRows,iCeils){
+		var arr = []
+			,arr2 = []
+			,i
+
+		/* i第几是行（yIndex），j第几是列(xIndex) */
+		for (i = 0; i < iRows; i++) { 
+			arr2 = []
+			for (var j = 0; j < iCeils; j++) {
+				var thisObj = objs[i * iCeils + j]
+				thisObj.xIndex = j
+				thisObj.yIndex = i
+				// thisObj.innerHTML = thisObj.yIndex + '|' +thisObj.xIndex
+				
+				thisObj.style.backgroundPosition = -j*oneLiW + 'px ' + (-i*oneLiH) + 'px'
+				
+				arr2.push(thisObj)
+			};
+			arr.push(arr2)
+		};
+
+		return arr;
+	}
+
+	
+}
+
+</script>
+
+<body>
+<!-- <div class="btn">
+	<input type="button" value="展开">
+	<input type="button" value="重置">
+</div> -->
+
+<div id="wrap">
+<input type="button" value="上一张">
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+<input type="button" value="下一张">
+</div>
+
+</body>
+</html>

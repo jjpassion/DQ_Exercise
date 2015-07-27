@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>本地存储 geolocation</title>
+</head>
+<!-- 
+LBS ： 基于地图信息的应用
+
+1、Storage
+	-sessionStorage
+		-session 临时会话，从页面打开到页面关闭的时间段
+		-窗口的临时存储，页面关闭，本地存储消失
+	-localStorage
+		-永久存储（可以手动删除数据）
+2、Storage的特点
+	-存储量限制（5M）
+	-客户端完成，不会请求服务器处理
+	-sessionStorage数据是不共享、localStorage共享
+3、地理位置
+	-经度 ： 南北极的连接线
+	-纬度 ： 东西连接的线
+
+4、位置信息从何而来
+	-IP地址
+	-GPS全球定位系统
+	-wifi无线网络
+	-基站
+5、地理位置对象
+	navigator.geolocation
+	-单次定位请求：getCurrentPosition(请求成功，请求失败，数据收集方式)
+	-请求成功函数
+		-经度 ： coords.longitude
+		-纬度 ： coords.latitude
+		-准确度： coords.accuracy
+		-海拔 ： coords.altitude
+		-海拔准确度 ： coords.altitudeAcuracy
+		-行进方向 ： coords.heading
+		-地面速度 ： coords.speed
+		-时间戳 ： new Date(position.timestamp)
+	-请求失败函数
+		-失败编号 ： code
+			0 ：不包括其他错误编号中的错误
+			1 ：用户拒绝浏览器获取位置信息
+			2 ：尝试获取用户信息，但失败了
+			3 ：设置了timeout值，获取位置超时了
+		-数据收集：json的形式
+			-enableHighAcuracy : 更精确的查找，默认false
+			-timeout : 获取位置允许最长时间，默认infinity
+			-maximumAge : 位置可以缓存的最大时间，默认0
+	-多次定位请求 ： watchPosition(像setInterval)
+		-移动设备用，位置改变才会触发
+		-配置参数：frequency 更新的频率
+	-关闭更新请求：clearWatch(像clearInterval)
+
+	百度地图API
+	<script src="http://api.map.baidu.com/api?v=1.5"></script>
+	创建基于地图的应用
+
+本地存储
+1、cookie 数据存储到计算机中,通过浏览器控制添加与删除数据
+2、cookie的特点
+	存储限制 域名100个cookie,每组大小4kB
+	客户端、服务器端，使用cookie都会请求服务器（头信息）
+	同浏览器页面间的cookie是共享
+3、storage
+	sessionStorage
+		session 临时会话，从页面打开到页面关闭时间段
+		窗口的临时存储，页面关闭，本地存储消失
+	localStorage 永久存储（可以手动删除数据）
+4、storage的特点
+	存储量限制5M （比cookie的存储量大）
+	客户端完成，不会请求服务器（本地存储，性能比cookie好）
+	窗口间sessionStorage数据是不共享、localStorage共享
+
+storage API
+    setItem(): 设置数据，key/value类型，类型都是字符串
+                    可以用获取属性的形式操作
+    getItem(): 获取数据，通过key来获取相应的value
+    removeItem() 删除数据，通过key来删除
+    clear()     删除全部存储的值
+    例子：保存注册信息
+    
+    存储事件：
+          - 当数据有修改或删除的情况，就会触发storage事件
+          - 在对数据进行改变的窗口对象上不会触发的
+          - key 修改或删除的key，clear（）key为null
+          - newValue 新设置的值，如果调用removeStorage() key为null
+          - oldValue 调用改变前的value
+          - storageArea 当前的storage对象
+          - url 触发该脚本变化的文档URL
+          - 注： session同窗口才可以，例子，iframe操作
+          例子：同步购物车
+
+
+ -->
+ <style>
+.div1{width: 400px;height: 400px;}
+ </style>
+ <script src="http://api.map.baidu.com/api?v=1.5"></script>
+<script>
+window.onload = function(){
+
+}
+</script>
+<body>
+<p></p>
+<input type="button" id="ipt" value="请求位置信息">
+<p></p>
+<div class="div1"></div>
+	
+</textarea>
+</body>
+</html>

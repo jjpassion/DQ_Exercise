@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>图片分片-3D翻转（切割70份）</title>
+</head>
+<style>
+	body,ul,li{ padding: 0; margin: 0; list-style: none;}
+	.list{ width: 570px; height: 400px; margin: 50px auto; -webkit-transform-style:preserve-3d; -webkit-perspective:600px; perspective:600px;}
+	.list > li{width: 55px; height: 55px; float: left; border: 1px solid rgba(0,0,0,0); background: #f69; background: url(./images/1.png) no-repeat; background-origin: border-box;/* -webkit-transition: background .3s, border .2s, -webkit-transform 2s .2s,opacity 2s .3s;*/ }
+	
+	.btn{margin: 0 auto; width: 200px;}
+	input{margin-top: 50px; position: relative; z-index: 2;}
+	input:nth-of-type(1){margin-left: 50px;}
+
+</style>
+
+<script>
+	
+window.onload = function(){
+	var oList = document.querySelector('.list')
+	var oLis = oList.getElementsByTagName('li')
+	var liLen = oLis.length
+
+	var oneLiW = oLis[0].offsetWidth
+		,oneLiH = oLis[0].offsetHeight
+
+	var iRows = parseInt(oList.offsetHeight / oneLiW)
+	var iCeils = parseInt(liLen / iRows) /* 长度/行数 = 每行的单元格个数 = 列数 */
+
+	// console.log(iRows,iCeils)
+	var objs = setPos(oLis,iRows,iCeils)
+
+	var oInput = document.getElementsByTagName('input')
+
+
+
+	/* 展开 */
+	oInput[0].onclick = function(){
+		clickObj(objs,iCeils-1,iRows-1,function(){
+		
+			with(this.style){
+				WebkitTransition = 'background .3s, border 2s, -webkit-transform 2s .2s,opacity 2s .3s'
+				border = '1px solid rgba(0,0,0,.2)'
+				boxShadow =  '0 0 20px blue'
+				WebkitTransform = 'translate(-50px,-100px) rotateY(-720deg) rotateX(-540deg)'
+				opacity = 0
+			}
+
+		},-1,-1)
+	}
+
+	/* 重置 */
+	oInput[1].onclick = function(){
+
+		clickObj(objs,0,0,function(){
+			with(this.style){
+				WebkitTransition = 'background .3s, border 1s, -webkit-transform ease-in 1s,opacity 1s'
+				border = '1px solid rgba(0,0,0,0)'
+				boxShadow =  '0 0 0 blue'
+				WebkitTransform = 'translate(0,0) rotateY(0deg) rotateX(0)'
+				opacity = 1
+			}
+		},1,1)
+	}
+
+	function clickObj(arr,x,y,fn,speedX,speedY,delayTime){
+		// var xIndex = obj.xIndex
+		// 	,yIndex = obj.yIndex
+		
+		delayTime || (delayTime = 50)
+
+		if(!arr[y] || !arr[y][x]) return;
+		if(fn){
+			clearTimeout(arr[y][x].timer)
+			arr[y][x].timer = setTimeout(function(){
+				fn.call(arr[y][x])
+				clickObj(arr,x+speedX,y,fn,speedX,speedY)
+				clickObj(arr,x,y+speedY,fn,speedX,speedY)
+			},delayTime)
+			
+		}
+	}
+
+	function setPos(objs,iRows,iCeils){
+		var arr = []
+			,arr2 = []
+
+		/* i第几是行（yIndex），j第几是列(xIndex) */
+		for (var i = 0; i < iRows; i++) { 
+			arr2 = []
+			for (var j = 0; j < iCeils; j++) {
+				var thisObj = objs[i * iCeils + j]
+				thisObj.xIndex = j
+				thisObj.yIndex = i
+				// thisObj.innerHTML = thisObj.yIndex + '|' +thisObj.xIndex
+				
+				thisObj.style.backgroundPosition = -j*oneLiW + 'px ' + (-i*oneLiH) + 'px'
+				
+				arr2.push(thisObj)
+			};
+			arr.push(arr2)
+		};
+
+		return arr;
+	}
+
+	
+}
+
+</script>
+
+<body>
+<div class="btn">
+	<input type="button" value="展开">
+	<input type="button" value="重置">
+</div>
+
+
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+</body>
+</html>

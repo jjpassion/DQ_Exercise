@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单</title>
+</head>
+<style>
+body{margin: 0; padding: 0;/* background: #eee;*/}
+.wrap{ width: 800px;  margin: 20px auto; padding: 10px;}
+.wrap label{display: inline-block; width: 100px; text-align: right;}
+.btn{text-align: center; line-height: 45px;}
+.btn > button{ width: 100px; height: 30px; background: #fff; border: 1px solid gray;  -webkit-appearance: none; border-radius: 5px;}
+.answer{vertical-align: top; width: 75%;}
+.question{width: 75%;}
+</style>
+<body>
+<!-- 
+字段名称：问题 字段类型：文本框
+字段名称：url/答案 字段类型：文本框 多行
+字段名称：来源 字段类型：下拉框 （论坛，官网，邮件，其他）
+字段名称：所属板块 字段类型：下拉框 
+	block.put("4", "新手入门");
+	block.put("5", "JavaScript API");
+	block.put("6", "云检索");
+	block.put("7", "Web服务 API");
+	block.put("8", "Android地图SDK");
+	block.put("9", "iOS地图SDK");
+	block.put("10", "Andriod定位SDK");
+	block.put("19", "车联网API ");
+	block.put("22", "导航SDK");
+	block.put("23", "全景SDK");
+	block.put("26", "百度鹰眼");
+	block.put("28", "golo(百度地图版)");
+ -->
+<div class="wrap">
+	<form action="" method="post" onsubmit="return testRes();">
+	  <fieldset>
+	  <legend>知识录入</legend>
+	  <p>
+	  	<label for="question">问题：</label>
+	  	<input type="text" class="question" name="question" id="question">
+	  </p>
+
+	  <p>
+	  	<label for="answer">url/答案：</label>
+	  	<textarea name="answer" class="answer" id="answer" cols="30" rows="10"></textarea>
+	  </p>
+	  
+	  <p>
+	  <label for="source">来源：</label>
+	  <select name="source" id="source">
+	  	<option value="论坛">论坛</option>
+	  	<option value="官网">官网</option>
+	  	<option value="邮件">邮件</option>
+	  	<option value="其他">其他</option>
+	  </select>
+	  </p>
+	
+	  <p>
+	  <label for="from">所属板块：</label>
+	  <select name="from" id="from">
+	  	<option value="新手入门">新手入门</option>
+	  	<option value="JavaScript API">JavaScript API</option>
+	  	<option value="云检索">云检索</option>
+	  	<option value="Web服务 API">Web服务 API</option>
+	  	<option value="Android地图SDK">Android地图SDK</option>
+	  	<option value="iOS地图SDK">iOS地图SDK</option>
+	  	<option value="Andriod定位SDK">Andriod定位SDK</option>
+	  	<option value="车联网API">车联网API</option>
+	  	<option value="导航SDK">导航SDK</option>
+	  	<option value="全景SDK">全景SDK</option>
+	  	<option value="百度鹰眼">百度鹰眼</option>
+	  	<option value="golo(百度地图版)">golo(百度地图版)</option>
+	  </select>
+	  </p>
+	  </fieldset>
+	  <p class="btn"><button type="submit">提交</button></p>
+	</form>
+</div>
+
+</body>
+<script>
+function testRes(){
+	var question = document.getElementById('question').value
+		,answer = document.getElementById('answer').value
+		,source = document.getElementById('source').value
+		,from = document.getElementById('from').value
+	if(question == false || answer == false || source == false || from == false){
+		alert('表单字段不能为空！')
+		return false
+	}
+}
+// String.prototype.Trim = function()  
+// {  
+// 	return this.replace(/(^\s*)|(\s*$)/g, "");  
+// } 
+</script>
+</html>

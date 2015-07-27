@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>足球运动-拖拽-运动</title>
+</head>
+<style>
+	*{margin: 0;padding: 0;}
+	#div1{position: absolute; width: 200px; height: 200px; background-image: url(./img/football.png); background-repeat: no-repeat;background-size: 80%; background-position: center;}
+
+	.black{position: absolute; border: 1px solid #000; }
+</style>
+<script type="text/javascript" async="async" src="../js/requestAnimationFrame.js"></script>
+<script>
+/**
+ * 拖拽的三大事件 onmousedown onmousemove onmouseup
+ * 1、解决拖拽图片的bug,则要阻止默认事件 return false;
+ * 2、IE8之前 选中就会有BUG
+ * 		setCapture() : 全局捕获（生成了一个透明层）
+ * 		releaseCapture() : 释放全局捕获（删除了一个层）
+ * 
+ */
+
+window.onload = function() {
+	//或者直接用document.getElementById('#div1')
+	var div1 = document.querySelector('#div1')
+		,body = document.querySelector('body')
+		,prevX = 0
+		,prevY = 0
+		,iSpeedX = 0
+		,iSpeedY = 0
+		,requestId = 0
+
+	/* 鼠标按下 */
+	div1.onmousedown = function(ev){
+		var ev = ev || window.event
+		var disX = ev.clientX - div1.offsetLeft
+			,disY = ev.clientY - div1.offsetTop
+			
+		prevX = ev.clientX
+		prevY = ev.clientY
+
+		if(div1.setCapture){
+			div1.setCapture();
+		}
+
+		document.onmousemove = function(ev){
+			var ev = ev || window.event
+			div1.style.left = ev.clientX - disX + 'px'
+			div1.style.top = ev.clientY - disY + 'px'
+
+			// var black = document.createElement('div');
+			// black.className = 'black';
+			// black.style.left = ev.clientX + 'px';
+			// black.style.top = ev.clientY + 'px';
+			// body.appendChild(black)
+			// 
+			var nowX = ev.clientX
+				,nowY = ev.clientY
+			
+			iSpeedX = nowX - prevX
+			iSpeedY = nowY - prevY
+
+			prevX = nowX
+			prevY = nowY
+
+		}
+
+		document.onmouseup = function(){
+			document.onmousemove = null
+			document.onmouseup = null
+			/* 释放 全局捕获 */
+			if(div1.releaseCapture){
+				div1.releaseCapture()
+			}
+
+			startMove(div1)
+		}
+
+
+		function startMove(obj){
+			// console.log(obj)
+			var mark = 0
+				,maxWidth = document.documentElement.clientWidth -obj.offsetWidth
+				,maxHeight = document.documentElement.clientHeight - obj.offsetHeight
+
+			requestId && window.cancelAnimationFrame(requestId)
+			requestId = window.requestAnimationFrame(function(){
+				// iSpeedX += 1
+				iSpeedY += 1  //模仿重力的感觉，Y轴速度加速
+
+				var L = obj.offsetLeft + iSpeedX
+					T = obj.offsetTop + iSpeedY
+
+				if( L > maxWidth ){
+					L = maxWidth
+					iSpeedX *= -1
+					iSpeedX *= 0.75
+				}else if( L < 0 ){
+					L = 0
+					iSpeedX *= -1
+					iSpeedX *= 0.75
+				}
+
+				if( T > maxHeight ){
+					// mark++
+					T = maxHeight
+					iSpeedY *= -1
+					iSpeedY *= 0.75
+					iSpeedX *= 0.75 //底边增加X轴的速度损失
+				}else if( T < 0 ){
+					T = 0
+					iSpeedY *= -1
+					iSpeedY *= 0.75
+				}
+
+				var nowL = obj.style.left 
+					,nowT = obj.style.top
+
+				// 球停止 不用递归
+				if( nowL == L + 'px' && nowT == T + 'px' && nowT == maxHeight + 'px'){
+					return
+				}
+
+				obj.style.left = L + 'px'
+				obj.style.top = T + 'px'
+
+				// console.log(1)
+				window.requestAnimationFrame(arguments.callee)
+
+			});
+			
+		}
+
+		return false;
+
+	}
+	// console.log(div1)
+}
+
+</script>
+<body>
+
+	<div id="div1"></div>
+	
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>分块坐标-点击变换颜色（切割70份）</title>
+</head>
+<style>
+	body,ul,li{ padding: 0; margin: 0; list-style: none;}
+	.list{ width: 600px; height: 420px; margin: 50px auto;}
+	.list > li{width: 58px; height: 58px; float: left; border: 1px solid #ccc; background: #f69;}
+</style>
+
+<script>
+	
+window.onload = function(){
+	var oList = document.querySelector('.list')
+	var oLis = oList.getElementsByTagName('li')
+	var liLen = oLis.length
+
+	var iRows = oList.offsetHeight / oLis[0].offsetHeight
+	var iCeils = liLen / iRows /* 长度/行数 = 每行的单元格个数 = 列数 */
+
+	var objs = setPos(oLis,iRows,iCeils)
+
+	// console.log(objs[0][0].xIndex)
+	
+	for (var i = 0; i < liLen; i++) {
+		oLis[i].onclick = function(){
+			clickObj(objs,this.xIndex,this.yIndex,function(){
+				this.style.background = 'orange'
+			})
+		}
+	};
+
+	function clickObj(arr,x,y,fn,delayTime){
+		// var xIndex = obj.xIndex
+		// 	,yIndex = obj.yIndex
+		
+		delayTime || (delayTime = 50)
+
+		if(!arr[y] || !arr[y][x]) return;
+		if(fn){
+			setTimeout(function(){
+				fn.call(arr[y][x])
+				clickObj(arr,x-1,y,fn)
+				clickObj(arr,x,y-1,fn)
+			},delayTime)
+			
+		}
+	}
+
+	function setPos(objs,iRows,iCeils){
+		var arr = []
+			,arr2 = []
+
+		/* i第几是行（yIndex），j第几是列(xIndex) */
+		for (var i = 0; i < iRows; i++) { 
+			arr2 = []
+			for (var j = 0; j < iCeils; j++) {
+				var thisObj = objs[i * iCeils + j]
+				thisObj.xIndex = j
+				thisObj.yIndex = i
+				thisObj.innerHTML = thisObj.yIndex + '|' +thisObj.xIndex
+				arr2.push(thisObj)
+			};
+			arr.push(arr2)
+		};
+
+		return arr;
+	}
+
+	
+}
+
+</script>
+
+<body>
+<ul class="list">
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+</body>
+</html>

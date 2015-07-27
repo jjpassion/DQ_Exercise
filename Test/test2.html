@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>判断一个字符串中出现次数最多的字符，统计这个次数</title>
+</head>
+<style>
+	body{background: #f69;}
+</style>
+ <!-- hashmap 3，判断一个字符串中出现次数最多的字符，统计这个次数 -->
+<script>
+function getMost(str){
+	var obj = []
+	for (var i = 0,len = str.length; i < len; i+=1) {
+		var key = str[i]
+		if(!obj[key]){
+			obj[key] = 1
+		}else{
+			obj[key]++
+		}
+	}
+	// console.log(obj)
+	/* 这样做的缺陷是只能找到最后一个次数最多的字符 比如 ab同时出现5次，因b排在a之后，所以最后记录的字符是b。a遗漏*/
+	var max = 0
+		,max_char = ''
+	for(key in obj){
+		if(max < obj[key]){
+			max = obj[key]
+			max_char = key
+		}
+	}
+
+	return [max,max_char]
+
+
+}
+
+var res = getMost('aaabbbcceee')
+console.log(res) //结果 3,k  "字母k出现三次"
+
+/* 改进方案 结果 */
+function getMost2(str){
+	var obj = []
+	for (var i = 0,len = str.length; i < len; i+=1) {
+		var key = str[i]
+		if(!obj[key]){
+			obj[key] = 1
+		}else{
+			obj[key]++
+		}
+	}
+
+	/* */
+	var max = 0
+		,max_char = []
+	for(key in obj){
+		if(max < obj[key]){
+			max = obj[key]
+			max_char.length = 0 //表示清空 数组 max_char
+			max_char.push(key)
+		}else if(max == obj[key]){
+			max_char.push(key)
+		}
+	}
+
+	return {'max':max,'max_key':max_char}
+}
+
+var res = getMost2('aaaabbbcceee')
+console.log(res) // 3,k  "字母k出现三次"
+
+</script>
+<body>
+
+
+
+  <!--
+	3，判断一个字符串中出现次数最多的字符，统计这个次数
+//将字符串的字符保存在一个hash table中，key是字符，value是这个字符出现的次数
+var str = "abcdefgaddda";
+var obj = {};
+for (var i = 0, l = str.length; i &lt; l; i++) {
+   var key = str[i];
+   if (!obj[key]) {
+      obj[key] = 1;
+   } else {
+      obj[key]++;
+   }
+}
+
+/*遍历这个hash table，获取value最大的key和value*/
+var max = -1;
+var max_key = "";
+var key;
+for (key in obj) {
+   if (max < obj[key]) {
+      max = obj[key];
+      max_key = key;
+   }
+}
+  -->
+	
+</body>
+</html>

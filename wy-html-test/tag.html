@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>标签分类与解析</title>
+</head>
+<style>
+	body,li,ul{margin: 0; padding: 0; list-style: none;}
+	body{background: #000; width: 100%; font-size: 12px;}
+	.wrap{width: 1030px; margin: 100px auto; border: 1px solid #fff; overflow: hidden; padding: 20px;}
+	ul{overflow: hidden;}
+	li{display: inline-block; width: 55px; height: 40px; border-radius: 5px;  line-height: 40px;  text-align: center; float: left; word-wrap: break-all; }
+	/*.white{ background: #fff; border: transparent; }*/
+	.black{ border: transparent; border: 1px solid transparent; }
+	.green-l{ background: #76b97a; border: 1px solid #4cb34b;}
+	.orange{ background: #df8735; border: 1px solid #f0913f;}
+	.orange-l{ background: #de894a; border: 1px solid #e99356;}
+	.blue{ background: #627be0; border: 1px solid #6b84ea;}
+	.blue-l{ background: #8295da; border: 1px solid #8b9ee2;}
+	.yellow{ background: #d5c43c; border: 1px solid #d4cb6e;}
+	.pink{ background: #da97d8; border: 1px solid #e6a3e4;}
+	.green{ background: #45ab44; border: 1px solid #4eb44d;}
+	.gray{ background: #cfd1d3; border: 1px solid #e2e4e5;}
+
+	.mark{ clear: both; margin-top: 20px; margin-bottom: 30px; color: #edf4f4;}
+	.mark > span{display: inline-block; margin-right: 40px;  width: 15%; margin-top: 10px; }
+	.mark i{display: inline-block; width: 10px; height: 10px; border-radius: 3px;}
+
+	h3,p{ color: #edf4f4; font-size: 13px;}
+</style>
+<body>
+<div class="wrap">
+<ul>
+	<li class="green-l">html</li>
+	<li class="black">2</li>
+	<li class="black">3</li>
+	<li class="black">4</li>
+	<li class="black">5</li>
+	<li class="black">6</li>
+	<li class="black">7</li>
+	<li class="black">8</li>
+	<li class="black">9</li>
+	<li class="black">10</li>
+	<li class="black">11</li>
+	<li class="black">12</li>
+	<li class="black">13</li>
+	<li class="black">14</li>
+	<li class="black">15</li>
+	<li class="black">16</li>
+	<li class="orange-l">col</li>
+	<li class="orange-l">table</li>
+	<!-- 第二排 -->
+	<li class="blue">head</li>
+	<li class="yellow">span</li>
+	<li class="black">21</li>
+	<li class="black">22</li>
+	<li class="black">23</li>
+	<li class="black">24</li>
+	<li class="black">25</li>
+	<li class="black">26</li>
+	<li class="black">27</li>
+	<li class="black">28</li>
+	<li class="orange">div</li>
+	<li class="green">fieldset</li>
+	<li class="green">form</li>
+	<li class="blue-l">body</li>
+	<li class="blue-l">h1</li>
+	<li class="blue-l">section</li>
+	<li class="orange-l">colgroup</li>
+	<li class="orange-l">tr</li>
+	<!-- 第三排 -->
+	<li class="blue">title</li>
+	<li class="yellow">a</li>
+	<li class="black">39</li>
+	<li class="black">40</li>
+	<li class="black">41</li>
+	<li class="black">42</li>
+	<li class="black">43</li>
+	<li class="black">44</li>
+	<li class="black">45</li>
+	<li class="black">46</li>
+	<li class="orange">pre</li>
+	<li class="green">meter</li>
+	<li class="green">select</li>
+	<li class="blue-l">aside</li>
+	<li class="blue-l">h2</li>
+	<li class="blue-l">header</li>
+	<li class="orange-l">caption</li>
+	<li class="orange-l">td</li>
+
+	<!-- 第四排 -->
+	<li class="blue">meta</li>
+	<li class="yellow">rt</li>
+	<li class="yellow">dfn</li>
+	<li class="yellow">em</li>
+	<li class="yellow">i</li>
+	<li class="yellow">small</li>
+	<li class="yellow">ins</li>
+	<li class="yellow">s</li>
+	<li class="orange">br</li>
+	<li class="orange">p</li>
+	<li class="orange">blockquote</li>
+	<li class="green">legend</li>
+	<li class="green">optgroup</li>
+	<li class="blue-l">address</li>
+	<li class="blue-l">h3</li>
+	<li class="blue-l">nav</li>
+	<li class="gray">menu</li>
+	<li class="orange-l">th</li>
+
+	<!-- 第五排 -->
+	<li class="blue">base</li>
+	<li class="yellow">rp</li>
+	<li class="yellow">abbr</li>
+	<li class="yellow">time</li>
+	<li class="yellow">b</li>
+	<li class="yellow">strong</li>
+	<li class="yellow">del</li>
+	<li class="yellow">kbd</li>
+	<li class="orange">hr</li>
+	<li class="orange">ol</li>
+	<li class="orange">dl</li>
+	<li class="green">label</li>
+	<li class="green">option</li>
+	<li class="green">detailist</li>
+	<li class="blue-l">h4</li>
+	<li class="blue-l">article</li>
+	<li class="gray">command</li>
+	<li class="orange-l">tbody</li>
+
+	<!-- 第六排 -->
+	<li class="blue">link</li>
+	<li class="blue">noscript</li>
+	<li class="yellow">q</li>
+	<li class="yellow">var</li>
+	<li class="yellow">sub</li>
+	<li class="yellow">mark</li>
+	<li class="yellow">bdi</li>
+	<li class="yellow">wbr</li>
+	<li class="orange">figcaption</li>
+	<li class="orange">ul</li>
+	<li class="orange">dt</li>
+	<li class="green">input</li>
+	<li class="green">output</li>
+	<li class="green">kegen</li>
+	<li class="blue-l">h5</li>
+	<li class="blue-l">footer</li>
+	<li class="gray">summary</li>
+	<li class="orange-l">thead</li>
+
+	<!-- 第七排 -->
+	<li class="blue">style</li>
+	<li class="blue">script</li>
+	<li class="yellow">cite</li>
+	<li class="yellow">samp</li>
+	<li class="yellow">sup</li>
+	<li class="yellow">ruby</li>
+	<li class="yellow">bdo</li>
+	<li class="yellow">code</li>
+	<li class="orange">figure</li>
+	<li class="orange">li</li>
+	<li class="orange">dd</li>
+	<li class="green">textarea</li>
+	<li class="green">button</li>
+	<li class="green">progress</li>
+	<li class="blue-l">h5</li>
+	<li class="blue-l">hgroup</li>
+	<li class="gray">details</li>
+	<li class="orange-l">tfoot</li>
+</ul>
+
+<ul style="margin-top:40px;">
+	<li class="black"></li>
+	<li class="black"></li>
+	<li class="black"></li>
+	<li class="black"></li>
+	<li class="black"></li>
+	<li class="black"></li>
+	<li class="pink">img</li>
+	<li class="pink">area</li>
+	<li class="pink">map</li>
+	<li class="pink">embed</li>
+	<li class="pink">object</li>
+	<li class="pink">param</li>
+	<li class="pink">source</li>
+	<li class="pink">iframe</li>
+	<li class="pink">canvas</li>
+	<li class="pink">track</li>
+	<li class="pink">audio</li>
+	<li class="pink">video</li>
+</ul>
+
+<div class="mark">
+	<span><i class="green-l"></i> 根元素</span>
+	<span><i class="yellow"></i> 文本级别语义</span>
+	<span><i class="green"></i> 表单</span>
+	<span><i class="orange-l"></i> 表格数据</span>
+	<span><i class="blue"></i> 原数据和脚本</span>
+	<span><i class="orange"></i> 组合内容</span>
+	<span><i class="blue-l"></i> 文档章节</span>
+	<span><i class="gray"></i> 互动元素</span>
+	<span><i class="pink"></i> 嵌入式内容</span>
+</div>
+
+<h3>注释:</h3>
+<p> dfn 标签可标记那些对特殊术语或短语的定义。</p>
+<p> rt,rp 与ruby合用，上拼音标注(rp 不支持rt的浏览器时显示的样式) </p>
+<p> q 标签定义短的引用。浏览器经常在引用的内容周围添加引号</p>
+<p> abbr 标签指示简称或缩写，比如 "WWW" 或 "NATO"。 </p>
+<p> cite 标签通常表示它所包含的文本对某个参考文献的引用，比如书籍或者杂志的标题。</p>
+<p> samp 标签表示一段用户应该对其没有什么其他解释的文本字符。要从正常的上下文抽取这些字符时，通常要用到这个标签。字符序列 (<samp>ae</samp> 可能会被转换为 &aelig; 连字字符。)</p>
+<p> ins <ins>下划线文本</ins></p>
+<p> bdi (设置间隔)标签允许您设置一段文本，使其脱离其父元素的文本方向设置。Username <bdi>Bill</bdi>:80 points。 支持：F,C </p>
+<p> bdo 元素可覆盖默认的文本方向。 </p>
+<p> s 带删除线文本 <s>sss</s>HTML 5 中不再支持这个标签.</p>
+<p> kbd 标签定义键盘文本。</p>
+<p> wpr Word Break Opportunity (wbr) 规定在文本中的何处适合添加换行符。
+提示：如果单词太长，或者您担心浏览器会在错误的位置换行，那么您可以使用 wbr 元素来添加 Word Break Opportunity（单词换行时机）。</p>
+<p> code 标签用于表示计算机源代码或者其他机器可以阅读的文本内容 </p>
+<p> blockquote 标签定义块引用。blockquote 之间的所有文本都会从常规文本中分离出来，经常会在左、右两边进行缩进（增加外边距），而且有时会使用斜体。也就是说，块引用拥有它们自己的空间</p>
+<p> meter  标签定义已知范围或分数值内的标量测量。也被称为 gauge（尺度）,例子：磁盘用量、查询结果的相关性，等等。注释：meter 标签不应用于指示进度（在进度条中）。如果标记进度条，请使用 progress 标签 </p>
+<p> legend 元素为 fieldset 元素定义标题</p>
+<p> fieldset 元素可将表单内的相关元素分组</p>
+<p> </p>
+</div>
+	
+</body>
+</html>

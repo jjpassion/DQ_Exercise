@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简易版-妈祖游戏</title>
+</head>
+<style>
+body{background: #ccc;}
+#c1{background: #fff;}
+</style>
+
+<script>
+window.onload = function(){
+	var oC = document.getElementById('c1')
+	var oGC = oC.getContext('2d')
+
+	var ocW = oC.width
+		,ocH = oC.height
+		,ocL = oC.offsetLeft
+		,ocT = oC.offsetTop
+
+	var ball = []
+
+
+
+
+	var iRotate = 0;
+	var yImg = new Image()
+	yImg.src = 'zuma.png'
+	// yImg.width = '100px'
+
+
+	yImg.onload = function(){
+
+		// draw()
+
+		// setInterval(addBall,400)
+
+		addBall()
+		setInterval(draw,1000/60)
+
+		// setInterval(move,30)
+		
+		
+
+	}
+
+	// setInterval(addBall,400)
+
+	// setInterval(draw,1000/60)
+
+	// setInterval(move,30)
+	// 
+	
+
+	
+	
+	function addBall(){
+
+		ball.push({
+			x : 300,
+			y : 0,
+			r : 200,
+			startX : 300,
+			startY : 0,
+			num : 0
+		});
+
+		oC.onmousemove = function(ev){
+			var ev = ev || window.event
+
+			var x = ev.clientX - ocL
+				,y = ev.clientY - ocT
+
+			var a = x - 300
+				,b = y - 200
+
+			var c = Math.sqrt(a*a + b*b)
+
+			if(a > 0 && b > 0 ){
+				/* 右下角 */
+				iRotate = -Math.asin(a/c)
+			}else if(a > 0){
+				/* 右上角 */
+				iRotate = Math.asin(b/c) - 90*Math.PI/180
+			}
+
+			if(a < 0 && b < 0 ){
+				/* 左上角 */
+				iRotate = -Math.asin(b/c) + 90*Math.PI/180
+			}else if(a < 0){
+				/* 左下角 */
+				iRotate = -Math.asin(a/c)
+			}
+
+		}
+
+	}
+
+	function move(){
+		for (var i = 0; i < ball.length; i++) {
+			ball[i].num += 1
+			if(ball[i].num == 270){
+				ball[i].r = 150
+				ball[i].startX = 250
+				ball[i].startY = 50
+			}
+
+			if(ball[i].num == 270 + 180){
+				alert('游戏结束')
+				window.location.reload();
+			}
+			
+			var r = ball[i].r
+			ball[i].x = Math.sin(ball[i].num * Math.PI/180) * r + ball[i].startX
+			ball[i].y = r - Math.cos(ball[i].num * Math.PI/180) * r + ball[i].startY
+		};
+	}
+
+	function draw(){
+		oGC.clearRect(0,0,ocW,ocH)
+
+		oGC.strokeStyle = '#f69'
+		oGC.fillStyle = '#f69'
+		oGC.beginPath()
+		oGC.arc(300,200,200,-90*Math.PI/180,180*Math.PI/180,false)
+		oGC.stroke()
+
+		oGC.beginPath()
+		oGC.arc(250,200,150,180*Math.PI/180,360*Math.PI/180,false)
+		oGC.stroke()
+
+		oGC.beginPath()
+		oGC.arc(400,200,20,0,360*Math.PI/180,false)
+		oGC.stroke()
+
+		
+
+		for (var i = 0; i < ball.length; i++) {
+			var x = ball[i].x,
+				y = ball[i].y
+			oGC.beginPath()
+			// oGC.moveTo(x,y)
+			oGC.arc(x,y,20,0,360*Math.PI/180,false)
+			oGC.fill()
+		};
+
+		oGC.save()
+		oGC.translate(300,200)
+		// oGC.rotate( n++ * Math.PI / 180 )
+		oGC.rotate( iRotate )
+		oGC.translate(-40,-40)
+		oGC.drawImage(yImg,0,0)
+		oGC.restore()
+	}
+
+}
+</script>
+
+<body>
+<canvas id="c1" width="600" height="500"></canvas>
+</body>
+</html>

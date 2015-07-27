@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>左右钢琴轮播图</title>
+	<style>
+	body,ul,ol{margin: 0;padding: 0;}
+	li{list-style: none;}
+	img{border: none; vertical-align: top;}
+
+	#box{width: 470px;height: 150px;position: relative;margin: 30px auto;  overflow: hidden;  }
+	ul{position: absolute; width: 470px; left: 0; top: 0; z-index: 1;}
+	ul > li{ position: absolute; width: 470px; top: 0;}
+
+	ol{position: absolute; right: 10px; bottom: 4px; z-index: 2;}
+	ol > li{float: left; padding:0 4px; margin: 4px; background: #fff; color: #f60; text-align: center; vertical-align: middle; line-height: 20px;}
+	ol > li.active{background: #f60; color: #fff;}
+	</style>
+	<script type="text/javascript" src="../js/move.js"></script>
+	<script>
+		var DOC = document
+
+		window.onload = function(){
+
+			var oUl = DOC.querySelector('ul')
+				,li_Ul = oUl.querySelectorAll('li')
+				,oOl = DOC.querySelector('ol')
+				,li_Ol = oOl.querySelectorAll('li')
+				,oBox = DOC.querySelector('#box')
+
+			var len = li_Ol.length
+				,oneWidth = li_Ul[0].offsetWidth
+				,iNow = 0 //定义切换新banner图前的banner索引号
+				,mark = true //滚动开关
+			/**
+			 * 在IE6，IE7，IE8， IE9以及最新的的FF, 
+			 * Chrome中，对于一般元素
+			 * 都是offsetHeight = padding + height + border = clientHeight + 滚动条 + 边框。
+			 */
+
+			for (var i = 0; i < len; i++) {
+				//将没有显示的图片全部定位到右侧 left = oneWidth
+				if(i > 0){
+					li_Ul[i].style.left = oneWidth + 'px'
+				} 
+				
+				li_Ol[i].index = i;
+				li_Ol[i].onmouseover = function(){
+					var idx = this.index
+
+					if(mark){
+						mark = false;
+
+						for (var i = 0; i < len; i++) {
+							li_Ol[i].className = ''
+						};
+						this.className = 'active'
+						
+						if(iNow < idx){
+							li_Ul[idx].style.cssText = 'left:' + oneWidth + 'px';
+							startMove(li_Ul[iNow],{'left' : - oneWidth})
+						}else if(iNow > idx){
+							li_Ul[idx].style.cssText = 'left:-' + oneWidth + 'px';
+							startMove(li_Ul[iNow],{'left' : oneWidth})
+						}
+						// console.log(this)
+
+						startMove(li_Ul[idx],{left : 0},function(){
+							mark = true;
+						});
+						iNow = idx
+					}
+				}
+				
+			};
+
+	
+
+			
+		}
+
+	</script>
+</head>
+<body>
+	<div id="box">
+		<ul>
+			<li><img src="../images/1.jpg" alt=""></li>
+			<li><img src="../images/2.jpg" alt=""></li>
+			<li><img src="../images/3.jpg" alt=""></li>
+			<li><img src="../images/4.jpg" alt=""></li>
+			<li><img src="../images/5.jpg" alt=""></li>
+		</ul>
+		<ol>
+			<li class="active">1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ol>
+	</div>
+</body>
+</html>

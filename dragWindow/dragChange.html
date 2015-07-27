@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽改变层大小</title>
+</head>
+<style>
+	*{padding: 0; margin: 0}
+	#div1{width: 200px;height: 200px;position: absolute; background: red;}
+	#div2{width: 30px;height: 30px; position: absolute; right: 0; bottom: 0; background: yellow;}
+</style>
+
+<script>
+window.onload = function(){
+	var oDiv1 = document.querySelector('#div1')
+		,oDiv2 = document.querySelector('#div2')
+
+	oDiv2.onmousedown = function(ev){
+		var ev = ev || window.event
+		var disX = ev.clientX
+			,disY = ev.clientY
+			,oWidth1 = oDiv1.offsetWidth
+			,oHeight1 = oDiv1.offsetHeight
+
+		/**
+		 * 网页可见区域宽： document.documentElement.clientWidth
+		 * 网页可见区高度： document.documentElement.clientHeight
+		 */
+		var maxWidth = document.documentElement.clientWidth - 10
+			,maxHeight = document.documentElement.clientHeight - 10
+
+
+		document.onmousemove = function(ev){
+			var ev = ev || window.event
+			var disX_now = ev.clientX
+				,disY_now = ev.clientY
+
+			var W = disX_now - disX + oWidth1 
+				,H = disY_now - disY + oHeight1
+
+			if(W < 100){
+				W = 100
+			}else if(W > maxWidth){
+				W = maxWidth
+			}
+
+			if(H < 100){
+				H = 100
+			}else if(H > maxHeight){
+				H = maxHeight
+			}
+
+			oDiv1.style.width = W + 'px'
+			oDiv1.style.height = H + 'px'
+		}
+		// console.log(disX,disY,oWidth1,oHeight1)
+
+		document.onmouseup = function(){
+			document.onmousedown = null
+			document.onmousemove = null
+		}
+	}
+}
+</script>
+<body>
+	<div id="div1">
+		<div id="div2"></div>
+	</div>
+</body>
+</html>

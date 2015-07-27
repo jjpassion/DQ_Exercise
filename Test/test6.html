@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>三行两列自适应布局</title>
+</head>
+<body>
+<style>
+html,body{height: 100%;}
+body{
+	display: flex; flex-flow:column;
+}
+.head,.foot{height: 100px; background: #ccc;}
+.body{ flex: 1; display: flex;}
+.side{width: 200px; background: pink; margin-right: 10px; }
+.main{flex:1; background: #999;}
+/*.main .t{height: 1000px;}*/
+</style>
+
+<div class="head">head</div>
+<div class="body">
+	<div class="side">side</div>
+	<div class="main">
+		<div class="t">maintest</div>
+	</div>
+</div>
+<div class="foot">foot</div>
+	
+</body>
+</html>

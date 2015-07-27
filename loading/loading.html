@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>loading小特效</title>
+	<link rel="stylesheet" href="./loading.css">
+	<style>
+		
+		.ui-loading {
+			width: 20px;
+			height: 20px;
+			display: block;
+			background: url(http://i.gtimg.cn/vipstyle/frozenui/1.0.0/img/loading_sprite.png?_bid=256);
+			background-size: auto 20px;
+			-webkit-animation: rotate 1s steps(12) infinite;
+		}
+
+
+		@-webkit-keyframes rotate {
+		0% {-webkit-transform: scale(1) rotate(0deg);}
+		50% {-webkit-transform: scale(.8) rotate(360deg);}
+		100% {-webkit-transform: scale(1) rotate(720deg);}
+	}
+	</style>
+</head>
+
+<span class="loading" style="left: 50%; opacity: 1;">
+	<span></span>
+	<i></i>
+</span>
+
+
+<h2>loading 示例2</h2>
+<span class="ui-loading"></span>
+
+
+<body>
+	
+</body>
+</html>

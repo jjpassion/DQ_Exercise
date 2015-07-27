@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5-拖拽-draggable</title>
+</head>
+<!-- 
+	拖放 draggable - 设置为true，元素就可以拖拽了
+
+	拖放事件
+	1、拖拽元素事件：事件对象为被拖拽元素
+		-dragstart,拖拽前触发
+		-drag 拖拽前，拖拽结束之间，连续触发
+		-dragend 拖拽结束触发
+	2、目标元素事件：事件对象为目标元素
+		-dragenter,进入目标元素触发，相当于mouseover
+		-dragover,进入目标，离开目标之间，连续触发
+		-dragleave,离开目标元素触发，相当于mouseout
+		-drop,在目标元素上鼠标触发
+	5、fileReader(读取文件信息)
+		- readAsDataURL 参数为要读取的文件对象，将文件读取为DataUrl
+		- onload 当读取文件成功完成的时候触发此事件
+				 this.result,来获取读取的文件数据，如果是图片，将返回，base64格式的图片
+		- 实例
+			拖拽删除列表
+			拖拽购物车
+			上传图片预览功能
+
+
+	总结：
+	1、事件的执行顺序：drop 不触发的时候
+		- dragstart > drag > dragenter > dragover > dragleave > dragend
+	2、事件的执行顺序: drop 触发的时候（dragover阻止默认事件）
+		- dragstart > drag > dragenter > dragover > drop > dragend
+	3、不能释放的光标和能释放的光标不一样
+ -->
+
+ <style>
+ 	li{list-style: none; background: pink; width: 100px; height: 30px; margin: 5px; line-height: 30px; text-align: center;}
+	#wrap{width: 200px; height: 200px; position: absolute; top: 300px; left: 200px; background: #ddd;}
+ </style>
+<script>
+	window.onload = function(){
+		var oLis = document.getElementsByTagName('li')
+			,oDiv = document.getElementById('wrap')
+
+		for (var i = 0,len = oLis.length; i < len; i++) {
+			oLis[i].ondragstart = function(){
+				this.style.background = '#f69'
+			}
+
+			/* 开始与结束 连续触发 */
+			oLis[i].ondrag = function(){
+				// console.log(i)
+				// document.title = i++
+			}
+
+			oLis[i].ondragend = function(){
+				this.style.background = 'pink'
+			}
+
+
+
+			oDiv.ondragenter = function(){
+				this.style.background = 'gray'
+			}
+
+			oDiv.ondragleave = function(){
+				this.style.background = '#ddd'
+			}
+
+			oDiv.ondragover = function(ev){
+				document.title = 'div dragover:' + (i++)
+				ev.preventDefault()
+			}
+
+			/* 语法规定:要想触发 drop事件，则需要在dragover当中阻止默认事件 */
+			oDiv.ondrop = function(){
+				alert(123)
+			}
+
+		};
+	}
+</script>
+<body>
+
+<ul>
+	<li draggable="true">1</li>
+	<li draggable="true">2</li>
+	<li draggable="true">3</li>
+</ul>
+
+<div id="wrap">
+	
+</div>
+	
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>推箱子</title>
+</head>
+<style>
+	*{margin: 0; padding: 0;}
+	#div1{position: relative; margin: 20px auto;}
+	.pos0,.pos1,.pos2,.pos3,.box,.person{width: 50px;height: 50px; float: left;}
+	.pos1{background: #666;} /*灰色背景*/
+	.pos2{background: url('./images/wall.png') no-repeat;}/* 墙 */
+	.pos3{background: red} /*红色背景*/
+	.pos0{background: blue}
+
+	.box{position: absolute; background: url('./images/box_yellow.png') no-repeat;}
+	.person{position: absolute; background: url('./images/sman.png');}
+</style>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+
+<script>
+$(function(){
+
+	Game.init('#div1')
+})
+
+var Game = {
+	/* 关卡数据 */
+	gk : [
+		{
+			map : [ /* 地图 8*8 */
+				1,1,2,2,2,2,1,1,
+				1,1,2,3,3,2,1,1,
+				1,2,2,0,3,2,2,1,
+				1,2,0,0,0,3,2,1,
+				2,2,0,0,0,0,2,2,
+				2,0,0,2,0,0,0,2,
+				2,0,0,0,0,0,0,2,
+				2,2,2,2,2,2,2,2,
+			],
+			box : [
+				{x : 4, y : 3},
+				{x : 3, y : 4},
+				{x : 4, y : 5},
+				{x : 5, y : 5},
+			],
+			person : { x : 3, y : 6 }
+		},
+		{
+			map : [ /* 地图 8*8 */
+				1,1,2,2,2,2,1,1,
+				1,1,2,3,3,2,1,1,
+				1,2,2,0,3,2,2,1,
+				1,2,0,0,0,3,2,1,
+				2,2,0,0,0,0,2,2,
+				2,0,0,2,0,0,0,2,
+				2,0,0,0,0,0,0,2,
+				2,2,2,2,2,2,2,2,
+			],
+			box : [
+				{x : 4, y : 3},
+				{x : 3, y : 4},
+				{x : 4, y : 5},
+				{x : 5, y : 5},
+			],
+			person : { x : 3, y : 6 }
+		}
+	]
+
+	/* 游戏初始化 */
+	,init : function(oParent){
+		
+		this.oParent = $(oParent)
+		this.createMap(0) // 参数表示 关数
+	}
+
+	/* 创建地图 */
+	,createMap : function(iNow){
+		/**
+		 * 进入第二、三 等等关时，先清空数据，不然会一直叠加
+		 * 清空内容 eg:  $("#showResult").empty();//清除div内容
+		 */
+		this.oParent.empty(); 
+		document.title = "第" + iNow + "关"
+
+		this.nowJson = this.gk[iNow]
+		this.nowJson.len = Math.sqrt(this.nowJson.map.length)
+		/* 算出这个矩形的宽度 */
+		// console.log(this.oParent)
+		this.oParent.css('width',this.nowJson.len * 50)
+		// $.proxy(function,this) 改变this之向
+		$.each(this.nowJson.map,$.proxy(function(i,elem){
+			/* 创建元素添加到父级元素中 */
+
+			this.oParent.append('<div class="pos'+elem+'"></div>')
+
+		},this));
+
+		this.createBox();
+		this.createPerson();
+	}
+
+	/* 创建箱子 */
+	,createBox : function(){
+		$.each(this.nowJson.box, $.proxy(function(index, val) {
+			 /* iterate through array or object */
+			 var oBox = $('<div class="box"></div>');
+			 oBox.css({
+			 	'left' : val.x * 50
+			 	,'top' : val.y * 50
+			 })
+			 this.oParent.append(oBox)
+		},this));
+	}
+
+	,createPerson : function(){
+		var oPerson = $('<div class="person"></div>')
+			,this_person = this.nowJson.person
+		// console.log(this_person.x)
+		oPerson.css({
+			'left' : this_person.x * 50
+			,'top' : this_person.y * 50
+		})
+
+		oPerson.data('x', this_person.x)
+		oPerson.data('y', this_person.y)
+		// console.log(oPerson.data('x'))
+
+		this.oParent.append(oPerson)
+
+		this.bindPerson(oPerson);
+	}
+	/* 对人物的操作 */
+	,bindPerson : function(oP){
+		// console.log(this.nowJson.len)
+		$(document).keydown($.proxy(function(ev) {
+			/* 接收jQuery当中的键盘键值 */
+			switch(ev.which){
+				case 37 : // 左键 找左边的一个 = y轴 * 列数 + x轴 - 1
+					this.runPerson(oP,{ x : -1})
+					break;
+				case 38 : //上键
+					this.runPerson(oP,{ y : -1})
+					break;
+				case 39 : // 右键
+					this.runPerson(oP,{ x : 1})
+					break; 
+				case 40	: //下键
+					this.runPerson(oP,{ y : 1})
+					break; 
+			}
+		},this));
+	}
+
+	/* 任务移动 */
+	,runPerson : function(oP,opt){
+		var stepX = opt.x || 0
+			,stepY = opt.y || 0
+
+		if(this.nowJson.map[ (oP.data('y') + stepY) * this.nowJson.len + oP.data('x') + stepX ] != 2){
+			/* ==2 就表示 撞墙了 */
+			if(stepY == 0){
+				var nowX = oP.data('x') + stepX
+				oP.data('x',nowX)
+				oP.css('left', nowX * 50)
+			}else{
+				var nowY = oP.data('y') + stepY
+				oP.data('y',nowY)
+				oP.css('top', nowY * 50)
+			}
+
+			/* 改变this指向 */
+			$('.box').each($.proxy(function(index, elem) {
+				 /* 
+				 	elem 这里的每一个elem都是原生的js对象
+				 	由于pz()该方法内部的obj使用都是按照jQuery对象来写的
+				 	所以，传入时，要加 $() 转为jQuery对象
+				  */
+				 
+				 // 碰撞到箱子，并且箱子的下一个不是墙，小乌龟走一步，箱子走一步
+				 if(this.pz( oP, $(elem) ) && this.nowJson.map[ (oP.data('y') + stepY) * this.nowJson.len + oP.data('x') + stepX ] != 2){
+				 	$(elem).css({
+				 		'left' : (oP.data('x') + stepX) * 50
+				 		,'top' : (oP.data('y') + stepY) * 50
+				 	})
+
+				 	//碰上了，箱子的下一个还是箱子，则，箱子退回，小乌龟退回
+				 	//判断（箱子的下一个还是箱子）也就是 这个箱子是否跟其他箱子碰上了
+				 	$('.box').each($.proxy(function(index2,elem2){
+				 		if ( elem!=elem2 && this.pz($(elem) , $(elem2) ) ) {
+				 			/* 回滚箱子 */
+				 			$(elem).css({
+				 				'left' : oP.data('x') * 50
+				 				,'top' : oP.data('y') * 50
+				 			})
+				 			/* 回滚小乌龟 */
+				 			var nowX = oP.data('x') - stepX
+				 				,nowY = oP.data('y') - stepY
+				 			oP.css({
+				 				'left' : nowX * 50
+				 				,'top' : nowY * 50
+				 			})
+
+				 			oP.data('x', nowX)
+				 			oP.data('y', nowY)
+				 		};	
+
+				 	},this));
+				 }else if(this.pz( oP, $(elem) ) ){
+				 	/* 表示前面是墙 */
+				 	/* 回滚小乌龟 */
+		 			var nowX = oP.data('x') - stepX
+		 				,nowY = oP.data('y') - stepY
+		 			oP.css({
+		 				'left' : nowX * 50
+		 				,'top' : nowY * 50
+		 			})
+
+		 			oP.data('x', nowX)
+		 			oP.data('y', nowY)
+				 	
+				 }
+			},this));
+		}
+
+		this.nextShow()
+
+	}
+
+	,nextShow : function(){
+		//循环判断，box箱子跟红色区域的碰撞次数。。。
+		var num = 0
+		$('.pos3').each($.proxy(function(i,elem){
+
+			$('.box').each($.proxy(function(j,elem2){
+				if(this.pz( $(elem),$(elem2) )){
+					num++
+				}
+			},this))
+
+		},this))
+
+		if(num == $('.box').size()){
+			alert('进入下一关')
+			/*数据没写，把第一关的数据继续用一次*/
+			this.createMap(1) // 参数表示 关数
+		}
+	}
+
+	/* 碰撞检测 */
+	,pz : function(obj1,obj2){
+		var o_offset1 = obj1.offset()
+		var L1 =  o_offset1.left
+		 	,R1 = o_offset1.left + obj1.width()
+		 	,T1 = o_offset1.top
+		 	,B1 = o_offset1.top + obj1.height()
+
+		var o_offset2 = obj2.offset()
+		var L2 = o_offset2.left
+		 	,R2 = o_offset2.left + obj2.width()
+		 	,T2 = o_offset2.top
+		 	,B2 = o_offset2.top + obj2.height()
+
+		if(R2 <= L1 || B2 <= T1 || R1 <= L2 || B1 <= T2){
+			return false;
+		}else{
+			return true;
+		}
+
+	}
+
+
+}
+</script>
+
+<body>
+	<div id="div1">
+		
+	</div>
+</body>
+</html>

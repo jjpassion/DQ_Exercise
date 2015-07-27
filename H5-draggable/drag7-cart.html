@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拖拽进购物车-</title>
+</head>
+<style>
+	ul,#cart{width: 880px; background: #becceb; margin:0 auto; padding: 10px; }
+	ul:after{content: ""; height: 0; overflow: hidden; visibility: hidden; clear: both; display: block;}
+	li{list-style: none; width: 200px; overflow: hidden;  float: left; margin: 0 10px;}
+	li img{max-width: 200px; }
+	
+	#cart{background: #f69; margin-top: 20px; color: #fff; overflow: hidden; }
+	#cart span{display: inline-block; width: 33%; text-align: center;}
+	.allprice{ float: right; color: #000; margin-top: 10px;}
+
+	#cart p{ border: 1px dashed #fff; height: 28px; line-height: 28px; margin: 0; }
+</style>
+
+<script>
+window.onload = function(){
+	var oCart = document.querySelector('#cart')
+		,oUl = document.getElementsByTagName('ul')[0]	
+		,allprice = document.querySelector('.allprice')
+
+	var i
+		,len
+		,iHas = {}
+
+	var aLis = oUl.getElementsByTagName('li')
+
+	for (i = 0,len = aLis.length; i < len; i++) {
+		aLis[i].ondragstart = function(ev){
+			var aPs = this.getElementsByTagName('p')
+			ev.dataTransfer.setData('name',aPs[0].innerHTML)
+			ev.dataTransfer.setData('price',aPs[1].innerHTML)
+			ev.dataTransfer.setDragImage(this,0,0)
+		}
+	};
+
+
+	oCart.ondragover = function(ev){
+		ev.preventDefault()
+	}
+
+	oCart.ondrop = function(ev){
+
+		var data = []
+		data.push(1)
+		data.push(ev.dataTransfer.getData('name'))
+		data.push(ev.dataTransfer.getData('price'))
+		// data.num = 1
+		// data.name = ev.dataTransfer.getData('name')
+		// data.price = ev.dataTransfer.getData('price')
+
+		len = data.length
+		var oP = document.createElement('p')
+		
+		/* 之前没有添加过该商品（按全称匹配）*/
+		if(!iHas[data[1]]){
+			for (i = 0; i < len; i++) {
+				var oSpan = document.createElement('span');
+				oSpan.innerHTML = data[i]
+				if(i==1){
+					oSpan.className = 'price'
+				}
+				oP.appendChild(oSpan)
+			};
+			this.insertBefore(oP,allprice)
+
+		}else{
+			var oPri = document.querySelectorAll('.price')
+			for (i = 0, l = oPri.length; i < l; i++) {
+				if(oPri[i].innerHTML == data[1] ){
+					oPri[i].previousSibling.innerHTML = parseInt(oPri[i].previousSibling.innerHTML ) + 1
+				}
+			};
+
+		}
+
+		iHas[ data[1] ] = 1
+		
+		var iPrice = allprice.innerHTML
+		
+		allprice.innerHTML = '总价为：￥' + ( getPriceNum( iPrice ) + getPriceNum(data[2]) )
+
+	}
+
+	function getPriceNum(str){
+		return (parseFloat(str.match(/\d+(\.\d*)?/)[0]) || 0)
+	}
+
+}
+</script>
+<body>
+
+<ul>
+	<li draggable="true">
+		<img src="http://124.202.144.17/pic/Q/27/68/b336f2e87201f44f83cf790a4e5d_640_832.cc.jpg" alt="">
+		<p>中长款衬衫泡泡袖OL衬衣</p>
+		<p>￥70.00</p>
+	</li>
+
+	<li draggable="true">
+		<img src="http://124.202.144.17/pic/Q/67/1d/6a9e627137ae6a5dedfed04b2c6f_640_900.ch.png" alt="">
+		<p>纯色低帮厚底系带帆布鞋</p>
+		<p>￥90.00</p>
+	</li>
+
+	<li draggable="true">
+		<img src="http://124.202.144.17/pic/Q/27/9f/b40e5dc5ea3899ba28c56934cb45_640_900.ch.png" alt="">
+		<p>破洞水洗牛仔短裤热裤</p>
+		<p>￥80.00</p>
+	</li>
+
+	<li draggable="true">
+		<img src="http://124.202.144.17/pic/Q/95/85/40db81672591b553ec78d081b151_640_900.cf.jpg" alt="">
+		<p>格子灯笼袖后背蝴蝶结衬衣</p>
+		<p>￥60.00</p>
+	</li>
+
+	
+</ul>
+<div id="cart">
+	<!-- <p><span>1</span><span>kdkdkkddkd</span><span>$120</span></p>
+	<p><span>1</span><span>kdkdkkddkd</span><span>$120</span></p> -->
+
+	<b class="allprice">总价：￥0</b>
+</div>
+
+	
+</body>
+</html>

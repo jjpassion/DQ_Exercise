@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>窗口-自动移动</title>
+</head>
+<style>
+	*{margin: 0; padding: 0}
+	#div1{position: absolute;background: red; width: 100px;height: 100px;}
+</style>
+<script>
+window.onload = function(){
+
+	var oDiv = document.querySelector('#div1')
+	var divW = oDiv.offsetWidth
+		,divH = oDiv.offsetHeight
+		,iSpeedX = 10
+		,iSpeedY = 10
+	
+	var maxHeight = document.documentElement.clientHeight - divH
+		,maxWidth = document.documentElement.clientWidth - divW
+
+	var timer = setInterval(function(){
+
+		var L = oDiv.offsetLeft + iSpeedX
+			,T = oDiv.offsetTop + iSpeedY
+
+		if ( T > maxHeight ) {
+			T = maxHeight
+			iSpeedY *= -1
+		}else if( T < 0 ){
+			T = 0
+			iSpeedY *= -1
+		}
+
+		if ( L > maxWidth ) {
+			L = maxWidth
+			iSpeedX *= -1
+		}else if( L < 0 ){
+			L = 0
+			iSpeedX *= -1
+		}
+
+		oDiv.style.cssText = 'left:' + L + 'px' + '; top:' + T + 'px';
+	},30)
+
+}
+</script>
+<body>
+	<div id="div1"></div>
+</body>
+</html>

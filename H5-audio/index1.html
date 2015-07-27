@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5-音频视频</title>
+</head>
+<!-- 
+
+1、标签
+	-audio video
+	-source
+2、视频容器
+	容器文件，类似于压缩了一组文件
+	-音频轨道
+	-视频轨道
+	-元数据：封面、标题、字幕等
+	-格式：.avi .flv .mp4 .mkv .ogv等
+3、媒体元素
+	-controls : 显示或隐藏用户控制界面
+	-autoplay : 是否自动播放
+	-loop : 是否循环
+	-currentTime : 开始到播放现在所用的时间
+	-duration : 媒体总时间（只读）
+	-volume : 0.0 - 1.0 的音量相对值
+	-muted : 是否静音
+	-autobuffer : 开始的时候是否缓冲加载，autoplay的时候，忽略此属性
+4、编解码器
+	-原始的视频容器非常大，添加需编码，播放需解码
+	-视频编解码器
+		AAC MPEG-3 OggVorbis
+	-视频编解码器
+		H.264 VP8 OggTheora
+5、媒体元素2
+	-paused : 媒体是否暂停（只读）
+	-ended : 媒体是否播放完毕（只读）
+	-error : 媒体发生错误的时候，返回错误代码（只读）
+	-currentSrc : 以字符串的形式返回媒体地址（只读）
+
+	-play() : 媒体播放
+	-pause() : 暂停
+	-load() : 媒体加载好后执行，预加载时候用
+6、媒体元素3
+	-loadstart	progress  suspend  emptied  stalled  play  pause  loadedmetadata loadeddata waiting playing canplay canplaythrough seeking seeked timeupdate ended ratechange durationchange volumechange
+7、video 额外特性
+	-poster 视频播放前的预览图片
+	-width/height 设置视频的尺寸
+	-videoWidth 、 videoHeight 视频的实际尺寸（只读）
+
+	例子： 带声音的导航
+		  视频与canvas的结合
+		  自制播放器
+		  
+ -->
+<style>
+video{width: 400px; height: 300px;}
+</style>
+<body>
+<!-- 不写controls则隐藏用户界面 -->
+<audio controls autoplay src="./dream.mp3"></audio>
+<!-- <video controls src="./shipin.mp4"></video> -->
+<video controls>
+	<source src="./dream.ogg"></source> <!-- 浏览器如果不支持 .ogg则播放下一个（or文件不存在） -->
+	<source src="./shipin.mp4"></source>
+</video>
+
+
+
+
+</body>
+</html>

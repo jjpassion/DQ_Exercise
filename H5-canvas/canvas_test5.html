@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例5-旋转的图片</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+canvas span{color: #fff;}
+input{margin:10px;}
+</style>
+ <script>
+ window.onload = function(){
+	 var btn = document.getElementsByTagName('input')
+	 	,oImg = document.getElementById('img')
+	 	,iHeight = oImg.height
+	 	,iWidth = oImg.width
+	 	,iNow = 0
+	 	,oC
+	 	,oGC
+	
+	 var tImg = new Image()
+	 tImg.src = oImg.src
+
+	 tImg.onload = function(){
+	 	draw(oImg)
+	 }
+
+	
+	 btn[0].onclick = function(){
+
+	 	iNow++ 
+
+	 	if(iNow > 3){
+	 		iNow = 0
+	 	}/*else if(iNow <= 0){
+	 		iNow = 0
+	 	}*/
+
+	 	change(iNow,oImg);
+	 }
+
+
+	 btn[1].onclick = function(){
+
+	 	iNow--
+
+	 	/*if(iNow > 3){
+	 		iNow = 0
+	 	} else*/if(iNow < 0){
+	 		iNow = 3
+	 	}
+	 	change(iNow,oImg);
+	 }
+
+	 
+
+	 function draw(obj){
+	 	oC = document.createElement('canvas')
+	 	oGC = oC.getContext('2d')
+
+	 	oC.width = obj.width
+	 	oC.height = obj.height
+	 	obj.parentNode.replaceChild(oC,obj)
+
+	 	oGC.drawImage(obj,0,0)
+	 }
+
+	 function change(idx,obj){
+
+	 	switch(idx){
+	 		case 1:
+	 			oC.width = iHeight
+	 			oC.height = iWidth
+	 			oGC.rotate(90*Math.PI/180)
+	 			oGC.drawImage(obj,0,-iHeight)
+	 			break;
+	 		case 2:
+	 			oC.width = iWidth
+	 			oC.height = iHeight
+	 			oGC.rotate(180*Math.PI/180)
+	 			oGC.drawImage(obj,-iWidth,-iHeight)
+	 			break;
+	 		case 3:
+	 			oC.width = iHeight
+	 			oC.height = iWidth
+	 			oGC.rotate(270*Math.PI/180)
+	 			oGC.drawImage(obj,-iWidth,0)
+	 			break;
+	 		case 0:
+	 			oC.width = iWidth
+	 			oC.height = iHeight
+	 			oGC.rotate(0)
+	 			oGC.drawImage(obj,0,0)
+	 			break;
+	 	}
+	 }
+	
+	 
+ }
+
+ </script>
+<body>
+<input type="button" value="顺时针旋转">
+<input type="button" value="逆时针旋转">
+<div><img src="../images/2.jpg" id="img" alt=""></div>
+</body>
+</html>

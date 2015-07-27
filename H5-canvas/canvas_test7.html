@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例6-文字选择-按10%像素显示</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+ul{float: left; margin-right: 20px; font-size: 30px;}
+ul > li {line-height:  40px; cursor: pointer;}
+</style>
+ <script>
+ window.onload = function(){
+ 	var oC = document.getElementById('c1')
+ 		,oGC = oC.getContext('2d')
+ 	
+ 	var iH = oC.height
+ 		,iW = oC.width
+
+ 	var oLis = document.querySelectorAll('li')
+ 		,i = 0
+ 		,len = oLis.length
+ 	for ( ; i < len; i++) {
+ 		oLis[i].onclick = function(){
+ 			writeFont(this.innerHTML,oGC)
+ 		}
+ 	};
+
+	
+	function writeFont(str,oGC){
+		oGC.clearRect(0,0,iW,iH)
+
+		var h = 160
+		oGC.fillStyle = '#f69'
+	 	oGC.font =  h + "px impact"
+	 	oGC.textBaseline = 'top'
+
+	 	var w = oGC.measureText(str).width
+
+	 	var iX = (iW - w)/2
+	 		iY = (iH - h)/2 /* -80调节文字居中 */
+
+	 	oGC.fillText(str,iX,iY)
+	 	var oImg = oGC.getImageData(iX,iY,w,h)
+
+	 	/* 取像素的10% */
+	 	var perArr = getArrNum(w*h, w*h/10)
+
+	 	var newImg = oGC.createImageData(w,h+80)
+
+	 	var i = 0
+	 		,l = perArr.length
+	 	
+	 	for ( ; i < l; i++) {
+	 		var idx = 4 * perArr[i]
+	 		newImg.data[ idx ] = oImg.data[ idx ]
+	 		newImg.data[ idx + 1 ] = oImg.data[ idx + 1 ]
+	 		newImg.data[ idx + 2 ] = oImg.data[ idx + 2 ]
+	 		newImg.data[ idx + 3 ] = oImg.data[ idx + 3 ]
+	 	};
+
+	 	oGC.putImageData( newImg, iX, iY)
+
+
+	}	
+
+	function getArrNum(allNum,iNum){
+		var i = 0
+			,arr = []
+			,newArr = []
+		for ( ; i < allNum; i++) {
+			arr.push(i)
+		};
+
+		for (i = 0; i < iNum; i++) {
+			newArr.push( arr.splice( Math.floor( Math.random() * arr.length ) , 1 ) )
+		};
+
+		return newArr
+	}
+
+
+	 
+ }
+
+ </script>
+<body>
+<ul>
+	<li>美</li>
+	<li>丽</li>
+	<li>说</li>
+</ul>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+</html>

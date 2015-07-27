@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>animateEnd</title>
+		<style type="text/css">
+.swimg{
+	margin-left: 100px;
+	width: 30px;
+	height: 70px;
+	background-color: #2E8B57;
+}
+.shake-act {
+    -webkit-animation-name: move;
+    -webkit-animation-iteration-count: 30;
+    -webkit-animation-timing-function: ease;
+    -webkit-animation-duration: .25s;
+    -webkit-animation-direction: normal;
+    -webkit-animation-fill-mode: both;
+}
+		
+@-webkit-keyframes move {
+    0% {
+        -webkit-transform: rotate(0deg)
+    }
+
+    25% {
+        -webkit-transform:  rotate(-10deg)
+    }
+
+    75% {
+        -webkit-transform: rotate(10deg)
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg)
+    }
+}
+		</style>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		
+	</head>
+	<body>
+	<div class="swimg"></div>
+	<div id="">
+		<a id="addAnimate" href="javascript:;">加动画</a>
+		<a id="delAnimate" href="javascript:;">去动画</a>
+	</div>
+	<script type="text/javascript">
+		
+		$('#addAnimate').click(function(){
+			$('.swimg').addClass('shake-act');
+		});
+		$('#delAnimate').click(function(){
+			$('.swimg').removeClass('shake-act');
+		})
+		
+		$('.swimg').on('webkitAnimationEnd',function(){
+			$('.swimg').removeClass('shake-act');
+			alert('webkitAnimationEnd');
+		});
+	</script>
+	</body>
+</html>

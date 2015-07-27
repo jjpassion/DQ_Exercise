@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>窗口模拟自由落体</title>
+	<script type="text/javascript" async="async" src="../js/requestAnimationFrame.js"></script>
+</head>
+
+<style>
+#btn{margin-bottom:10px; cursor: pointer; }
+#div1{width: 100px;height: 100px;background: red; position: absolute;}
+</style>
+
+<script>
+window.onload = function(){
+	var btn = document.querySelector('#btn')
+		,iSpeed = 0
+		,timer = null
+		,requestId = 0
+
+	btn.onclick = function(){
+		startMove('#div1')
+	}
+
+	function startMove(obj){
+		if(requestId){ window.cancelAnimationFrame(requestId); }
+
+		var div1 = document.querySelector(obj)
+		var maxHeight = document.documentElement.clientHeight - div1.offsetHeight;
+		var mark = 0;
+		requestId = window.requestAnimationFrame(function(){
+			iSpeed += 1.5
+			var T = div1.offsetTop + iSpeed
+			if( T > maxHeight){
+				T = maxHeight
+				iSpeed *= -1
+				iSpeed *= 0.75
+				mark++
+			}else{
+				mark = 0
+			}
+			div1.style.top = T + 'px'
+
+			if(mark < 2){
+				window.requestAnimationFrame(arguments.callee)
+			}
+		});
+		
+	}
+}
+
+	
+</script>
+<body>
+	<!-- <div class="btn">开始运动</div> -->
+	<input type="button" id="btn" value="开始运动">
+	<div id="div1"></div>
+</body>
+</html>

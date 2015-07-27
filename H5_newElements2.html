@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5 本地存储</title>
+</head>
+<style>
+	*{margin:0;padding:0;}
+	h2{margin: 10px;}
+	pre{color: red;}
+	
+</style>
+
+<body>
+	<h2>1、H5之前的本地存储</h2>
+	<pre>  
+	
+	1. cookie
+		缺点：a.大小限制，4KB
+			b.附加在每次请求中，增加流量
+			c.在http中是明文传输，安全性比较低
+		
+	2. flash local shared objects
+		2002年Flash退出的可以在Flash对象中存储100K的数据
+
+		缺点：需要Flash的支持，存在技术局限性
+
+	3. Gears 理解为：插件数据库
+		2007年goodle启动的项目，通过插件技术增强浏览器的。Gears提供Api访问基于Sqlite的嵌入式SQL数据库
+
+		缺点：用户必须安装Gears插件，不可控
+
+	</pre>
+
+
+	<h2>2、H5的本地存储</h2>
+	<pre>
+
+	1. 什么是HTML5的本地存储？
+		a.一种让网页可以把【键值对】存储在用户浏览器客户端的方法。像cookie一样，这些数据不会因为你打开新网站，刷新页面乃至关闭你的浏览器而消失。（只能存储字符串）
+
+		b.而与 cookie不同的是，这些数据不会每次随着HTTP请求被发送到服务器端
+
+		c.HTML5规范的一部分，这一接口会被浏览器原生支持，不用依赖任何第三方插件。只要浏览器支持HTML5就能支持。
+
+		
+	2. 手机对本地存储的支持情况
+		iPhone		Android
+		2.0+  		2.0+
+
+		
+	3. 判断浏览器是否支持本地存储
+
+		function isSupportStorage(){
+			return "localstorage" in window;
+		}
+	4. w3c定位的storage接口
+
+	5. localstorage
+		a.存储数据. 			localStorage.setItem('key','value')
+		b.读取数据			localStorage.getItem('key')
+		c.列出所有缓存数据		
+		    var list = []
+			for(var i=0; i < localStorage.length; i++){
+				var key = localStorage.key(i)
+				var value = loacalStorage.getItem(key)
+				list.push({'k':key,'v':value})
+			}
+		d.删除数据. 			localStorage.removeItem(key)	
+
+		e.保存JSON对象		
+			var jsonObj = {'id':123,'name':"BR"}
+			localStorage.setItem("json",JSON.stringify(jsonObj))
+
+			取的时候用：JSON.parse(localStorage.getItem("json"))
+
+	6. 本地存储的使用场景
+		a.存储一些很少变动的数据，比如用户名昵称
+		b.存储一些用户编辑很长时间的数据，比如邮件、文章草稿
+
+	7. 不同于服务器存储
+	    数据可能随时丢掉
+	    当服务器缓存使用
+
+	</pre>
+
+
+	<h2>2、sessionStorage</h2>
+	<pre>
+	
+	1. api接口 与localStorage相同
+	
+	2. sessionStorage操作
+		a. 存储数据
+		b. 读取数据
+
+	3. 使用场景
+		a. 代替session，比如购物车
+		
+	</pre>
+	
+	<h2>H5 视频开发网站</h2>
+	<pre>
+		
+	1. http://www.delphiki.com/html5/playr/
+	
+	2. http://videojs.com/
+
+	3. http://html5video.org/
+		
+	</pre>
+
+
+
+	<footer style="height:100px;"></footer>
+</body>
+</html>

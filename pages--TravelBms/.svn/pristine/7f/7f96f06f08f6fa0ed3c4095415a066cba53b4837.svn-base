@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="all_style.css"/>
+<link type="text/css" rel="stylesheet" href="index.css"/>
+<title>北斗旅游管理系统</title>
+<script src="jquery-1.11.3.min.js"></script>
+<style>
+.users_top{font-family:微软雅黑;}
+h1{font-family:微软雅黑;}
+.leibie{font-family:微软雅黑;}
+.users_top02{font-family:微软雅黑;}
+
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="logo">
+    	<a href=""><img  class="logo_img" src="images/logo.png"/>
+        <img  class="logo_line" src="images/logo_line.png"/>
+        <h1>北斗旅游管理系统</h1></a>
+    </div>
+    <div class="botton">
+    	<img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/message.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/setting.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="login.html" class="icon"><img src="images/out.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="img_id"><img src="images/img_ID.png"/></a>
+        <a href="#"><p>某某某，您好！</p></a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="nav_left">  		
+            <dl>
+            	<a href="#">
+                    <div class="botton_index">
+                        <img src="images/index_icon.png"/>
+                        <p>首页</p>
+                    </div>
+        		</a>
+                
+                <a href="#" class="menu_botton"><dd>
+                	<p>系统管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                                    <div class="xiala_menu">
+                                    	<a href="xtrz.html">系统日志</a>
+                                        <a href="users.html">用户信息</a>
+                                        <a href="jsgl.html">角色管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>设备管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="sbgl_jbxx.html">基本信息</a>
+                                        <a href="sygl.html">使用管理</a>
+                                    </div>
+                <a href="lytgl.html" class="menu_botton"><dd>
+                	<p>旅行团管理</p>
+                </dd></a>
+                <a href="#" class="menu_botton"><dd>
+                	<p>人员管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="dygl.html">导游管理</a>
+                                        <a href="ykgl.html">游客管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>组织机构管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="lxsgl.html">旅行社管理</a>
+                                    </div>
+            </dl>
+            <script>
+					$(".menu_botton").click(function(){
+						var flag=$(this).next("div").is(":hidden");
+						if(flag){
+							$(this).next("div").show();
+						}else{
+							$(this).next("div").hide();
+						}
+					});
+            </script>
+	</div>
+    
+    <div class="content_bigbox">
+    	<div class="weizhi">
+        	<img class="icon_gray" src="images/index_icon_gray.png"/>
+            <a href="index.html">首页</a>
+        </div>
+        <div class="users_01">
+                <p class="users_top">设备情况统计</p>
+                <dl>
+                	<dd><a class="neirong01">进入盲区提醒：<span class="red_text">+1</span></a><a class="neirong02" href="#">详细情况</a></dd>
+                    <dd><a class="neirong01">SIM卡换卡提醒：<span class="red_text">+2</span></a><a class="neirong02" href="#">详细情况</a></dd>
+                    <dd><a class="neirong01">在线设备：<span class="jindutiao">　　　　　　　　　　　　　</span></a>　75%　(120人)<a class="neirong02" href="#">详细情况</a></dd>
+                    <dd><a class="neirong01">设备电量情况：<span class="jindutiao">　　　　　　</span></a>　35%　(20台)　电量低<a class="neirong02" href="#">详细情况</a></dd>
+                    <img class="users_line" src="images/users_fengexian.png">
+                    <a class="more_01" href="#">更多设备情况</a>                 
+                </dl>
+                <img class="bottom_img" src="images/index_users_bottom.png"> 
+        </div>
+        <div class="users_02">
+        		<p class="users_top">旅行团信息概况</p>
+                <div class="leibie">开团时间　　参团人数　　团队状态　　导游证编码　　组织机构编码</div>
+                <dl>
+                	<dd><a class="neirong03">2015-06-10　　　　50人　　　　　．．　　　　　000000　　　　　0000000</a><a class="neirong04" href="#">详情</a></dd>
+                    <dd><a class="neirong03">2015-06-10　　　　50人　　　　　．．　　　　　000000　　　　　0000000</a><a class="neirong04" href="#">详情</a></dd>
+                    <dd><a class="neirong03">2015-06-10　　　　50人　　　　　．．　　　　　000000　　　　　0000000</a><a class="neirong04" href="#">详情</a></dd>
+                    <dd><a class="neirong03">2015-06-10　　　　50人　　　　　．．　　　　　000000　　　　　0000000</a><a class="neirong04" href="#">详情</a></dd>
+                    <dd><a class="neirong03">2015-06-10　　　　50人　　　　　．．　　　　　000000　　　　　0000000</a><a class="neirong04" href="#">详情</a></dd>                   
+                </dl>
+                <a class="more_02" href="lytgl.html">更多出团信息</a> 
+                <img class="bottom_img" src="images/index_users_bottom.png">
+        </div>
+        <div class="users_03">
+				<p class="users_top02">人员信息</p>
+             	<dl>
+                	<dd><a class="neirong05">某某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23岁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属团：某某某旅行团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属导游：某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;紧急联系人：某某某（13600000000）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;病史：无</a><a class="neirong06" href="#">详情</a></dd>
+                    <dd><a class="neirong05">某某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23岁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属团：某某某旅行团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属导游：某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;紧急联系人：某某某（13600000000）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;病史：无</a><a class="neirong06" href="#">详情</a></dd>
+                    <dd><a class="neirong05">某某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23岁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属团：某某某旅行团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属导游：某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;紧急联系人：某某某（13600000000）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;病史：无</a><a class="neirong06" href="#">详情</a></dd>
+                    <dd><a class="neirong05">某某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;男&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;23岁&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属团：某某某旅行团&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所属导游：某某&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;紧急联系人：某某某（13600000000）&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;病史：无</a><a class="neirong06" href="#">详情</a></dd>
+                    <dd><a class="more_03" href="#">更多游客信息</a>
+                	    <a class="more_03" href="#">查看导游信息</a></dd>
+                </dl>
+                
+                <img class="bottom_img02" src="images/users_03_bottom.png">
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+	<h2>Copyright &copy; 2015 by SCBDLBS.</h2>
+	<h3>All Rights Reserved</h3>
+</div>
+</body>
+</html>

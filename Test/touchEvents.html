@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Touch Events</title>
+</head>
+<body>
+	1. ontouchstart(onmousedown)
+	2. ontouchend(onmousemove)
+	3. ontouchmove(onmouseup)
+	4. ontouchcancel
+
+	//使用
+	document.querySelector('#touchable').addEventListener('touchstart',function(event){
+		event.touches: 触摸的对象数（直接对应触摸的手指数）
+		event.targetTouches: 当前touch事件元素上对象数（当前绑定元素的手指数）
+	})
+	
+
+	touch对象属性
+	pageX		相对于父元素的x坐标
+	pageY		相对于父元素的y坐标
+	clientX		相对于当前窗口的x坐标
+	clientY		相对于当前窗口的y坐标
+	screenX		相对于当前屏幕的x坐标
+	screenY		相对于当前屏幕的y坐标
+	target		指代当前点击的对象
+</body>
+</html>

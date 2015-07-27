@@ -1,0 +1,30 @@
+/*参数设置页面*/
+.biaodan{margin-left:14px;margin-top:20px;}
+.shezhixiang{background-image:url(images/csxx_bg.png);width:1090px;height:500px;padding-left:60px;padding-top:40px;overflow:hidden;}
+input{outline:none;border:solid 1px #40abdf;height:14px;background-color:transparent;margin-top:6px;}
+.shezhixiang span{line-height:24px;font-size:14px;margin-right:10px;}
+select{outline:none;border:solid 1px #40abdf;background-color:transparent;width:120px;height:18px;}
+.left,.left_02,.middle,.middle_02,.right,.right_02,.bottom{float:left;}
+.left{line-height:36px;margin-top:4px;}
+.left_02{margin-left:20px;line-height:36px;margin-top:3px;}
+.middle{margin-left:80px;line-height:36px;margin-top:4px;}
+.right{margin-left:100px;line-height:36px;margin-top:3px;}
+.bottom{margin-left:30px;line-height:36px;}
+.middle_02{line-height:36px;margin-top:5px;margin-left:20px;}
+.right_02{line-height:36px;margin-top:3px;margin-left:20px;}
+.btn{float:right;overflow:hidden;margin-right:100px;margin-top:100px;}
+.tijiao{width:100px;height:30px;background-color:#40adef;line-height:30px; text-align:center;float:left;margin-right:30px;}
+.chongzhi{width:100px;height:30px;background-color:#40adef;line-height:30px; text-align:center;float:left;}
+.tijiao div,.chongzhi div{color:white;font-size:16px; font-family:微软雅黑;}
+
+.bottom div .Wdate{
+	border:#40abdf 1px solid;
+	width:160px;
+	background-image:url(images/datePicker.gif);background-repeat:no-repeat;background-position:right;
+}
+.Wdate::-ms-clear{display:none;}
+
+.WdateFmtErr{
+	font-weight:bold;
+	color:red;
+}

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例3-时钟</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+canvas span{color: #fff;}
+</style>
+ <script>
+ window.onload = function(){
+ 	 var oC = document.getElementById('c1')
+	 var oGC = oC.getContext('2d')
+	 	 ,iHeight = oC.offsetHeight
+	 	 ,iWidth = oC.offsetWidth
+
+	 var x = 200
+	 	 ,y = 200
+	 	 ,r = 150
+
+	function toDraw(){
+		var date = new Date()
+		var iHour = date.getHours()
+			,iMinute = date.getMinutes()
+			,iSecond = date.getSeconds()
+
+		// console.log(iHour,iMinute,iSecond)
+		oGC.clearRect(0,0,iWidth,iHeight)
+
+		var iHourD = (-90 + iHour*30 + iMinute/2)*Math.PI/180
+			,iMinuteD = (-90 + iMinute*6)*Math.PI/180
+			,iSecondD = (-90 + iSecond*6)*Math.PI/180
+
+		oGC.strokeStyle = "#f69"	 
+		oGC.beginPath()
+		for (var i = 0; i < 60; i++) {
+			oGC.moveTo(x,y)
+			oGC.arc(x,y,r,i*6*Math.PI/180,(i+1)*6*Math.PI/180,false)
+		};
+		oGC.closePath()
+		oGC.stroke();
+
+		/* 画白屏 */
+		oGC.fillStyle = "#fff"
+		oGC.beginPath()
+		oGC.arc(x,y,r*18.5/20,0,360*Math.PI/180,false)
+		oGC.closePath()
+		oGC.fill();
+
+		/* 每刻钟 指针 */
+		oGC.beginPath()
+		for (var i = 0; i < 12; i++) {
+			oGC.moveTo(x,y)
+			oGC.arc(x,y,r,i*30*Math.PI/180,(i+1)*30*Math.PI/180,false)
+		};
+		oGC.lineWidth = 3
+		oGC.closePath()
+		oGC.stroke();
+
+		/* 画白屏 */
+		oGC.beginPath()
+		oGC.arc(x,y,r*17/20,0,360*Math.PI/180,false)
+		oGC.closePath()
+		oGC.fill();
+
+		/* 时针 */
+		oGC.beginPath()
+		oGC.moveTo(x,y)
+		oGC.arc(x,y,r*9/20,iHourD,iHourD,false)
+		oGC.lineWidth = 6
+		oGC.closePath()
+		oGC.stroke();
+
+		/* 分针 */
+		oGC.beginPath()
+		oGC.moveTo(x,y)
+		oGC.arc(x,y,r*12/20,iMinuteD,iMinuteD,false)
+		oGC.lineWidth = 3
+		oGC.closePath()
+		oGC.stroke();
+
+		/* 分针 */
+		oGC.beginPath()
+		oGC.moveTo(x,y)
+		oGC.arc(x,y,r*15/20,iSecondD,iSecondD,false)
+		oGC.lineWidth = 1
+		oGC.closePath()
+		oGC.stroke();
+	}
+
+	setInterval(toDraw,1000)
+	// toDraw()
+	 
+ }
+
+ </script>
+<body>
+
+<canvas id="c1" width="400" height="400">
+	<!-- 不支持canvas的浏览器 这句话就显示  -->
+	<span>浏览器不支持canvas</span>
+</canvas>
+
+</body>
+</html>

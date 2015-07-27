@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>waterfall - 瀑布流</title>
+	<style>
+	*{margin: 0;padding: 0;}
+	#container{ border: 1px solid black; margin: 50px auto 0; position: relative;
+	 }
+	
+	#container img{position: absolute;}
+
+	#loader{width: 100%;height: 60px;background: url('./images/loading.gif') no-repeat center #fff; position: fixed; bottom: 0; left: 0}
+	</style>
+	
+</head>
+<body>
+	<div id="container">
+		
+	</div>
+
+	<div id="loader"></div>
+</body>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+
+<script>
+$(function(){
+	//计算列
+	var iWidth = 200 //列宽
+		,iSpace = 10 //间隔宽
+		,iCells = 0 //实际列数
+		,oContainer = $('#container')
+		,oLoader = $('#loader')
+		,arrT = []
+		,arrL = []  //存放每一列的left值
+		,iPage = 0
+		,iBtn = true
+		,sUrl = 'http://dqm.fedevot.meilishuo.com/aj/wx_new/normal_goods?callback=?'
+		,frame = 1
+		,iMark = true
+		,$WIN = $(window)
+		,minIndex
+	
+	var iouterWidth = iWidth + iSpace; //实际列宽
+
+	function setCells(){
+		//算出列数 -1 只是为了，好看
+		iCells = Math.floor($WIN.innerWidth() / iouterWidth) - 1; 
+		if(iCells < 3){
+			iCells = 3
+		}else if(iCells > 6){
+			iCells = 6
+		}
+		// document.titile = iCells
+		oContainer.css('width',iouterWidth * iCells - iSpace)
+	}
+
+	setCells();
+
+	//设置每一列的left值
+	function setColumn(){
+		for (var i = 0; i < iCells; i++) {
+			arrT.push(0) //初始情况第一行的top为0
+			arrL.push( i * iouterWidth)
+		};
+	}
+	
+	setColumn()
+	getData()
+
+	$WIN.on('scroll',function(){
+		var winHeight = $WIN.scrollTop() + $WIN.height()
+		// console.log(winHeight);
+		// document.title = winHeight + "=" + arrT[minIndex]
+		if( winHeight > arrT[minIndex] + 10 ){
+			getData()
+		}
+
+	})
+
+	/**
+	 * 窗口改变大小时，重新布局
+	 * @param  
+	 * @return 
+	 */
+	$WIN.on('resize',function(event) {
+
+		var oldCells = iCells;  //记录原来的列数
+		setCells(); //重新设置列数
+
+		//如果原来的列数 == 现在的列数 则直接返回
+		if(oldCells == iCells){
+			return
+		}
+
+		//判断是否需要加载数据
+		var winHeight = $WIN.scrollTop() + $WIN.height()
+		if( winHeight > arrT[minIndex] + 10 ){
+			getData()
+		}
+
+
+
+		arrT = []
+		arrL = [] 
+		// 重新赋值、设置每一列的left值
+		setColumn();
+
+
+
+		//将现有已经加载完成的图片重新排列
+		var oImgs = oContainer.children('img');
+		oImgs.each(function(){
+			//最小高度的列
+			var minIdx = getMin()
+
+			//设置 图片 宽、高 及 定位 
+			$(this).css({
+				left : arrL[minIdx]
+				,top  : arrT[minIdx]
+			})
+			arrT[minIdx] += $(this).height() + 10
+		})
+	});
+
+	//pic_width pic_height
+	function getMin(){
+		//初始化 为对顶层图片，top 为 0 
+		
+		var iv = arrT[0]
+			,_index = 0
+		for (var i = 1,len = arrT.length; i < len; i+=1) {
+			if (iv > arrT[i]) {
+				iv = arrT[i]
+				_index = i
+			};
+		};
+		return _index
+	}
+
+	function getData(){
+		if(iMark){ //加载开关
+			oLoader.show()
+			iMark = false
+			$.getJSON(sUrl , {
+				'frame' : frame++
+				,'page_name' : 'clothes'
+			}, function(data){
+				$.each(data.tInfo, function(index, obj) {
+					var oImg = $('<img />')
+					oImg.attr('src',obj.goods_img)
+					oImg.appendTo(oContainer)
+
+					//缩放高度 = 缩放比例 * 原始高度
+					var iHeight = iWidth / obj.pic_width * obj.pic_height
+
+					//最小高度的列
+					minIndex = getMin()
+
+					//设置 图片 宽、高 及 定位 
+					oImg.css({
+						width : iWidth
+						,height : iHeight
+						,left : arrL[minIndex]
+						,top  : arrT[minIndex]
+					})
+
+					arrT[minIndex] += iHeight + 10
+				});
+
+				//加载完成 
+				oLoader.hide()
+				iMark = true
+			})
+		}
+	}
+
+})
+
+</script>
+</html>

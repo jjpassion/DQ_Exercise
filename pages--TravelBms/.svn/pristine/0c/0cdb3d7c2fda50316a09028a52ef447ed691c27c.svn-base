@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link type="text/css" rel="stylesheet" href="all_style.css"/>
+<link type="text/css" rel="stylesheet" href="sbgl_jbxx.css"/>
+<title>北斗旅游管理系统</title>
+<script src="jquery-1.11.3.min.js"></script>
+<script src="jquery.min.js"></script>
+<script src="jqPaginator.js"></script>
+<style>
+.logo h1{font-family:微软雅黑;}
+</style>
+</head>
+<body>
+<div class="header">
+	<div class="logo">
+    	<a href="#"><img  class="logo_img" src="images/logo.png"/>
+        <img  class="logo_line" src="images/logo_line.png"/>
+        <h1>北斗旅游管理系统</h1></a>
+    </div>
+    <div class="botton">
+    	<img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/message.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/setting.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="icon"><img src="images/out.png"/></a>
+        <img class="line" src="images/logo_line.png"/>
+        <a href="#" class="img_id"><img src="images/img_ID.png"/></a>
+        <a href="#"><p>某某某，您好！</p></a>
+    </div>
+</div>
+
+<div class="content">
+    <div class="nav_left">
+            <dl>
+            	<a href="index.html">
+                    <div class="botton_index">
+                        <img src="images/index_icon.png"/>
+                        <p>首页</p>
+                    </div>
+        		</a>
+                
+                <a href="#" class="menu_botton"><dd>
+                	<p>系统管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                                    <div class="xiala_menu">
+                                        <a href="users.html">系统用户信息</a>
+                                        <a href="jsgl.html">角色管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>设备管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="sbgl_jbxx.html">基本信息</a>
+                                        <a href="sbgl_csxx_02.html">参数信息</a>
+                                        <a href="#">设备录入</a>
+                                        <a href="#">使用管理</a>
+                                    </div>
+                <a href="lytgl.html" class="menu_botton"><dd>
+                	<p>旅行团管理</p>
+                </dd></a>
+                <a href="#" class="menu_botton"><dd>
+                	<p>人员管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="#">导游管理</a>
+                                        <a href="#">游客管理</a>
+                                    </div>
+                <a href="#" class="menu_botton"><dd>
+                	<p>组织机构管理</p>
+                	<img src="images/jiantou_bottom.png"/>
+                </dd></a>
+                					<div class="xiala_menu">
+                                        <a href="#">组织机构管理</a>
+                                    </div>
+            </dl>
+            <script>
+					$(".menu_botton").click(function(){
+						var flag=$(this).next("div").is(":hidden");
+						if(flag){
+							$(this).next("div").show();
+						}else{
+							$(this).next("div").hide();
+						}
+					});
+            </script>
+	</div>
+    <div class="content_bigbox">
+    	 <div class="weizhi">
+        	<img class="icon_gray" src="images/index_icon_gray.png"/>
+            <a href="index.html">首页</a>
+            <img class="jiantou_right" src="images/jiantou_right.png"/>
+            <a href="#">设备管理</a>
+            <img class="jiantou_right" src="images/jiantou_right.png"/>
+            <a href="sbgl_jbxx.html">基本信息</a>
+        </div>
+    	<div class="search">
+            <p>状态</p>
+            <select class="search_zt" size="1" >
+                <option selected="select">状态1</option>
+                <option>状态2</option>
+                <option>状态3</option>
+   			</select>
+            <p>生产厂商</p>
+            <select class="search_cs" size="1" >
+                <option selected="select">生产厂商1</option>
+                <option>生产厂商2</option>
+                <option>生产厂商3</option>
+   			</select>
+            <p>手机号</p>
+            <input class="sjhm">
+            
+            <a href="#"><img src="images/search.png"></a>
+        </div>
+        <div class="biaodan">
+            	<p class="taitou">基本信息</p>
+                <dl class="taitou_02">
+					<input type="checkbox"/>
+                    <dd class="jbxx_leibie_02">设备IMEI</dd>
+                    <dd class="jbxx_leibie_03">状态</dd>
+                    <dd class="jbxx_leibie_04">生产日期</dd>
+                    <dd class="jbxx_leibie_05">生产厂商</dd>
+                    <dd class="jbxx_leibie_06">入库日期</dd>
+                    <dd class="jbxx_leibie_07">出生日期</dd>
+                    <dd class="jbxx_leibie_08">手机号码</dd>
+                    <dd class="jbxx_leibie_09">颜色</dd>
+                    <dd class="jbxx_leibie_10">备注</dd>
+                    <dd class="jbxx_leibie_11"></dd>
+                </dl>                                                              
+            <div class="content_01">
+            	<input type="checkbox"/>
+                <dl>
+                    <dd class="jbxx_name">aaa</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_sex">XXX</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_account">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_userpwd">aaaaaaa</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_telnumber">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_birthdate">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_type">13666666666</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_AgencyCode">red</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_remark">备注</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_details"><a href="">编辑</a></dd>
+                </dl>
+             </div>
+             <div class="content_02">
+             	<input type="checkbox"/>
+                <dl>
+                    <dd class="jbxx_name">aaa</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_sex">XXX</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_account">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_userpwd">aaaaaaa</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_telnumber">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_birthdate">2015/06/28</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_type">13666666666</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_AgencyCode">red</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_remark">备注</dd><dd><img src="images/fengexian.png"></dd>
+                    <dd class="jbxx_details"><a href="">编辑</a></dd>
+                </dl>           
+              </div>
+              <img class="jiewei" src="images/biaodan_bottom_bg.png">
+        </div>
+        <div class="content_btn">
+              	<a href="#"><img src="images/zengjia.png"></a>
+                <a href="#"><img src="images/shanchu.png"></a>
+        </div>
+        <div class="fenye">
+                <div class="page">
+					<ul class="pagination" id="pagination1"></ul>		
+						<script type="text/javascript">
+                            $.jqPaginator('#pagination1', {
+                                totalPages: 10,
+                                visiblePages: 8,
+                                currentPage: 1,
+								first:'<li class="first"><a href="javascript:;">首页</a></li>',
+								prev: '<li class="prev"><a href="javascript:;">上一页</a></li>',
+								next: '<li class="next"><a href="javascript:;">下一页</a></li>',
+								page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+								last:'<li class="last"><a href="javascript:;">尾页</a></li>',
+                                onPageChange: function (num, type) {
+                                $('#p1').text(type + '：' + num);
+                                }
+                            });                           
+                        </script>
+                </div>
+                </div>
+    </div>
+</div>
+<div class="footer">
+	<h2>Copyright &copy; 2015 by SCBDLBS.</h2>
+	<h3>All Rights Reserved</h3>
+</div>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>模仿百度音乐-DataTransfer-</title>
+</head>
+<!-- 
+	拖放 draggable - 设置为true，元素就可以拖拽了
+
+	拖放事件
+	1、拖拽元素事件：事件对象为被拖拽元素
+		-dragstart,拖拽前触发
+		-drag 拖拽前，拖拽结束之间，连续触发
+		-dragend 拖拽结束触发
+	2、目标元素事件：事件对象为目标元素
+		-dragenter,进入目标元素触发，相当于mouseover
+		-dragover,进入目标，离开目标之间，连续触发
+		-dragleave,离开目标元素触发，相当于mouseout
+		-drop,在目标元素上鼠标触发  语法规定:要想触发 drop事件，则需要在dragover当中阻止默认事件 
+
+	3、解决火狐下的问题
+		- 必须设置dataTransfer 对象的setData方法才可以拖拽除图片外的其他标签
+
+	4、dataTransfer对象
+		- setData() 设置数据key和value（必须是字符串）
+		- getData() 获取数据，根据key值，获取对应的value
+		- effectAllowed
+			-effectAllowed : 设置光标样式（none,copy,copylink,copyMove,link,linkMove,move,all 和 uninitialized）
+		- setDragImage
+			-三个参数：指定的元素，坐标X，坐标Y
+		- files
+			-获取外部拖拽的文件，返回一个filesList列表
+			-filesList下有个type属性，返回文件的类型
+	5、fileReader(读取文件信息)
+		- readAsDataURL 参数为要读取的文件对象，将文件读取为DataUrl
+		- onload 当读取文件成功完成的时候触发此事件
+				 this.result,来获取读取的文件数据，如果是图片，将返回，base64格式的图片
+		- 实例
+			拖拽删除列表
+			拖拽购物车
+			上传图片预览功能
+
+
+	总结：
+	1、事件的执行顺序：drop 不触发的时候
+		- dragstart > drag > dragenter > dragover > dragleave > dragend
+	2、事件的执行顺序: drop 触发的时候（dragover阻止默认事件）
+		- dragstart > drag > dragenter > dragover > drop > dragend
+	3、不能释放的光标和能释放的光标不一样
+ -->
+
+ <style>
+ 	ul{border: 1px solid #f3faff; width: 60%; margin: 10px auto; padding: 2% 5%;}
+ 	li{ width: 100%; height: 28px; line-height: 30px; text-align: left; border-bottom: 1px solid #fff;border-top: 1px solid #fff; background: #fff;}
+ 	li:nth-of-type(2n){
+ 		background: #f3faff; border: none; height: 30px;
+ 	}
+ 	li:hover{ background: #f0f0f0;}
+
+ 	.d_img{ display: block; width: 20px; height: 20px; background: url(./music.png) no-repeat -98px -39px;}
+
+ </style>
+<script>
+	window.onload = function(){
+		var oUl = document.querySelector('ul')
+			oLis = document.getElementsByTagName('li')
+			,oImg = document.querySelector('.d_img')
+			,iNow = 0
+			// ,oldTarget = null
+
+		for (var i = 0,len = oLis.length; i < len; i++) {
+
+			oLis[i].index = i
+
+			oLis[i].ondragstart = function(ev){
+				var ev = ev || window.event
+
+				draging = true
+
+				iNow = this.index
+				// console.log(this.index)
+				ev.dataTransfer.setData('name',this.index)
+
+				/* 改变拖拽进入目标区域内的鼠标样式 */
+				ev.dataTransfer.effectAllowed = 'link'
+
+				/* 设置拖拽时的 副本样式(对象,x,y) */
+				ev.dataTransfer.setDragImage(oImg,-10,-10)
+
+			}
+
+			oUl.ondragover = function(ev){
+				var ev = ev || window.event
+				// oldTarget = oldTarget ? oldTarget : ev.target
+				// 
+				// if(oldTarget && oldTarget != ev.target){
+				// 	 ev.target.style.background = '#f0f0f0'
+				// }else if( oldTarget == null){
+				// 	oldTarget = ev.target
+				// }else{
+				// 	 ev.target.style.background = '#fff'
+				// }
+				
+				ev.preventDefault()
+			}
+
+			oUl.ondrop = function(ev){
+				var ev = ev || window.event
+		
+				var idx = ev.dataTransfer.getData('name')
+
+				insertAfter(oLis[idx],ev.target)
+				
+				for (var j = 0; j < len; j++){
+					oLis[j].index = j
+				}
+			}
+
+			oLis[i].ondragend = function(ev){
+				var ev = ev || window.event
+				ev.target.style.background = '#f0f0f0'
+			}
+		};
+
+
+		function insertAfter(newEl, targetEl){   
+		    var parentEl = targetEl.parentNode;   
+		    if(parentEl.lastChild == targetEl){   
+		        parentEl.appendChild(newEl);   
+		    }else{   
+		        parentEl.insertBefore(newEl,targetEl.nextSibling);   
+		    }   
+		} 
+
+
+	}
+</script>
+<body>
+
+<ul>
+	<li draggable="true">1</li>
+	<li draggable="true">2</li>
+	<li draggable="true">3</li>
+	<li draggable="true">4</li>
+	<li draggable="true">5</li>
+	<li draggable="true">6</li>
+	<li draggable="true">7</li>
+	<li draggable="true">8</li>
+	<li draggable="true">9</li>
+	<li draggable="true">10</li>
+	<li draggable="true">11</li>
+	<li draggable="true">12</li>
+	<li draggable="true">13</li>
+	<li draggable="true">14</li>
+	<li draggable="true">15</li>
+	<li draggable="true">16</li>
+	<li draggable="true">17</li>
+	<li draggable="true">18</li>
+	<li draggable="true">19</li>
+	<li draggable="true">20</li>
+	<li draggable="true">21</li>
+	<li draggable="true">22</li>
+	<li draggable="true">23</li>
+	<li draggable="true">24</li>
+</ul>
+
+<span class="d_img"></span>
+
+	
+</body>
+</html>

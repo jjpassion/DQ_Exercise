@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>带声音的导航</title>
+</head>
+<style>
+	li{list-style: none; width: 100px; height: 30px; border: 1px solid #f69; line-height: 30px; text-align: center; float: left;}
+</style>
+<body>
+<ul id="ul1">
+	<li data-i="a">001</li>
+	<li data-i="b">002</li>
+	<li data-i="c">003</li>
+	<li data-i="d">004</li>
+	<li data-i="e">005</li>
+	<li data-i="f">006</li>
+	<li data-i="g">007</li>
+</ul>
+<audio id="au"></audio>
+
+<script>
+window.onload = function(){
+	var oLis = document.getElementsByTagName('li')
+	var oAu = document.getElementById('au')
+
+	for (var i = 0, len = oLis.length; i < len; i++) {
+		oLis[i].onmouseover = function(){
+
+			// console.log(this.getAttribute('data-i'))
+			oAu.setAttribute('src','http://s8.qhimg.com/share/audio/piano1/' + this.getAttribute('data-i') + '4.mp3')
+
+			oAu.play()
+		}
+	};
+	
+
+}
+</script>
+</body>
+</html>

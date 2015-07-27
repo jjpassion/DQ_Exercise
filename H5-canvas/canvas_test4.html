@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例4-旋转的小方块</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+canvas span{color: #fff;}
+</style>
+ <script>
+ window.onload = function(){
+ 	 var oC = document.getElementById('c1')
+	 var oGC = oC.getContext('2d')
+	 	,iWidth = oC.width
+	 	,iHeight = oC.height
+	 	,num = 0
+	 	,num2 = 0
+	 	,value = 1
+
+	 // console.log(iWidth,iHeight)
+
+	 oGC.fillStyle = "#f69"
+	 setInterval(function(){
+	 	num++
+	 	// num2++
+	 	oGC.save() /* 避免旋转度数的累加 */
+	 	oGC.clearRect(0,0,iWidth,iHeight)
+	 	oGC.translate(100,100)
+
+	 	if(num2 == 100){
+	 		value = -1
+	 	}else if(num2 == 0){
+	 		value = 1
+	 	}
+	 	num2 += value
+	 	
+	 	oGC.scale(num2*1/50,num2*1/50)
+
+	 	oGC.rotate(num*Math.PI/180)
+	 	oGC.translate(-50,-50)
+	 	oGC.fillRect(0,0,100,100)
+	 	oGC.restore()
+
+	 },30)
+	
+	
+	 
+ }
+
+ </script>
+<body>
+
+<canvas id="c1" width="400" height="400">
+	<!-- 不支持canvas的浏览器 这句话就显示  -->
+	<span>浏览器不支持canvas</span>
+</canvas>
+
+</body>
+</html>

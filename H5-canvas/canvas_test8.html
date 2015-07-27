@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas实例8-根据坐标获取数据</title>
+</head>
+<style>
+
+body{background: #ddd;}
+canvas{background: #fff;
+	/* 在这里设置宽高，是表示canvas的缩放宽高，而写在标签里面的宽高才是canvas真正的宽高*/
+	/* width: 400px;height: 400px;*/
+}
+ul{float: left; margin-right: 20px; font-size: 30px;}
+ul > li {line-height:  40px; cursor: pointer;}
+</style>
+ <script>
+ window.onload = function(){
+ 	var oC = document.getElementById('c1')
+ 		,oGC = oC.getContext('2d')
+ 	
+ 	oGC.fillStyle = "#000"
+ 	oGC.fillRect(0,0,100,100)
+ 	var oImg = oGC.getImageData(0,0,100,100)
+
+ 	var c = getXY(oImg,3,5)
+ 	console.log(c)
+
+ 	// setXY(oImg,3,5,[255, 102, 153, 255])
+ 	var i = 0
+ 		,w = oImg.width
+ 		// ,h = oImg.height
+ 	for ( ; i < w; i++) {
+ 		setXY(oImg,i,50,[255, 102, 153, 255])
+ 	};
+
+ 	oGC.putImageData(oImg,100,100)
+
+ 	// var c = getXY(oImg,3,5)
+ 	// console.log(c)
+
+ 	function setXY(obj,x,y,color){
+ 		var w = obj.width
+ 			,h = obj.height
+ 			,data = obj.data
+
+ 		data[ 4*(y*w+x) ] = color[0]
+ 		data[ 4*(y*w+x)+1 ] = color[1]
+ 		data[ 4*(y*w+x)+2 ] = color[2]
+ 		data[ 4*(y*w+x)+3 ] = color[3]
+ 		// return color
+ 	}
+
+ 	function getXY(obj,x,y){
+ 		var w = obj.width
+ 			,h = obj.height
+ 			,data = obj.data
+
+ 		var color = []
+ 		color[0] = data[ 4*(y*w+x) ]
+ 		color[1] = data[ 4*(y*w+x)+1 ]
+ 		color[2] = data[ 4*(y*w+x)+2 ]
+ 		color[3] = data[ 4*(y*w+x)+3 ]
+
+ 		return color
+ 	}
+
+ 
+	 
+ }
+
+ </script>
+<body>
+<canvas id="c1" width="400" height="400"></canvas>
+</body>
+</html>

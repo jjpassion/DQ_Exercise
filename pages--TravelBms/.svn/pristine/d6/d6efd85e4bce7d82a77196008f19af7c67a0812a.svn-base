@@ -1,0 +1,64 @@
+
+.content_bigbox{width:1179px;float:left;}
+.search{overflow:hidden;margin-left:40px;}
+.search input{outline:none;border:solid 1px #40abdf;width:68px;height:14px;background-color:transparent;float:left;margin:20px 0 20px 10px;}
+.search .mingchen{width:140px;}
+.search .sfzh{width:100px;}
+.search .sjhm{width:140px;}
+.search a{float:right;margin-top:18px;margin-right:50px;}
+.search p{float:left;margin:20px 0 20px 20px;line-height:18px;}
+.search select{float:left;outline:none;border:solid 1px #40abdf;width:60px;height:18px;margin:20px 0 20px 10px;}
+.taitou{width:1154px;margin-left:10px;background-image:url(images/biaodan_01.png);height:43px;font-size:16px;font-family:微软雅黑;line-height:40px;text-align:center;}
+.jiewei{margin-left:10px;}
+
+
+.taitou_02{background-image:url(images/biaodan_02.png);background-repeat:no-repeat;margin-left:10px;width:100%;overflow:hidden;}
+.taitou_02 dd{float:left;line-height:36px;color:white;font-size:14px;font-family:微软雅黑;}
+.taitou_02 input{float:left;margin-left:26px;margin-top:12px;}
+.dygl_leibie_02{width:6%; text-align:center;}
+.dygl_leibie_03{width:5%; text-align:center;}
+.dygl_leibie_04{width:7%; text-align:center;}
+.dygl_leibie_05{width:7%; text-align:center;}
+.dygl_leibie_06{width:9%; text-align:center;}
+.dygl_leibie_07{width:7%; text-align:center;}
+.dygl_leibie_08{width:9%; text-align:center;}
+.dygl_leibie_09{width:10%; text-align:center;}
+.dygl_leibie_10{width:9%; text-align:center;}
+.dygl_leibie_11{width:10%;text-align:center;}
+.dygl_leibie_12{width:8%;text-align:center;}
+.dygl_leibie_13{width:8%;text-align:center;}
+.content_01{background-image:url(images/biaodan_bg_gray.png);background-repeat:no-repeat;margin-left:10px;width:1154px;height:36px;}
+.content_01 dd,.content_02 dd{float:left;line-height:34px;}
+.content_01 input,.content_02 input{float:left;margin-left:26px;margin-top:12px;}
+
+.dygl_name{width:6%;text-align:center;}
+.dygl_sex{width:5%;text-align:center;}
+.dygl_account{width:7%;text-align:center;}
+.dygl_userpwd{width:7%;text-align:center;}
+.dygl_telnumber{width:9%;text-align:center;}
+.dygl_birthdate{width:8%;text-align:center;}
+.dygl_type{width:8%;text-align:center;}
+.dygl_AgencyCode{width:11%;text-align:center;}
+.dygl_remark{width:9%;text-align:center;}
+.dygl_beizhu{width:10%;text-align:center;}
+.dygl_zhuangtai{width:8%;text-align:center;}
+.dygl_details{width:6%;text-align:center;}
+.dygl_details a{ text-decoration:underline;color:#65baf1;}
+.content_02{background-image:url(images/biaodan_bg_white.png);background-repeat:no-repeat;margin-left:10px;width:1154px;height:36px;}
+.content_btn{margin-top:40px;overflow:hidden;float:left;}
+.content_btn a{float:left;margin-left:20px;background-color:#40ABEF;width:86px;height:36px;color:white;font-size:14px;font-family:微软雅黑;line-height:36px;text-align:center;}
+.content_btn .dc{width:100px;}
+.content_btn .dc img{float:left;padding-top:8px;padding-left:8px;}
+
+.fenye{margin-right:20px;}
+.page{overflow:hidden;float:right;}
+.pagination{overflow:hidden;}
+.pagination li{float:left;line-height:24px;}
+.pagination{display:inline-block;}
+.pagination li{display:inline}
+.pagination li a{position:relative;float:left;padding:6px 12px;line-height:1.42857143;text-decoration:none;color:#428bca;background-color:#fff;border:1px solid #CCC;margin-left:-1px}
+.pagination li:first-child a{margin-left:0;border-bottom-left-radius:4px;border-top-left-radius:4px}
+/*右边上下圆角度数*/
+.pagination li:last-child a{border-bottom-right-radius:4px;border-top-right-radius:4px}
+.pagination>.active>a,.pagination>.active>span,.pagination>.active>a:hover,.pagination>.active>span:hover,.pagination>.active>a:focus,.pagination>.active>span:focus{z-index:2;color:#fff;background-color:#428bca;border-color:#428bca;cursor:default}
+.pagination>.disabled>span,.pagination>.disabled>span:hover,.pagination>.disabled>span:focus,.pagination>.disabled>a,.pagination>.disabled>a:hover,.pagination>.disabled>a:focus{color:#999;background-color:#fff;border-color:#ddd;cursor:not-allowed}
