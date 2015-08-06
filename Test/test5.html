@@ -6,21 +6,167 @@
 </head>
 
 <script>
-var a = 0
-function fn(b){
-	return function fb(c){
-		console.log(a++,b++,c++)
+// var a = 0
+// function fn(b){
+// 	return function fb(c){
+// 		console.log(a++,b++,c++)
+// 	}
+// }
+
+// var f1 = fn(0)
+// var f2 = fn(0)
+// f1()
+// f2()
+
+// var f1 = f2 = fn(fn(0))
+// f1()
+// f2()
+
+
+// function A(){
+// 	this.a = null;
+// 	this.b = null;
+
+// 	this.step1 = function(){
+// 		//TODO
+// 	}
+// 	this.step2 = function(){
+// 		//TODO
+// 	}
+// 	this.api = function(){
+// 		//TODO
+// 	}
+// }
+// 
+// 
+	// var a=1;
+	// var func = (function(){
+	// 	var a=2;
+	// 	return function(){
+	// 		a++;
+	// 		alert(a)
+	// 	}
+	// })()
+
+// console.log(func)
+// func() //3
+// func() //4
+
+// (function(){
+// 	// a = 5;
+// 	alert(window.a)
+// 	alert(a)
+// 	var a = 10;
+// 	alert(a)
+// })()
+// 
+// var a = 6;
+//     (function(){
+//            alert(a)
+//            var a = 4;
+//      })() 
+// 
+// 
+
+	// var x = 10;
+	// function foo(){
+	// 	alert(x);
+	// }
+	// function bar(){
+	// 	var x = 20;
+	// 	foo();
+	// }
+	// bar();
+
+
+	function myType(param){
+		alert("I am an " + Object.prototype.toString.call(param).slice(8, -1) )
 	}
-}
 
-var f1 = fn(0)
-var f2 = fn(0)
-f1()
-f2()
+// myType({})
+// myType([])
+// myType(function(){})
+// myType(new Date())
+// myType('111')
+// myType(1)
+// 
+	function type(obj){
+		return  Object.prototype.toString.call(obj).slice(8, -1).toLowerCase()
+	}
 
-var f1 = f2 = fn(fn(0))
-f1()
-f2()
+// alert( type([]) )
+
+	// function Teacher(){}
+
+	// Teacher.prototype = {
+	// 	job : 'teacher',
+	// 	setName : function(name){
+	// 		this.name = name
+	// 	}
+	// }
+
+	// var bill = new Teacher()
+	// bill.setName('Bill')
+	// alert(bill.name) //Bill
+	// alert(bill.job) //teacher
+
+	// bill.job = 'assistant';
+	// alert(bill.job) //assistant
+	// delete bill.job;
+	// alert(bill.job); //teacher
+	//
+	 
+	// if( typeof Object.create == 'function'){
+
+	// 	Object.create = function(obj){
+	// 		if( typeof obj != 'object' ){
+	// 			throw TypeError('Object prototype may only be an Object or null')
+	// 		}
+	// 		var r = function(){}
+	// 		r.prototype = obj
+	// 		return new r;  //new r() 与new r 没有区别，只是r函数没有参数时，括号可以省略
+	// 	}
+
+	// }
+
+	// var a = Object.create({x:1,y:2})
+	// alert(a.x)
+
+	function search(arr,dst){
+		var type = Object.prototype.toString.call(arr).slice(8,-1);
+		if(type != 'Array'){
+			throw TypeError('Object prototype may only be an Array')
+		}
+		var len = arr.length;
+		if( !len){
+			return -1;
+		}
+
+		var l = 0;
+		var h = len - 1;
+		while(l <= h){
+			var m = Math.floor( (h+l)/2 );
+			if( arr[m] == dst ){
+				return m;
+			}else if( dst < arr[m] ){ //左半部分
+				h = m - 1;
+			}else{ //右半部分
+				l = m + 1;
+			}
+
+		}
+	}
+	var arr = [1,2,4,6,7,9,19,20,30,40,45,47];
+	// alert( search(arr,45) )
+
+document.addEventListener('DOMContentLoaded',function(){
+	document.body.style.fontSize = '24px';
+},false);
+
+
+	var arr=[1,2,"a","b"];
+	var ret=arr.splice(1,2,3);
+
 
 </script>
 <style>
@@ -49,9 +195,19 @@ f2()
 .box .right{top: 0;left: 100px;   -webkit-transform: rotateY(90deg) translateZ(150px);}
 .box .back{ top: 0;left: 0px;  -webkit-transform: rotateY(180deg) translateZ(150px);}
 .box .front{ top: 0;left: 0px;  -webkit-transform: translateZ(150px);}
+
+
+.font .f24{
+	font-size: 100%;
+}
+.font .f36{ font-size:  120%;}
 </style>
 <body>
-
+<div class="font">
+	
+	<p class="f24">字体大小24px</p>
+	<p class="f36">字体大小36px</p>
+</div>
 <header></header>
 <div>
 	<section></section>
