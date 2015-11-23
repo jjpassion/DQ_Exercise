@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全屏布局</title>
+</head>
+<style>
+	body{padding: 0; margin: 0; }
+	
+      html,body,.parent{
+      	height: 100%;
+      	overflow: hidden;
+      }
+      div{ border: 1px solid blue;}
+      .parent{display: flex; flex-direction:column;}
+      .top{ height: 100px;}
+      .bottom{height: 50px;}
+
+      .middle{flex:1; display: flex;}
+      .middle .left{ width: 200px;}
+      .middle .right{ flex: 1; overflow: auto; }
+      .middle .right .inner{ min-height: 1000px; }
+</style>
+<body>
+	<div class="parent">
+		<div class="top">top</div>
+		<div class="middle">
+			<div class="left">left</div>
+			<div class="right">right
+				<!-- 让右侧滚动起来 -->
+				<div class="inner"></div>
+			</div>
+		</div>
+		
+		<div class="bottom">bottom</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>wap站 轮播图</title>
+
+<style>
+body,html{ margin: 0; padding: 0;}
+a {
+    color: #666;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    /*display: inline-block;*/
+}
+ul {
+    list-style: none; margin: 0; padding: 0;
+}
+
+.banner-slider {
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+}
+.banner-slider-wrap {
+    display: -webkit-box;
+    display: box;
+}
+.banner-slider-wrap li {
+    position: relative;
+    width: 100%;
+}
+.banner-slider-wrap li img {
+    width: 100%;
+}
+.banner-slider-wrap li[status="drop"] {
+    -webkit-transition: all 0.2s ease-out 0s;
+}
+
+.banner-slider-point {
+	/* banner小圆点 居中做法 */
+    -webkit-transform: translate(-50%, 0);  
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-top: 12px;
+    position: absolute;
+    bottom: 0;
+}
+.banner-slider-point li {
+    float: left;
+    width: 12px;
+    height: 12px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    margin-right: 11px;
+    -webkit-border-radius: 100%;
+    border-radius: 100%;
+}
+.banner-slider-point .curr {
+    background-color: #ffffff;
+}
+</style>
+	
+</head>
+<body>
+<section style="-webkit-transform: translateZ(0);">		
+<div class="banner-slider">
+	<ul class="banner-slider-wrap">
+			<li ahref="#" >
+				<a href="#" ><img src="http://124.202.144.17/img/_o/75/54/3bf9faee21865f303220cdcad973_640_340.ch.jpg"></a>
+			</li>
+			<li ahref="#" >
+				<a href="#" ><img src="http://124.202.144.17/img/_o/cf/86/9d17bb78c8bd53adbd5ab649bd7e_640_340.ch.jpg"></a>
+			</li>
+			<li ahref="#" >
+				<a href="#" ><img src="http://124.202.144.17/img/_o/c8/3b/86a5821663532ae14780fe9e7802_640_340.ch.jpg"></a>
+			</li>
+			<li ahref="#" >
+				<a href="#" ><img src="http://124.202.144.17/img/_o/88/d6/1910bc7886c56b3c8d5504d3eb18_640_340.ch.jpg"></a>
+			</li>
+			<li ahref="#" >
+				<a href="#" ><img src="http://124.202.144.17/img/_o/0f/64/c4450ff23cf98d72aeaf271d3baa_640_340.cg.jpg"></a>
+			</li>
+		</ul>
+
+		<ul class="banner-slider-point">
+			<li class=""></li>
+			<li class=""></li>
+			<li class=""></li>
+			<li class=""></li>
+			<li class=""></li>
+		</ul>
+		
+	</div>
+	</section>
+</body>
+<script src="http://libs.baidu.com/zepto/0.8/zepto.min.js"></script>
+
+<script type="text/javascript" src="./wap-lunbo.js"></script>
+</html>

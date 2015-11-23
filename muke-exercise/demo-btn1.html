@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>幽灵按钮demo</title>
+	<link rel="stylesheet" href="../css/cssreset.css">
+	<script src="../js/jquery.min.js"></script>
+
+</head>
+<style>
+body{ background: #333;}
+.box{ width: 800px;  margin: 50px auto; position: relative;  }
+.box .link{ float: left; width: 200px; margin: 0 20px; text-align: center;}
+.box .link img{ transform: rotate(0deg) scale(1,1); transition: all .4s;  }
+.box .link img:hover{ 
+	transform: rotate(360deg) scale(1.2,1.2);  
+	-webkit-transform: rotate(360deg) scale(1.2,1.2);  
+	-moz-transform: rotate(360deg) scale(1.2,1.2);  
+	-ms-transform: rotate(360deg) scale(1.2,1.2);  
+	-o-transform: rotate(360deg) scale(1.2,1.2);  
+}
+.box button{ background: transparent; color: #1BC1A1; font-size: 16px; border: 1px solid rgba(255,255,255,.6); width: 130px; margin-top: 30px; padding-top: 10px; padding-bottom: 10px; text-align: left; position: relative; }
+.box button .rightArrow{
+	display: inline-block; width: 18px; height: 2px; background: #1BC1A1;
+	/*box-shadow: inset 0 0 0 2px;
+	color: #1BC1A1;*/
+	position: absolute; top: 50%; right: 24px; transform: translate(0,-50%);
+}
+.box button .rightArrow:before{
+	content: ''; display: block; border: 8px solid transparent;
+	border-left-color: inherit; /* 继承父级颜色 */  position: absolute;
+	left: 100%;top: 50%;
+	transform: translate(0,-50%);
+	-o-transform: translate(0,-50%);
+	-moz-transform: translate(0,-50%);
+	-webkit-transform: translate(0,-50%);
+	-ms-transform: translate(0,-50%);
+}
+.box button,.box button .rightArrow{ transition: all .4s ease-out;}
+
+/* 四周的线条 */
+button .line{ position: absolute;   background-color: transparent;  transition: all .2s ease-out; }
+
+button .line-left{ width: 0; height: 1px; left: -100%; top: -1px; }
+button .line-top{ width: 1px; height: 0; right: -1px; top: -110%; }
+button .line-right{ width: 0; height: 1px;  right: -100%; bottom: -1px; }
+button .line-bottom{ width: 1px; height: 0;  left: -1px; top: 110%; }
+
+/* 按钮 hover 效果 */
+.box button:hover{
+	border: 1px solid rgba(255,255,255,1)
+}
+
+.box button:hover .line{ background-color: #fff; }
+.box button:hover .rightArrow{ right: 18px; }
+.box button:hover .line-left{ width: 100%; left: 0;}
+.box button:hover .line-top{  height: 100%; top: 0px;}
+.box button:hover .line-right{ width: 100%; right: 0px;}
+.box button:hover .line-bottom{ height: 100%; top: 0px;} 
+/* top 100% , 是按父级的高度为基准。  */
+
+.tip{ position: absolute; background: #2DCB70; color: #fff; border-radius: 5px; height: 35px; line-height: 35px; font-size: 18px; padding-left: 10px; padding-right: 10px; z-index: 9; top: 110px; opacity: 0;}
+
+.tip i{
+	position: absolute; bottom: -15px; left: 50%; margin-left: -4px;
+	border: 8px solid transparent; 
+	border-top-color: #2DCB70; 
+}
+</style>
+<body>
+	<div class="box">
+		<figure class="link">
+			<img src="../images/demo-btn.png" alt="">
+			<figcaption>
+				<button class="btn" data-info="NOD DO MISSION MISSION">MISSION <i class="rightArrow"></i>
+					<span class="line line-left"></span>
+					<span class="line line-top"></span>
+					<span class="line line-right"></span>
+					<span class="line line-bottom"></span>
+				</button>
+			</figcaption>
+		</figure>
+		<figure class="link">
+			<img src="../images/demo-btn.png" alt="">
+			<figcaption>
+				<button class="btn" data-info="YOU">PLAY <i class="rightArrow"></i>
+					<span class="line line-left"></span>
+					<span class="line line-top"></span>
+					<span class="line line-right"></span>
+					<span class="line line-bottom"></span>
+				</button>
+			</figcaption>
+		</figure>
+		<figure class="link">
+			<img src="../images/demo-btn.png" alt="">
+			<figcaption>
+				<button class="btn" data-info="OH NO NO NO,CAN TOUCH">TOUCH <i class="rightArrow"></i>
+					<span class="line line-left"></span>
+					<span class="line line-top"></span>
+					<span class="line line-right"></span>
+					<span class="line line-bottom"></span>
+				</button>
+			</figcaption>
+		</figure>
+
+		<div class="tip"><span class="txt"></span><i></i></div>
+	</div>
+	
+</body>
+</html>
+
+<script>
+$(function(){
+	var $box = $('.box');
+	var $tip = $('.tip');
+	var $btn = $box.find('.btn');
+
+	$btn.hover(function() {
+		if( !$tip.is(':animated') ){
+			var _this = $(this);
+			/* position() 获取的是：最近的设置了定位的父元素 */
+			var position = _this.position()
+			$tip.children('.txt').html(_this.data('info'))
+			var dis = ( $tip.outerWidth() - _this.outerWidth() )/2;
+			$tip.css({
+				left : position.left - 5 - dis + 'px'
+			}).animate({'top': 130, 'opacity': 1}, 500);
+		}
+	}, function() {
+		/* 鼠标离开时，先判断是否有动画 */
+		if(!$tip.is(':animated')){
+			$tip.animate({'top': 100, 'opacity': 0}, 500);
+		}
+	});
+
+});
+</script>

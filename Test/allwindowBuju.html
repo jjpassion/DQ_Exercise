@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全屏布局</title>
+</head>
+<style>
+	body{padding: 0; margin: 0; }
+	/*.parent{ margin-left: -20px; overflow: hidden; width: 400px; background: blue; } 
+	.column{ float: left; width: 100px; box-sizing: border-box; padding-left: 20px; border: 1px solid red;}*/
+
+	 /* .parent{ 
+          display : flex;
+      }     
+      .column{
+          flex: 1;background: red;
+      }
+      .column + .column{   margin-left: 20px;  } */
+      /*//选择2，3，4 */
+
+      html,body,.parent{
+      	height: 100%; 
+      	overflow: hidden;
+      }
+      .top, .left, .right, .bottom{
+      	position: absolute;
+      	border: 1px solid red;
+      }
+      .top{
+      	top: 0; left: 0; right: 0;
+      	height: 100px;
+      }
+      .left{ 
+		top: 100px; left: 0; bottom: 50px;
+		width: 200px;
+      }
+      .right{
+      	overflow: auto;
+      	top: 100px; left: 200px; bottom: 50px; right: 0;
+      }
+      .bottom{
+      	bottom: 0; left: 0; right: 0;
+      	height: 50px;
+      }
+      .right .inner{ min-height: 1000px; }
+</style>
+<body>
+	<!-- <div class="parent">
+		<div class="column">
+			<p>1</p>
+		</div>
+		<div class="column">
+			<p>2</p>
+		</div>
+		<div class="column">
+			<p>3</p>
+		</div>
+		<div class="column">
+			<p>4</p>
+		</div>
+	</div> -->
+	<div class="parent">
+		<div class="top">top</div>
+		<div class="left">left</div>
+		<div class="right">right
+			<!-- 让右侧滚动起来 -->
+			<div class="inner"></div>
+		</div>
+		<div class="bottom">bottom</div>
+	</div>
+</body>
+</html>

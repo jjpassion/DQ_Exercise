@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSS3图片动态提示效果</title>
+</head>
+<style>
+	body,html,figure,figcaption,h2,p{margin: 0; padding: 0;}
+	figure{width: 33.33%; overflow: hidden; position: relative; float: left; height: 400px;}
+	figure img{ opacity: .9;}
+
+	.test1,.test2,.test3,.test4,.test5,.test6{
+		background-color: #333;
+	}
+
+	.test1:hover img
+	,.test2:hover img
+	,.test3:hover img{
+		transform: translate(-50px,0);
+		opacity: .6;
+	}
+	.test4:hover img
+	,.test5:hover img
+	,.test6:hover img{
+		opacity: .6;
+	}
+
+	figcaption{position: absolute; left: 10px; top: 30px; color: #fff;}
+	figcaption h2{ margin-bottom: 10px; }
+	figcaption p{ margin: 5px; color: #fff;  padding: 5px;  transition: all 0.3s;}
+	figcaption h2, figcaption span, figcaption div,figure img{ transition: all 0.4s;}
+
+	@media screen and (max-width: 600px){
+		figure{width: 100%}
+	}
+	@media screen and (min-width: 601px) and (max-width: 1000px){
+		figure{width: 50%}
+	}
+	@media screen and (min-width: 1001px){
+		figure{width: 33.33%}
+	}
+
+	
+	/* 依次平滑效果 */
+	
+	.test1 figcaption p{
+		transform:translate(-120px,0);background-color: #fff;text-align: center; color: #333;
+	}
+	.test1:hover figcaption p{
+		transform: translate(0,0);
+	}
+
+	.test1 figcaption p:nth-of-type(1){
+		transition-delay: 0.05s;
+	}
+	.test1 figcaption p:nth-of-type(2){
+		transition-delay: 0.1s;
+	}
+	.test1 figcaption p:nth-of-type(3){
+		transition-delay: 0.15s;
+	}
+
+	/* 旋转动画 */
+	.test2 figcaption{width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+	.test2 figcaption div{ border: 2px solid #fff; width: 80%; height: 80%; position: absolute; left: 10%; top: 10%;}
+	
+	.test2 figcaption h2{margin-left:15%; margin-top: 15%; }
+	.test2 figcaption p{ margin-left:15%; margin-top: 10px; transform: translate(0,50px); opacity: 0; }
+	.test2:hover figcaption p{
+		transform: translate(0,0); opacity: 1;
+	}
+	.test2 figcaption div{
+		transform: translate(0,-420px) rotate(0);
+	}
+	.test2:hover figcaption div{
+		transform: translate(0,0) rotate(360deg); 
+	}
+	
+	/* 斜切动画 */
+	.test3 figcaption{ margin-top: 10%; margin-left: 5%;}
+	.test3 figcaption p{ margin: 0;}
+	.test3 figcaption p,.test3 figcaption h2{ transform: skew(90deg); }
+
+	.test3:hover figcaption p,.test3:hover figcaption h2{
+		transform: skew(0);
+	}
+	.test3 figcaption p{
+		transition-delay : .3s;
+	}
+
+	/* 放大缩小动画 */
+	.test4 figcaption{ width: 100%; height: 100%; position: absolute; left: 0; top: 0; }
+	.test4 figcaption h2{ margin-left: 15%; margin-top: 20%;}
+	.test4 figcaption p{ margin-top: 10px;margin-left: 15%; }
+	.test4 figcaption div{ border: 2px solid #fff; width: 80%; height: 80%; position: absolute; left: 10%; top: 10%; }
+	.test4 figcaption div
+	,.test4 figcaption p
+	,.test4 figcaption h2{
+		transform:scale(1.2,1.2);opacity: 0;
+	}
+	.test4:hover figcaption div
+	,.test4:hover figcaption p
+	,.test4:hover figcaption h2{
+		transform:scale(1,1);opacity: 1; 
+	}
+	.test4:hover img{ transform: scale(1.2,1.2); }
+	
+	/* 利用旋转展示额外信息 */
+	.test5 figcaption{width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+	.test5 figcaption h2{ margin-top: 15%; margin-left: 15%; opacity: 0;}
+	.test5 figcaption div{ width: 95%;  background-color: #fff; color: #333; text-align: right; padding-right:10%;  height: 100px; padding-top: 20px; position: absolute; bottom: -120px; left: 0; transform-origin: 0 0; }
+	.test5:hover figcaption div{ transform: rotate(-10deg);}
+	.test5:hover figcaption h2{ opacity: 1;}
+
+	/* 通过缩放属性绘制边框 */
+	.test6 figcaption{width: 100%; height: 100%; position: absolute; left: 0; top: 0;}
+	.test6 figcaption p{ opacity: 0; transform: scale(1.2,1.2);margin-top: 10px;margin-left: 20%; }
+	.test6 figcaption h2{ margin-left: 5%; margin-top: 5%;}
+	.test6 figcaption .line1{ width: 0; height: 70%; border-top:1px solid #fff; border-bottom: 1px solid #fff; position: absolute; top: 15%; left: 50%;  }
+	.test6 figcaption .line2{width: 70%; height: 0; border-left:1px solid #fff; border-right: 1px solid #fff; position: absolute; top: 50%; left: 15%;  }
+	.test6:hover img{ transform: scale(1.2,1.2);}
+	.test6:hover figcaption p{ opacity: 1; transform: scale(1,1);}
+	.test6:hover figcaption h2{ margin-left: 20%; margin-top: 25%;}
+	.test6:hover figcaption .line1{width: 80%;  left: 10%;}
+	.test6:hover figcaption .line2{height: 80%;  top: 11%;}
+</style>
+<body>
+	<figure class="test1">
+		<img src="../images/demo-flat-move.jpg" alt="">
+		<figcaption>
+			<h2>平移动画</h2>
+			<p>图片描述</p>
+			<p>图片描述</p>
+			<p>图片描述</p>
+		</figcaption>
+	</figure>
+	<figure class="test2">
+		<img src="http://d05.res.meilishuo.net/img/_hd/b0/8f/1332cbffb2648609c23d2b3043d1_960_420.ch.jpg" alt="">
+		<figcaption>
+			<h2>旋转动画-飞入飞出</h2>
+			<p>图片描述-飞来飞去</p>
+			<div></div>
+		</figcaption>
+	</figure>
+	<figure class="test3">
+		<img src="../images/flat-move.jpg" alt="">
+		<figcaption>
+			<h2>斜切动画</h2>
+			<p>斜切动画斜切动画图片描述</p>
+		</figcaption>
+	</figure>
+	<figure class="test4">
+		<img src="http://d02.res.meilishuo.net/pic/_o/cd/8a/41793bb07770959ac95c93b726ae_640_556.cf.jpg" alt="">
+		<figcaption>
+			<h2>缩放动画</h2>
+			<p>图片描述图片描述</p>
+			<div></div>
+		</figcaption>
+	</figure>
+	<figure class="test5">
+		<img src="http://d06.res.meilishuo.net/img/_o/98/86/43a5442cc650ec7280d723637058_600_400.cg.jpg" alt="">
+		<figcaption>
+			<h2>利用旋转展示额外信息</h2>
+			<!-- <p>斜切动画斜切动画图片描述</p> -->
+			<div>btn1 btn2</div>
+		</figcaption>
+	</figure>
+
+	<figure class="test6">
+		<img src="http://d05.res.meilishuo.net/img/_o/0b/18/d6c3068c7816add7d042cc48dab6_600_400.ch.jpg" alt="">
+		<figcaption>
+			<h2>绘制线条效果</h2>
+			<p>通过缩放属性绘制边框</p>
+			<div class="line1"></div>
+			<div class="line2"></div>
+		</figcaption>
+	</figure>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<script>
+	function load (){
+ 
+	    document.addEventListener('touchstart',touch, false);
+	    document.addEventListener('touchmove',touch, false);
+	    document.addEventListener('touchend',touch, false);
+	     
+	    function touch (event){
+	        var event = event || window.event;
+	         
+	        var oInp = document.getElementById("inp");
+	 
+	        switch(event.type){
+	            case "touchstart":
+	                oInp.innerHTML = "Touch started (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";
+	                break;
+	            case "touchend":
+	                oInp.innerHTML = "<br>Touch end (" + event.changedTouches[0].clientX + "," + event.changedTouches[0].clientY + ")";
+	                
+	                 oInp.innerHTML += "<br>Touch end (" + event.changedTouches[0].pageX + "," + event.changedTouches[0].pageY + ")";
+	                break;
+	            case "touchmove":
+	                event.preventDefault();
+	                oInp.innerHTML = "<br>Touch moved (" + event.touches[0].clientX + "," + event.touches[0].clientY + ")";
+	                break;
+	        }
+	         
+	    }
+	}
+	window.addEventListener('load',load, false);
+
+	</script>
+</head>
+<body>
+	<div id="inp"></div>
+	<div>
+	<h3>touchEvents</h3>
+	<pre>
+	1. ontouchstart(onmousedown)
+	2. ontouchend(onmousemove)
+	3. ontouchmove(onmouseup)
+	4. ontouchcancel
+
+	//使用
+	document.querySelector('#touchable').addEventListener('touchstart',function(event){
+		event.touches: 触摸的对象数（直接对应触摸的手指数）
+		event.targetTouches: 当前touch事件元素上对象数（当前绑定元素的手指数）
+	})
+	
+
+	touch对象属性
+	pageX		相对于父元素的x坐标
+	pageY		相对于父元素的y坐标
+	clientX		相对于当前窗口的x坐标
+	clientY		相对于当前窗口的y坐标
+	screenX		相对于当前屏幕的x坐标
+	screenY		相对于当前屏幕的y坐标
+	target		指代当前点击的对象
+	</pre>
+
+	<pre>
+	touches：表示当前跟踪的触摸操作的touch对象的数组。
+
+　　targetTouches：特定于事件目标的Touch对象的数组。
+
+　　changeTouches：表示自上次触摸以来发生了什么改变的Touch对象的数组。
+
+
+　　每个Touch对象包含的属性如下。
+
+
+　　clientX：触摸目标在视口中的x坐标。
+
+　　clientY：触摸目标在视口中的y坐标。
+
+　　identifier：标识触摸的唯一ID。
+
+　　pageX：触摸目标在页面中的x坐标。
+
+　　pageY：触摸目标在页面中的y坐标。
+
+　　screenX：触摸目标在屏幕中的x坐标。
+
+　　screenY：触摸目标在屏幕中的y坐标。
+
+　　target：触目的DOM节点目标。
+	</pre>
+	</div>
+</body>
+</html>

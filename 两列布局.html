@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>布局</title>
+</head>
+<style>
+	.left{ 
+		float: left; 
+		width: 100px; 
+		background: #ccc; 
+		position: relative;
+	}
+
+	.right-fix{ 
+		border: 1px dashed red; 
+		float: right; 
+		margin-left: -102px; 
+		width: 100%; 
+	}
+
+	.right{ 
+		margin-left: 120px; 
+		background: pink;
+	}
+</style>
+<body>
+	<div class="parent">
+		<div class="left">
+			<p>left</p>
+		</div>
+
+		<div class="right-fix">
+			<div class="right">
+				<p style="clear:both;">right1</p>
+				<p>right2</p>
+				<p>right1</p>
+				<p>right2</p>
+			</div>
+			kdkdkdkdk
+		</div>
+		
+	</div>
+</body>
+</html>

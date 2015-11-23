@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+	
+	<form action="" name="course">
+		<select name="chapter" id="chapter">
+			<option>选择章目录</option>
+		</select>
+		<select name="section" id="">
+			<option>选择节目录</option>
+		</select>
+	</form>
+
+
+</body>
+<script>
+	
+	var chapters = [
+		{ text : '1. DOM基础', value : '1' },
+		{ text : '2. 事件模型', value : '2' }
+	];
+
+	var sections = {
+		1 : [
+			{ text : '1.1 文档树', value : '1.1' },
+			{ text : '1.2 节点操作', value : '1.2' },
+			{ text : '1.3 元素遍历', value : '1.3' },
+			{ text : '1.4 样式操作', value : '1.4' },
+			{ text : '1.5 属性操作', value : '1.5' },
+			{ text : '1.6 表单操作', value : '1.6' }
+		],
+
+		2 : [
+			{ text : '2.1 事件类型', value : '2.1' },
+			{ text : '2.2 事件模型', value : '2.2' },
+			{ text : '2.3 事件应用', value : '2.3' }
+		]
+	};
+
+	var forms = document.forms['course'];
+	var chapterSelect = forms.elements['chapter']
+	var selectionSelect = forms.elements['section']
+
+	//填充select下面的选项
+	function fillSelect(select,list){
+		// console.log(select.length)
+		//i > 0  表示不会把第一项删掉
+		for (var i = select.length - 1; i > 0; i--) {
+			select.remove(i);
+		};
+		list.forEach(function(data){
+			//new Option( [ text [, value [,defaultSelected [, selected] ] ] ] );
+			var option = new Option(data.text, data.value);
+			select.add(option);
+		})
+	}
+
+	fillSelect(chapterSelect,chapters); //初始化章节option
+
+	//给章节select添加change事件
+	chapterSelect.addEventListener('change',function(event){
+		var value = event.target.value,
+			list = sections[value] || []
+		fillSelect(selectionSelect,list);
+	})
+
+	textarea.addEventListener('input',function(event){
+		var target = event.target,
+		    cursor = target.selectionStart;
+
+		if( target.value.charAt(cursor - 1) === '@' ){
+			doShowAtList(function(name){
+				var end = cursor + name.length;
+				target.setRangeText( name, cursor,end,'end');
+			})
+		}
+	});
+	
+
+</script>
+</html>

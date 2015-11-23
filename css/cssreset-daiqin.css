@@ -1,0 +1,76 @@
+/**
+* css reset
+**/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;-webkit-text-size-adjust:none;}
+body{line-height:1; font-family:Arial;./*bgc(@wap_bgpink); .fc(#666);*/ }
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+ul{list-style:none}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:none}
+a{margin:0;padding:0;font-size:100%;vertical-align:baseline;background:transparent;color: #666; /*.tnone;*/ /*.tnone(){text-decoration: none;}*/
+}
+ins{background-color:#ff9;color:#000;text-decoration:none}
+mark{background-color:#ff9;color:#000;font-style:italic;font-weight:bold}
+del{text-decoration:line-through}
+abbr[title],dfn[title]{border-bottom:1px dotted;cursor:help}
+table{border-collapse:collapse;border-spacing:0}
+hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em
+0;padding:0}
+input,select{vertical-align:middle}
+textarea{resize: none; outline: none;}
+legend { display:none; }
+
+*, ::after, ::before{
+	-webkit-tap-highlight-color:rgba(255,255,255,0);
+	-webkit-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-drag: none;
+}
+
+/* 去除拖动高亮 */
+html{
+    -webkit-tap-highlight-color:rgba(255,255,255,0);
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;
+}
+/* 设置input,textare 之类的文本框的placeholder的默认颜色 */
+:-moz-placeholder{color:#ccc !important;}
+::-moz-placeholder{color:#ccc !important;}
+:-ms-input-placeholder{color:#ccc !important;}
+::-webkit-input-placeholder{color:#ccc !important;}
+
+/* search input 去掉默认右侧的小叉 */
+input[type=search]::-webkit-search-decoration,
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-results-button,
+input[type=search]::-webkit-search-results-decoration {
+	display: none;
+}
+/* input IE下 去掉小叉 */
+input::-ms-clear{display: none;}
+
+/*reset duweijing*/
+/*html,body,div,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,ul,ol,li,pre,hr,figure,fieldset,legend,table,th,td,form,button,input,textarea,menu,blockquote{padding: 0;margin:0; display: block;}
+i,cite,em,var,address,dfn{font-style: normal;}
+caption,th{text-align: left;font-weight: normal;}
+h1,h2,h3,h4,h5,h6,small{font-size: 100%;}
+h1,h2,h3,h4,h5,h6,em,strong,b{font-weight: normal;}
+sub,sup{font-size: 83%;}
+body,input,textarea,button,select,keygen,legend{outline: none;color:#333;font-size: 12px;}
+samp,kbd,code,pre{font-family: inherit;}
+textarea{overflow: auto;resize: none;}
+[hidefocus],summary{outline:none}
+li{list-style: none;}    
+q:before,q:after{content: none;}
+ins,u,s,a,a:hover{text-decoration: none;}
+a,button{cursor: pointer;}  
+header,footer,section,aside,address,nav,hgroup,menu,summary,details,figure,figcaption{display: block;}
+img,fieldset,abbr,iframe,body,html{border:0;}
+table{border-collapse: collapse;}*/
+/*a,a:hover{cursor: pointer;}*/
+
+
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, target-densitydpi=device-dpi, initial-scale=1, user-scalable=no">
+	<title>fullPage</title>
+	<link rel="stylesheet" href="../css/cssreset.css">
+	<link rel="stylesheet" href="../css/jquery.fullPage.min.css">
+	<!-- <script src="../js/jquery.min.js"></script> -->
+</head>
+
+<style>
+	.section{ color: #fff; }
+/*	.bg1{ background: pink;}
+	.bg2{ background: #ccc;}
+	.bg3{ background: #64A5BB;}
+	.bg4{ background: green;}*/
+	.slide{ text-align: center; }
+
+</style>
+<body>
+	<div id="fullPage">
+		<div class="section bg1">
+			<div class="slide">side1</div>
+			<div class="slide">side2</div>
+			<div class="slide">side3</div>
+		</div>
+		<div class="section bg2">something2</div>
+		<div class="section bg3">something3</div>
+		<div class="section bg4">something4</div>
+	</div>
+</body>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="../js/jquery.easing.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery-fullPage/2.1.8/jquery.fullPage.js
+"></script>
+<script>
+	$(document).ready(function(){
+		/*用sectionsColor 设置每个section的背景色 */
+		$('#fullPage').fullpage({
+			sectionsColor : ['#64A5BB','green','pink','gray']
+		});
+	});
+</script>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+</head>
+<body>
+
+	<form action="./api" name="valid" method="post">
+		<p><label for=""> <input name="username" required type="text"></label></p>
+		<p><button>submit</button></p>
+	</form>
+
+
+</body>
+<script>
+	
+	var input = document.forms['valid'].elements['username']
+	input.addEventListener('invalid',function(event){
+		var target = event.target
+		if( target.validity.valueMissing ){
+			target.setCustomValidity('请输入您的姓名！')
+		}
+	})
+	
+
+</script>
+</html>
