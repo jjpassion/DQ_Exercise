@@ -1,5 +1,9 @@
-define('test',function(){
-	alert(111)
-	var a = 1
-	,b = 3
-})
+define([], function() {
+  console.log(11)
+  return {
+    hello: function() {
+      alert("hello, a");
+    }
+  }
+
+});
